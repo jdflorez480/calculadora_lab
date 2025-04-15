@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, Suspense } from 'react';
 import { CurrencyDollarIcon, CalendarIcon, TruckIcon } from '@heroicons/react/24/outline';
 import ResultadoCalculo from '../../components/ResultadoCalculo';
 import { calcularNomina, SALARIO_MINIMO_2025 } from '../../utils/calculosLaborales';
@@ -17,7 +17,7 @@ interface Resultado {
   diasTrabajados: number;
 }
 
-export default function NominaPage() {
+function NominaContent() {
   const [formData, setFormData] = useState({
     salarioBase: '',
     otrosIngresos: '',
@@ -233,5 +233,13 @@ export default function NominaPage() {
         )}
       </div>
     </div>
+  );
+}
+
+export default function NominaPage() {
+  return (
+    <Suspense fallback={<div>Cargando...</div>}>
+      <NominaContent />
+    </Suspense>
   );
 }

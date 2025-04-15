@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { Suspense, useState } from 'react';
 import { CurrencyDollarIcon, ClockIcon } from '@heroicons/react/24/outline';
 import ResultadoCalculo from '../../components/ResultadoCalculo';
 import { calcularHorasExtras } from '../../utils/calculosLaborales';
@@ -23,7 +23,7 @@ interface FormData {
   horasNocturnas: string;
 }
 
-export default function HorasExtrasPage() {
+function HorasExtrasContent() {
   const [formData, setFormData] = useState<FormData>({
     salarioBase: '',
     horasExtrasDiurnas: '0',
@@ -278,5 +278,13 @@ export default function HorasExtrasPage() {
         )}
       </div>
     </div>
+  );
+}
+
+export default function HorasExtrasPage() {
+  return (
+    <Suspense fallback={<div>Cargando...</div>}>
+      <HorasExtrasContent />
+    </Suspense>
   );
 }

@@ -2,11 +2,11 @@
 
 import { usePathname, useSearchParams } from 'next/navigation';
 import Script from 'next/script';
-import { useEffect } from 'react';
+import { useEffect, Suspense } from 'react';
 
 const GA_MEASUREMENT_ID = 'G-RBLWY52KHC';
 
-export default function GoogleAnalytics() {
+function GoogleAnalyticsContent() {
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
@@ -34,5 +34,13 @@ export default function GoogleAnalytics() {
         `}
       </Script>
     </>
+  );
+}
+
+export default function GoogleAnalytics() {
+  return (
+    <Suspense>
+      <GoogleAnalyticsContent />
+    </Suspense>
   );
 }

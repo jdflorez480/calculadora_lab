@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, Suspense } from 'react';
 import { CurrencyDollarIcon, UserIcon, HomeIcon, HeartIcon } from '@heroicons/react/24/outline';
 import ResultadoCalculo from '../../components/ResultadoCalculo';
 import { calcularRetencionFuente, UVT_2025 } from '../../utils/calculosLaborales';
@@ -28,7 +28,7 @@ interface FormData {
   medicinaPrepagada: string;
 }
 
-export default function RetencionPage() {
+function RetencionContent() {
   const [formData, setFormData] = useState<FormData>({
     salarioBase: '',
     bonificaciones: '',
@@ -383,5 +383,13 @@ export default function RetencionPage() {
         )}
       </div>
     </div>
+  );
+}
+
+export default function RetencionPage() {
+  return (
+    <Suspense fallback={<div>Cargando...</div>}>
+      <RetencionContent />
+    </Suspense>
   );
 }

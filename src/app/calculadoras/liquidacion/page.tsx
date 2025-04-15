@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, Suspense } from 'react';
 import DatePicker, { registerLocale } from 'react-datepicker';
 import { es } from 'date-fns/locale/es';
 import ResultadoCalculo from '../../components/ResultadoCalculo';
@@ -24,7 +24,7 @@ interface ResultadoLiquidacion {
   diasLaborados: number;
 }
 
-export default function LiquidacionPage() {
+function LiquidacionContent() {
   const [formData, setFormData] = useState({
     salarioBase: '',
     auxilioTransporte: true,
@@ -255,5 +255,13 @@ export default function LiquidacionPage() {
         )}
       </div>
     </div>
+  );
+}
+
+export default function LiquidacionPage() {
+  return (
+    <Suspense fallback={<div>Cargando...</div>}>
+      <LiquidacionContent />
+    </Suspense>
   );
 }
