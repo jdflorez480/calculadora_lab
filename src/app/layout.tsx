@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Geist } from "next/font/google";
 import "./globals.css";
 import Navbar from "./components/Navbar";
+import { Analytics } from '@vercel/analytics/react';
+import GoogleAnalytics from './components/GoogleAnalytics';
 
 const geist = Geist({
   subsets: ["latin"],
@@ -27,6 +29,7 @@ export default function RootLayout({
   return (
     <html lang="es">
       <body className={`${geist.className} antialiased bg-gray-50`}>
+        <GoogleAnalytics />
         <Navbar />
         <main className="min-h-screen">
           {children}
@@ -38,6 +41,7 @@ export default function RootLayout({
             </p>
           </div>
         </footer>
+        <Analytics />
       </body>
     </html>
   );
