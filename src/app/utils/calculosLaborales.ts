@@ -12,7 +12,7 @@ export const PORCENTAJE_PENSION_EMPLEADO = 0.04; // 4%
 // Constantes para cálculos de nómina
 export const PORCENTAJE_SALUD = 0.04; // 4% del salario base
 export const PORCENTAJE_PENSION = 0.04; // 4% del salario base
-export const AUXILIO_TRANSPORTE_2025 = 162000;
+export const AUXILIO_TRANSPORTE_2025 = 200000;
 
 // Constantes para horas extras
 export const RECARGO_HORA_EXTRA_DIURNA = 0.25; // 25% adicional

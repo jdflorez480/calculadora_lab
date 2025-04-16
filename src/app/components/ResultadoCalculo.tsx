@@ -2,15 +2,14 @@ import { useState } from 'react';
 import { jsPDF } from 'jspdf';
 import { ArrowDownTrayIcon, ShareIcon } from '@heroicons/react/24/outline';
 import {
-  FacebookShareButton,
-  TwitterShareButton,
   WhatsappShareButton,
   LinkedinShareButton,
-  FacebookIcon,
-  TwitterIcon,
+  FacebookShareButton,
   WhatsappIcon,
-  LinkedinIcon
+  LinkedinIcon,
+  FacebookIcon,
 } from 'react-share';
+import { EmailShareButton, EmailIcon } from 'react-share';
 
 interface Resultado {
   concepto: string;
@@ -141,44 +140,58 @@ const ResultadoCalculo = ({ resultados, total, titulo, subtitulo }: ResultadoCal
 
   return (
     <div className="bg-white rounded-2xl shadow-xl overflow-hidden">
-      <div className="px-6 py-4 bg-gradient-to-r from-blue-600 to-blue-700">
-        <div className="flex justify-between items-start">
+      <div className="px-4 sm:px-6 py-4 bg-gradient-to-r from-blue-600 to-blue-700">
+        <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-4">
           <div>
             <h2 className="text-xl font-bold text-white">{titulo}</h2>
             {subtitulo && (
               <p className="mt-0.5 text-sm text-blue-100">{subtitulo}</p>
             )}
           </div>
-          <div className="flex gap-2">
+          <div className="flex flex-wrap sm:flex-nowrap gap-2">
             <button
               onClick={generarPDF}
-              className="flex items-center px-3 py-1.5 bg-white/10 text-white rounded-lg hover:bg-white/20 transition-colors duration-200 text-sm cursor-pointer"
+              className="flex-1 sm:flex-none flex items-center justify-center px-4 py-2 bg-white/10 text-white rounded-lg hover:bg-white/20 transition-colors duration-200 text-sm"
             >
-              <ArrowDownTrayIcon className="h-4 w-4 mr-1.5" />
+              <ArrowDownTrayIcon className="h-4 w-4 mr-2" />
               <span className="font-medium">Descargar PDF</span>
             </button>
-            <div className="relative">
+            <div className="relative flex-1 sm:flex-none">
               <button
                 onClick={() => setShowShare(!showShare)}
-                className="flex items-center px-3 py-1.5 bg-white/10 text-white rounded-lg hover:bg-white/20 transition-colors duration-200 text-sm cursor-pointer"
+                className="w-full flex items-center justify-center px-4 py-2 bg-white/10 text-white rounded-lg hover:bg-white/20 transition-colors duration-200 text-sm"
               >
-                <ShareIcon className="h-4 w-4 mr-1.5" />
+                <ShareIcon className="h-4 w-4 mr-2" />
                 <span className="font-medium">Compartir</span>
               </button>
               {showShare && (
-                <div className="absolute right-0 mt-2 p-2 bg-white rounded-lg shadow-xl z-10 flex gap-2">
-                  <WhatsappShareButton url={shareUrl} title={shareMessage}>
-                    <WhatsappIcon size={32} round />
-                  </WhatsappShareButton>
-                  <FacebookShareButton url={shareUrl} hashtag="#CalculadoraLaboral">
-                    <FacebookIcon size={32} round />
-                  </FacebookShareButton>
-                  <TwitterShareButton url={shareUrl} title={shareMessage}>
-                    <TwitterIcon size={32} round />
-                  </TwitterShareButton>
-                  <LinkedinShareButton url={shareUrl} title={shareTitle} summary={shareMessage}>
-                    <LinkedinIcon size={32} round />
-                  </LinkedinShareButton>
+                <div className="absolute right-0 mt-2 p-3 bg-white rounded-lg shadow-xl z-10">
+                  <div className="flex flex-col gap-3">
+                    <WhatsappShareButton url={shareUrl} title={shareMessage}>
+                      <div className="flex items-center gap-3 hover:bg-gray-50 p-2 rounded-lg transition-colors">
+                        <WhatsappIcon size={32} round />
+                        <span className="text-sm text-gray-700">WhatsApp</span>
+                      </div>
+                    </WhatsappShareButton>
+                    <EmailShareButton url={shareUrl} subject={shareTitle} body={shareMessage}>
+                      <div className="flex items-center gap-3 hover:bg-gray-50 p-2 rounded-lg transition-colors">
+                        <EmailIcon size={32} round />
+                        <span className="text-sm text-gray-700">Gmail</span>
+                      </div>
+                    </EmailShareButton>
+                    <LinkedinShareButton url={shareUrl} title={shareTitle} summary={shareMessage}>
+                      <div className="flex items-center gap-3 hover:bg-gray-50 p-2 rounded-lg transition-colors">
+                        <LinkedinIcon size={32} round />
+                        <span className="text-sm text-gray-700">LinkedIn</span>
+                      </div>
+                    </LinkedinShareButton>
+                    <FacebookShareButton url={shareUrl} hashtag="#CalculadoraLaboral">
+                      <div className="flex items-center gap-3 hover:bg-gray-50 p-2 rounded-lg transition-colors">
+                        <FacebookIcon size={32} round />
+                        <span className="text-sm text-gray-700">Facebook</span>
+                      </div>
+                    </FacebookShareButton>
+                  </div>
                 </div>
               )}
             </div>
@@ -187,6 +200,12 @@ const ResultadoCalculo = ({ resultados, total, titulo, subtitulo }: ResultadoCal
       </div>
 
       <div className="px-6 py-4">
+        <div className="mb-4 p-3 bg-blue-50 border border-blue-100 rounded-lg">
+          <p className="text-sm text-blue-700 flex items-center">
+            <ArrowDownTrayIcon className="h-5 w-5 mr-2" />
+            <span>¡Puedes descargar tu liquidación en PDF para guardarla o compartirla!</span>
+          </p>
+        </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
           {resultados.map((resultado, index) => (
             <div 
