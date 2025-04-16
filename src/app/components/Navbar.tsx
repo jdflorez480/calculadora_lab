@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { HomeIcon } from '@heroicons/react/24/outline';
+import Image from 'next/image';
 
 export default function Navbar() {
   return (
@@ -8,7 +8,14 @@ export default function Navbar() {
         <div className="flex justify-between h-16">
           <div className="flex">
             <Link href="/" className="flex items-center">
-              <HomeIcon className="h-8 w-8 text-blue-600" />
+              <Image
+                src="/images/logo.png"
+                alt="Logo Calculadora Laboral"
+                width={32}
+                height={32}
+                priority
+                className="text-blue-600"
+              />
               <span className="ml-2 text-xl font-bold text-gray-900">
                 Calculadora Laboral
               </span>
