@@ -1,6 +1,6 @@
 'use client';
 
-import { Suspense, useState } from 'react';
+import { useState, Suspense } from 'react';
 import { CurrencyDollarIcon, ClockIcon } from '@heroicons/react/24/outline';
 import ResultadoCalculo from '../../components/ResultadoCalculo';
 import { calcularHorasExtras } from '../../utils/calculosLaborales';
