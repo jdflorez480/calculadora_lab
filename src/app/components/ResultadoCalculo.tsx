@@ -132,7 +132,7 @@ const ResultadoCalculo = ({ resultados, total, titulo, subtitulo }: ResultadoCal
     doc.setTextColor(100, 100, 100);
     doc.line(20, yFooter - 10, 190, yFooter - 10);
     doc.text("Este documento es informativo y los valores pueden estar sujetos a verificación.", 20, yFooter);
-    doc.text("Calculadora de Liquidación Laboral - www.calculadora.com", 20, yFooter + 5);
+    doc.text("Calculadora de Liquidación Laboral -www.calculalaboral.com/", 20, yFooter + 5);
 
     // Guardar PDF
     doc.save('liquidacion-laboral.pdf');

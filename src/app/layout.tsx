@@ -55,9 +55,14 @@ export default function RootLayout({
         </main>
         <footer className="bg-white border-t py-8">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <p className="text-center text-sm text-gray-500">
-              © {new Date().getFullYear()} Calculadora Laboral Colombia. Todos los derechos reservados.
-            </p>
+            <div className="space-y-4">
+              <p className="text-center text-xs text-gray-500">
+                Nota: Los cálculos proporcionados son de carácter informativo y están sujetos a revisión. Se recomienda consultar con un profesional para validar los resultados.
+              </p>
+              <p className="text-center text-sm text-gray-500">
+                © {new Date().getFullYear()} Calculadora Laboral Colombia. Todos los derechos reservados.
+              </p>
+            </div>
           </div>
         </footer>
         <Analytics />
