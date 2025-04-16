@@ -129,17 +129,68 @@ export const calcularInteresesCesantias = (cesantias: number, diasLaborados: num
   return Math.round((cesantias * 0.12 * diasLaborados) / DIAS_ANO);
 };
 
-export const calcularPrimaServicios = (salarioTotal: number, diasLaborados: number): { primerSemestre: number, segundoSemestre: number } => {
-  const valorPrimaSemestre = Math.round((salarioTotal * Math.min(diasLaborados, DIAS_SEMESTRE)) / DIAS_ANO);
-  if (diasLaborados <= DIAS_SEMESTRE) {
+const obtenerFechasSemestre = (año: number, semestre: 1 | 2): { inicio: Date; fin: Date } => {
+  if (semestre === 1) {
     return {
-      primerSemestre: valorPrimaSemestre,
-      segundoSemestre: 0
+      inicio: new Date(año, 0, 1), // 1 de enero
+      fin: new Date(año, 5, 30)    // 30 de junio
+    };
+  } else {
+    return {
+      inicio: new Date(año, 6, 1),  // 1 de julio
+      fin: new Date(año, 11, 31)    // 31 de diciembre
     };
   }
+};
+
+const calcularDiasSemestre = (fechaInicio: Date, fechaFin: Date, fechaSemestreInicio: Date, fechaSemestreFin: Date): number => {
+  // Ajustar las fechas de inicio y fin al rango del semestre
+  const inicioEfectivo = new Date(Math.max(fechaInicio.getTime(), fechaSemestreInicio.getTime()));
+  const finEfectivo = new Date(Math.min(fechaFin.getTime(), fechaSemestreFin.getTime()));
+
+  // Si no hay superposición con el semestre, retornar 0
+  if (inicioEfectivo > fechaSemestreFin || finEfectivo < fechaSemestreInicio) {
+    return 0;
+  }
+
+  // Calcular los días trabajados en el semestre
+  const diasEnSemestre = calcularDiasLaborados(inicioEfectivo, finEfectivo);
+  return Math.min(diasEnSemestre, DIAS_SEMESTRE);
+};
+
+export const calcularPrimaServicios = (salarioTotal: number, diasLaborados: number, fechaInicio: Date, fechaFin: Date): { primerSemestre: number, segundoSemestre: number } => {
+  // Obtener el año o años involucrados
+  const añoInicio = fechaInicio.getFullYear();
+  const añoFin = fechaFin.getFullYear();
+  
+  let diasPrimerSemestre = 0;
+  let diasSegundoSemestre = 0;
+
+  // Si es el mismo año
+  if (añoInicio === añoFin) {
+    const fechasPrimerSemestre = obtenerFechasSemestre(añoInicio, 1);
+    const fechasSegundoSemestre = obtenerFechasSemestre(añoInicio, 2);
+
+    diasPrimerSemestre = calcularDiasSemestre(fechaInicio, fechaFin, fechasPrimerSemestre.inicio, fechasPrimerSemestre.fin);
+    diasSegundoSemestre = calcularDiasSemestre(fechaInicio, fechaFin, fechasSegundoSemestre.inicio, fechasSegundoSemestre.fin);
+  } else {
+    // Si son años diferentes, debemos calcular para cada año
+    // Primer semestre del primer año
+    const fechasPrimerSemestreInicio = obtenerFechasSemestre(añoInicio, 1);
+    diasPrimerSemestre = calcularDiasSemestre(fechaInicio, fechaFin, fechasPrimerSemestreInicio.inicio, fechasPrimerSemestreInicio.fin);
+
+    // Segundo semestre del último año
+    const fechasSegundoSemestreFin = obtenerFechasSemestre(añoFin, 2);
+    diasSegundoSemestre = calcularDiasSemestre(fechaInicio, fechaFin, fechasSegundoSemestreFin.inicio, fechasSegundoSemestreFin.fin);
+  }
+
+  // Calcular el valor de cada prima
+  const valorPrimaPrimerSemestre = Math.round((salarioTotal * diasPrimerSemestre) / DIAS_ANO);
+  const valorPrimaSegundoSemestre = Math.round((salarioTotal * diasSegundoSemestre) / DIAS_ANO);
+
   return {
-    primerSemestre: valorPrimaSemestre,
-    segundoSemestre: valorPrimaSemestre
+    primerSemestre: valorPrimaPrimerSemestre,
+    segundoSemestre: valorPrimaSegundoSemestre
   };
 };
 
@@ -164,7 +215,7 @@ export const calcularLiquidacionTotal = (datos: DatosLiquidacion) => {
   const salarioTotal = calcularSalarioTotal(datos.salarioBase, datos.auxilioTransporte);
   const cesantias = calcularCesantias(salarioTotal, diasLaborados);
   const interesesCesantias = calcularInteresesCesantias(cesantias, diasLaborados);
-  const { primerSemestre: primaPrimerSemestre, segundoSemestre: primaSegundoSemestre } = calcularPrimaServicios(salarioTotal, diasLaborados);
+  const { primerSemestre: primaPrimerSemestre, segundoSemestre: primaSegundoSemestre } = calcularPrimaServicios(salarioTotal, diasLaborados, datos.fechaInicio, datos.fechaFin);
   const vacaciones = calcularVacaciones(datos.salarioBase, diasLaborados);
   const aportesSalud = calcularAporteSalud(datos.salarioBase);
   const aportesPension = calcularAportePension(datos.salarioBase);
