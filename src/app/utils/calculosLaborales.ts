@@ -100,9 +100,21 @@ interface ResultadoRetencion {
 }
 
 export const calcularDiasLaborados = (fechaInicio: Date, fechaFin: Date): number => {
-  const diferencia = fechaFin.getTime() - fechaInicio.getTime();
-  const diasTotales = Math.ceil(diferencia / (1000 * 3600 * 24));
-  return Math.min(diasTotales, DIAS_ANO);
+  const mesesCompletos = (fechaFin.getFullYear() - fechaInicio.getFullYear()) * 12 + 
+    (fechaFin.getMonth() - fechaInicio.getMonth());
+  
+  let diasTotales = mesesCompletos * 30;
+
+  // Calcular los días del primer mes (considerando 30 días máximo)
+  const diaInicio = Math.min(fechaInicio.getDate(), 30);
+  diasTotales -= (diaInicio - 1);
+
+  // Calcular los días del último mes (considerando 30 días máximo)
+  const diaFin = Math.min(fechaFin.getDate(), 30);
+  diasTotales += diaFin;
+
+  // No permitir días negativos y limitar a 360 días máximo
+  return Math.max(0, Math.min(diasTotales, DIAS_ANO));
 };
 
 export const calcularSalarioTotal = (salarioBase: number, incluirAuxilio: boolean): number => {

@@ -138,7 +138,7 @@ function HorasExtrasContent() {
                 type="text"
                 name="salarioBase"
                 className="block w-full pl-8 pr-12 py-2.5 text-gray-900 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 sm:text-sm input-currency shadow-sm"
-                placeholder="1.000.000"
+                placeholder="1.423.500"
                 value={formData.salarioBase}
                 onChange={handleSalarioChange}
                 required

@@ -2,7 +2,8 @@
 
 import { useState, Suspense } from 'react';
 import DatePicker, { registerLocale } from 'react-datepicker';
-import { es } from 'date-fns/locale/es';
+import { es } from 'date-fns/locale';
+import 'react-datepicker/dist/react-datepicker.css';
 import ResultadoCalculo from '../../components/ResultadoCalculo';
 import { calcularLiquidacionTotal } from '../../utils/calculosLaborales';
 import { CalendarIcon, CurrencyDollarIcon, TruckIcon } from '@heroicons/react/24/outline';
@@ -11,7 +12,7 @@ import { CalendarIcon, CurrencyDollarIcon, TruckIcon } from '@heroicons/react/24
 const SALARIO_MINIMO_2025 = 1423500;
 const TOPE_AUXILIO_TRANSPORTE = SALARIO_MINIMO_2025 * 2;
 
-// Registrar el idioma español
+// Registrar el idioma español para el DatePicker
 registerLocale('es', es);
 
 interface ResultadoLiquidacion {
@@ -145,7 +146,7 @@ function LiquidacionContent() {
                   type="text"
                   name="salarioBase"
                   className="block w-full pl-8 pr-12 py-2.5 text-gray-900 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 sm:text-sm input-currency shadow-sm"
-                  placeholder="1.000.000"
+                  placeholder="1.423.500"
                   value={formData.salarioBase}
                   onChange={handleSalarioChange}
                   required

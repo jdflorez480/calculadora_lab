@@ -4,6 +4,12 @@ import { useState, Suspense } from 'react';
 import { CurrencyDollarIcon, CalendarIcon, TruckIcon } from '@heroicons/react/24/outline';
 import ResultadoCalculo from '../../components/ResultadoCalculo';
 import { calcularNomina, SALARIO_MINIMO_2025 } from '../../utils/calculosLaborales';
+import DatePicker, { registerLocale } from 'react-datepicker';
+import { es } from 'date-fns/locale';
+import 'react-datepicker/dist/react-datepicker.css';
+
+// Registrar el idioma español para el DatePicker
+registerLocale('es', es);
 
 const TOPE_AUXILIO_TRANSPORTE = SALARIO_MINIMO_2025 * 2;
 
@@ -17,13 +23,23 @@ interface Resultado {
   diasTrabajados: number;
 }
 
+interface FormData {
+  salarioBase: string;
+  otrosIngresos: string;
+  diasTrabajados: string;
+  auxilioTransporte: boolean;
+  fechaPago: Date | null;
+}
+
 function NominaContent() {
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<FormData>({
     salarioBase: '',
     otrosIngresos: '',
     diasTrabajados: '30',
-    auxilioTransporte: true
+    auxilioTransporte: true,
+    fechaPago: null
   });
+  
   const [resultado, setResultado] = useState<Resultado | null>(null);
 
   const formatNumber = (value: string) => {
@@ -128,7 +144,7 @@ function NominaContent() {
                   type="text"
                   name="salarioBase"
                   className="block w-full pl-8 pr-12 py-2.5 text-gray-900 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 sm:text-sm input-currency shadow-sm"
-                  placeholder="1.000.000"
+                  placeholder="1.423.500"
                   value={formData.salarioBase}
                   onChange={handleSalarioChange}
                   required
@@ -207,6 +223,27 @@ function NominaContent() {
                 <span className="ml-3 text-sm text-gray-600">
                   Se marca automáticamente si el salario es menor o igual a 2 SMMLV (${formatNumber(TOPE_AUXILIO_TRANSPORTE.toString())})
                 </span>
+              </div>
+            </div>
+
+            {/* Fecha de Pago */}
+            <div className="form-group lg:col-span-1">
+              <div className="flex items-center h-8 mb-2">
+                <CalendarIcon className="h-5 w-5 text-blue-500 shrink-0" />
+                <label className="ml-2 block text-sm font-medium text-gray-900">
+                  Fecha de Pago
+                </label>
+              </div>
+              <div className="relative rounded-lg">
+                <DatePicker
+                  selected={formData.fechaPago}
+                  onChange={(date) => setFormData({...formData, fechaPago: date})}
+                  dateFormat="dd/MM/yyyy"
+                  locale="es"
+                  placeholderText="Seleccionar fecha"
+                  className="block w-full py-2.5 pl-3 pr-10 text-gray-900 border border-gray-300 rounded-lg hover:border-gray-400 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-colors duration-200 ease-in-out sm:text-sm cursor-pointer bg-white shadow-sm"
+                  required
+                />
               </div>
             </div>
           </div>

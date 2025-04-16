@@ -4,6 +4,12 @@ import { useState, Suspense } from 'react';
 import { CurrencyDollarIcon, UserIcon, HomeIcon, HeartIcon } from '@heroicons/react/24/outline';
 import ResultadoCalculo from '../../components/ResultadoCalculo';
 import { calcularRetencionFuente, UVT_2025 } from '../../utils/calculosLaborales';
+import DatePicker, { registerLocale } from 'react-datepicker';
+import { es } from 'date-fns/locale';
+import 'react-datepicker/dist/react-datepicker.css';
+
+// Registrar el idioma español para el DatePicker
+registerLocale('es', es);
 
 interface ResultadoRetencion {
   resultados: Array<{
@@ -26,6 +32,7 @@ interface FormData {
   dependientes: boolean;
   interesesVivienda: string;
   medicinaPrepagada: string;
+  fechaCalculo: Date | null;
 }
 
 function RetencionContent() {
@@ -38,7 +45,8 @@ function RetencionContent() {
     afc: '',
     dependientes: false,
     interesesVivienda: '',
-    medicinaPrepagada: ''
+    medicinaPrepagada: '',
+    fechaCalculo: null
   });
   const [resultado, setResultado] = useState<ResultadoRetencion | null>(null);
 
@@ -147,7 +155,7 @@ function RetencionContent() {
                     type="text"
                     name="salarioBase"
                     className="block w-full pl-8 pr-12 py-2.5 text-gray-900 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 sm:text-sm input-currency shadow-sm"
-                    placeholder="1.000.000"
+                    placeholder="1.423.500"
                     value={formData.salarioBase}
                     onChange={handleMoneyInputChange}
                     required
@@ -356,6 +364,26 @@ function RetencionContent() {
                   <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
                     <span className="text-gray-500 sm:text-sm">COP</span>
                   </div>
+                </div>
+              </div>
+
+              {/* Fecha de Cálculo */}
+              <div className="form-group">
+                <div className="flex items-center mb-2">
+                  <label className="ml-2 block text-sm font-medium text-gray-900">
+                    Fecha de Cálculo
+                  </label>
+                </div>
+                <div className="relative rounded-lg">
+                  <DatePicker
+                    selected={formData.fechaCalculo}
+                    onChange={(date) => setFormData({...formData, fechaCalculo: date})}
+                    dateFormat="dd/MM/yyyy"
+                    locale="es"
+                    placeholderText="Seleccionar fecha"
+                    className="block w-full py-2.5 pl-3 pr-10 text-gray-900 border border-gray-300 rounded-lg hover:border-gray-400 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-colors duration-200 ease-in-out sm:text-sm cursor-pointer bg-white shadow-sm"
+                    required
+                  />
                 </div>
               </div>
             </div>
