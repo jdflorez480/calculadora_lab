@@ -11,6 +11,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 1,
     },
     {
+      url: `${baseUrl}/calculadoras/prima`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly',
+      priority: 0.9, // Alta prioridad por ser una calculadora importante y temporal
+    },
+    {
       url: `${baseUrl}/calculadoras/nomina`,
       lastModified: new Date(),
       changeFrequency: 'monthly',

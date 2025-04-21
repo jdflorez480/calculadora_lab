@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { BriefcaseIcon, CurrencyDollarIcon, ClockIcon, CalculatorIcon } from '@heroicons/react/24/outline';
+import { BriefcaseIcon, CurrencyDollarIcon, ClockIcon, CalculatorIcon, GiftIcon } from '@heroicons/react/24/outline';
 
 const calculadoras = [
   {
@@ -39,6 +39,27 @@ export default function Home() {
           <p className="mt-4 text-xl text-gray-700">
             Herramientas gratuitas para calcular tus prestaciones laborales
           </p>
+        </div>
+
+        {/* Banner Prima Junio 2025 */}
+        <div className="mt-8 mb-8">
+          <Link href="/calculadoras/prima" 
+                className="block bg-gradient-to-r from-blue-600 to-blue-800 rounded-xl p-1 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
+            <div className="bg-white p-6 rounded-lg flex flex-col sm:flex-row items-center justify-between space-y-4 sm:space-y-0">
+              <div className="flex items-center space-x-4">
+                <span className="bg-blue-100 p-3 rounded-full">
+                  <GiftIcon className="h-8 w-8 text-blue-600" />
+                </span>
+                <div className="text-left">
+                  <h2 className="text-2xl font-bold text-blue-900">¡Calcula tu Prima de Junio 2025!</h2>
+                  <p className="text-gray-600">Conoce cuánto recibirás de prima este semestre según la ley colombiana</p>
+                </div>
+              </div>
+              <button className="bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors duration-200 cursor-pointer">
+                Calcular Prima
+              </button>
+            </div>
+          </Link>
         </div>
 
         <div className="mt-16 grid gap-8 sm:grid-cols-2 lg:grid-cols-4">

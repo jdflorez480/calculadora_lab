@@ -99,6 +99,40 @@ interface ResultadoRetencion {
   }[];
 }
 
+interface DatosPrima {
+  salarioBase: number;
+  otrosIngresos: number;
+  auxilioTransporte: boolean;
+  fechaInicio: Date;
+  fechaFin: Date;
+}
+
+interface ResultadoPrima {
+  auxilioTransporte: number;
+  totalPrima: number;
+}
+
+export const calcularPrima = (datos: DatosPrima): ResultadoPrima => {
+  // Calcular el salario promedio incluyendo otros ingresos
+  const salarioPromedio = datos.salarioBase + datos.otrosIngresos;
+
+  // Determinar si aplica auxilio de transporte
+  const auxilioTransporte = datos.auxilioTransporte ? AUXILIO_TRANSPORTE_2025 : 0;
+
+  // Calcular los días trabajados en el semestre
+  const diasTrabajados = calcularDiasLaborados(datos.fechaInicio, datos.fechaFin);
+  const diasSemestre = Math.min(diasTrabajados, DIAS_SEMESTRE);
+
+  // Calcular el valor de la prima
+  // La prima es igual a: (Salario promedio + Auxilio de transporte) * días trabajados / 360
+  const totalPrima = Math.round(((salarioPromedio + auxilioTransporte) * diasSemestre) / DIAS_ANO);
+
+  return {
+    auxilioTransporte,
+    totalPrima
+  };
+};
+
 export const calcularDiasLaborados = (fechaInicio: Date, fechaFin: Date): number => {
   const mesesCompletos = (fechaFin.getFullYear() - fechaInicio.getFullYear()) * 12 + 
     (fechaFin.getMonth() - fechaInicio.getMonth());
