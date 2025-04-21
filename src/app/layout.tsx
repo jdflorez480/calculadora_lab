@@ -10,9 +10,9 @@ const geist = Geist({
 });
 
 export const metadata: Metadata = {
-  title: "Calculadoras Laborales Colombia - Herramientas Gratuitas",
+  title: "Calculadora de liquidacion y Prestaciones Laborales Colombia - Herramientas Gratuitas",
   description: "Calcula fácilmente liquidaciones, primas, cesantías y más. Herramientas gratuitas para trabajadores en Colombia. Cálculos actualizados 2025.",
-  keywords: "calculadora laboral, liquidación laboral colombia, prima servicios, cesantías, vacaciones, calculadora salario neto, horas extras, retención en la fuente",
+  keywords: "calculadora laboral,calculo prima, calculo prima online, calculadora de liquidacion, calculadora de prima servicios, calculadora de cesantías, calculadora de vacaciones, calculadora de salario neto, calculadora de horas extras, calculadora de retención en la fuentecalculo de prestaciones sociales, calculadora de nómina, calculadora de recargos nocturnos, calculadora de dominicales y festivos, calculadora de deducciones salariales, calculadora de auxilio transporte, calculadora de sueldo",
   openGraph: {
     title: "Calculadoras Laborales Colombia",
     description: "Herramientas gratuitas para calcular prestaciones laborales en Colombia",
