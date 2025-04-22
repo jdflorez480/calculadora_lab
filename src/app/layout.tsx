@@ -47,6 +47,14 @@ export default function RootLayout({
 }) {
   return (
     <html lang="es">
+      <head>
+        <link 
+          rel="alternate" 
+          type="application/rss+xml" 
+          title="Blog Laboral Colombia RSS Feed" 
+          href="/feed.xml"
+        />
+      </head>
       <body className={`${geist.className} antialiased bg-gray-50`}>
         <GoogleAnalytics />
         <Navbar />
