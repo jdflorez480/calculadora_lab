@@ -3,6 +3,7 @@ import { Geist } from "next/font/google";
 import "./globals.css";
 import Navbar from "./components/Navbar";
 import { Analytics } from '@vercel/analytics/react';
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import GoogleAnalytics from './components/GoogleAnalytics';
 
 const geist = Geist({
@@ -74,6 +75,7 @@ export default function RootLayout({
           </div>
         </footer>
         <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );
