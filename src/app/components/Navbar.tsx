@@ -7,15 +7,27 @@ export default function Navbar() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16">
           <div className="flex">
-            <Link href="/" className="flex items-center">
-              <Image
-                src="/images/logo.png"
-                alt="Logo Calculadora Laboral"
-                width={32}
-                height={32}
-                priority
-                className="text-blue-600"
-              />
+            <Link href="/" className="group flex items-center" title="Ir al inicio">
+              <div className="relative">
+                <Image
+                  src="/images/logo.png"
+                  alt="Logo Calculadora Laboral"
+                  width={32}
+                  height={32}
+                  priority
+                  className="text-blue-600"
+                />
+                <div className="absolute -top-1 -right-1 bg-blue-600 rounded-full p-0.5 shadow-sm transform group-hover:scale-110 transition-transform">
+                  <svg 
+                    xmlns="http://www.w3.org/2000/svg" 
+                    className="h-3 w-3 text-white" 
+                    viewBox="0 0 20 20" 
+                    fill="currentColor"
+                  >
+                    <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z" />
+                  </svg>
+                </div>
+              </div>
               <span className="ml-2 text-xl font-bold text-gray-900">
                 Calculadora Laboral
               </span>
