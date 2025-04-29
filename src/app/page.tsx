@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { BriefcaseIcon, CurrencyDollarIcon, ClockIcon, CalculatorIcon, GiftIcon } from '@heroicons/react/24/outline';
+import { BriefcaseIcon, CurrencyDollarIcon, ClockIcon, CalculatorIcon, GiftIcon, SunIcon, BuildingLibraryIcon } from '@heroicons/react/24/outline';
 
 const calculadoras = [
   {
@@ -25,6 +25,18 @@ const calculadoras = [
     descripcion: 'Calcula el valor de tu retención en la fuente mensual',
     icono: CurrencyDollarIcon,
     href: '/calculadoras/retencion'
+  },
+  {
+    titulo: 'Cesantías',
+    descripcion: 'Calcula tus cesantías e intereses según la legislación colombiana',
+    icono: BuildingLibraryIcon,
+    href: '/calculadoras/cesantias'
+  },
+  {
+    titulo: 'Vacaciones',
+    descripcion: 'Calcula el valor de tus vacaciones y días acumulados',
+    icono: SunIcon,
+    href: '/calculadoras/vacaciones'
   }
 ];
 
