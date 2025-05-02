@@ -151,7 +151,7 @@ const ResultadoCalculo = ({ resultados, total, titulo, subtitulo }: ResultadoCal
           <div className="flex flex-wrap sm:flex-nowrap gap-2">
             <button
               onClick={generarPDF}
-              className="flex-1 sm:flex-none flex items-center justify-center px-4 py-2 bg-white/10 text-white rounded-lg hover:bg-white/20 transition-colors duration-200 text-sm"
+              className="flex-1 cursor-pointer sm:flex-none flex items-center justify-center px-4 py-2 bg-white/10 text-white rounded-lg hover:bg-white/20 transition-colors duration-200 text-sm"
             >
               <ArrowDownTrayIcon className="h-4 w-4 mr-2" />
               <span className="font-medium">Descargar PDF</span>
@@ -159,7 +159,7 @@ const ResultadoCalculo = ({ resultados, total, titulo, subtitulo }: ResultadoCal
             <div className="relative flex-1 sm:flex-none">
               <button
                 onClick={() => setShowShare(!showShare)}
-                className="w-full flex items-center justify-center px-4 py-2 bg-white/10 text-white rounded-lg hover:bg-white/20 transition-colors duration-200 text-sm"
+                className="w-full cursor-pointer flex items-center justify-center px-4 py-2 bg-white/10 text-white rounded-lg hover:bg-white/20 transition-colors duration-200 text-sm"
               >
                 <ShareIcon className="h-4 w-4 mr-2" />
                 <span className="font-medium">Compartir</span>

@@ -281,9 +281,86 @@ function PrimaContent() {
           <p className="text-gray-700 leading-relaxed mb-4">
             Todos los trabajadores vinculados mediante un contrato laboral tienen derecho a recibir la prima de servicios, sin importar si trabajan a tiempo completo o parcial. Sin embargo, no aplica para contratistas independientes o trabajadores que no estén bajo una relación laboral formal.
           </p>
-          <p className="text-gray-700 leading-relaxed">
+          <p className="text-gray-700 leading-relaxed mb-4">
             La prima de servicios es un derecho irrenunciable y su pago oportuno es obligatorio para los empleadores. En caso de incumplimiento, el empleador puede enfrentar sanciones legales.
           </p>
+
+          {/* Nueva sección de preguntas frecuentes */}
+          <h2 className="text-2xl font-bold text-gray-900 mt-8 mb-4">Preguntas Frecuentes sobre la Prima 2025</h2>
+          
+          <div className="space-y-6">
+            <div className="bg-white p-4 rounded-lg shadow-sm">
+              <h3 className="text-lg font-semibold text-blue-700">¿Cuánto sería la prima de junio de 2025?</h3>
+              <p className="text-gray-700 mt-2">
+                La prima de junio de 2025 corresponde a 15 días de salario por el primer semestre del año. Para un trabajador con salario mínimo de $1.423.500 que haya laborado todo el semestre, sería aproximadamente $711.750 más el proporcional del auxilio de transporte. <span className="font-medium text-blue-600">Nuestra calculadora te permite obtener el valor exacto de tu prima en segundos</span> - solo ingresa tu salario, beneficios y el periodo trabajado para recibir un cálculo personalizado y preciso.
+              </p>
+            </div>
+
+            <div className="bg-white p-4 rounded-lg shadow-sm">
+              <h3 className="text-lg font-semibold text-blue-700">¿Cómo se calcula la prima 2025?</h3>
+              <p className="text-gray-700 mt-2">
+                Para 2025, la prima se calcula sumando el salario mensual más el auxilio de transporte (cuando aplica), multiplicando este resultado por los días trabajados durante el semestre, y dividiendo entre 360. Si has trabajado todo el semestre (180 días), corresponde exactamente a medio mes de salario más auxilio de transporte. <span className="font-medium text-blue-600">¡No te compliques con las fórmulas! Nuestra calculadora realiza automáticamente todos estos cálculos</span>, considerando tus ingresos específicos y el período exacto que has trabajado.
+              </p>
+            </div>
+
+            <div className="bg-white p-4 rounded-lg shadow-sm">
+              <h3 className="text-lg font-semibold text-blue-700">¿Cuándo se paga la prima de 2025?</h3>
+              <p className="text-gray-700 mt-2">
+                Según la legislación colombiana, la prima de servicios se paga en dos momentos del año: 
+                <ul className="list-disc pl-5 mt-2">
+                  <li>Primera prima: A más tardar el 30 de junio de 2025, correspondiente al primer semestre (enero a junio).</li>
+                  <li>Segunda prima: A más tardar el 20 de diciembre de 2025, correspondiente al segundo semestre (julio a diciembre).</li>
+                </ul>
+                El empleador debe realizar el pago dentro de estos plazos legales para evitar sanciones. <span className="font-medium text-blue-600">Planifica con anticipación utilizando nuestra calculadora</span> para conocer el monto exacto que deberías recibir en cada fecha de pago.
+              </p>
+            </div>
+
+            <div className="bg-white p-4 rounded-lg shadow-sm">
+              <h3 className="text-lg font-semibold text-blue-700">¿Cuál es la fórmula para calcular la prima?</h3>
+              <p className="text-gray-700 mt-2">
+                La fórmula exacta es:
+              </p>
+              <p className="text-gray-700 font-mono bg-gray-100 p-4 rounded-lg my-2">
+                Prima = (Salario mensual + Auxilio de transporte) × Días trabajados ÷ 360
+              </p>
+              <p className="text-gray-700 mt-2">
+                Por ejemplo, para un trabajador con salario de $2.000.000, sin derecho a auxilio de transporte, que trabajó 180 días (semestre completo):
+              </p>
+              <p className="text-gray-700 font-mono bg-gray-100 p-4 rounded-lg my-2">
+                Prima = ($2.000.000) × 180 ÷ 360 = $1.000.000
+              </p>
+              <p className="text-gray-700 mt-2">
+                Para un trabajador con salario mínimo ($1.423.500) más auxilio de transporte ($200.000) que trabajó el semestre completo:
+              </p>
+              <p className="text-gray-700 font-mono bg-gray-100 p-4 rounded-lg my-2">
+                Prima = ($1.423.500 + $200.000) × 180 ÷ 360 = $811.750
+              </p>
+              <p className="text-gray-700 mt-2">
+                <span className="font-medium text-blue-600">¿Por qué complicarse con cálculos manuales?</span> Nuestra calculadora aplica automáticamente esta fórmula y considera todos los detalles específicos de tu situación laboral para darte un resultado preciso al instante.
+              </p>
+            </div>
+          </div>
+          
+          {/* Banner para destacar la calculadora */}
+          <div className="mt-8 bg-blue-100 p-6 rounded-xl shadow-sm">
+            <div className="flex flex-col md:flex-row items-center justify-between">
+              <div className="mb-4 md:mb-0 md:mr-6">
+                <h3 className="text-lg font-bold text-blue-800">Calcula tu prima de servicios 2025 ahora mismo</h3>
+                <p className="text-blue-700 mt-2">
+                  Nuestra calculadora es gratuita, precisa y fácil de usar. Obtén el valor exacto de tu prima en segundos.
+                </p>
+              </div>
+              <button 
+                onClick={() => window.scrollTo({top: 0, behavior: 'smooth'})}
+                className="px-6 py-3 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition-colors shadow-md flex items-center"
+              >
+                Usar la calculadora
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 ml-2" viewBox="0 0 20 20" fill="currentColor">
+                  <path fillRule="evenodd" d="M14.707 12.707a1 1 0 01-1.414 0L10 9.414l-3.293 3.293a1 1 0 01-1.414-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 010 1.414z" clipRule="evenodd" />
+                </svg>
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     </div>

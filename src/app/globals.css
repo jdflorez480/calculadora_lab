@@ -33,6 +33,40 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
+/* Animación sutil de olas */
+.subtle-wave-animation use {
+  animation: subtleWaveMove 20s infinite linear;
+}
+
+.subtle-wave-animation use:nth-child(1) {
+  animation-delay: -3s;
+  animation-duration: 24s;
+}
+
+.subtle-wave-animation use:nth-child(2) {
+  animation-delay: -5s;
+  animation-duration: 28s;
+}
+
+.subtle-wave-animation use:nth-child(3) {
+  animation-delay: -7s;
+  animation-duration: 32s;
+}
+
+.subtle-wave-animation use:nth-child(4) {
+  animation-delay: -9s;
+  animation-duration: 36s;
+}
+
+@keyframes subtleWaveMove {
+  0% {
+    transform: translate(-70px, 0);
+  }
+  100% {
+    transform: translate(70px, 0);
+  }
+}
+
 /* Estilos personalizados para el calendario */
 input[type="date"] {
   position: relative;
