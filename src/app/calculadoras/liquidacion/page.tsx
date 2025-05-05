@@ -412,8 +412,8 @@ function LiquidacionContent() {
                 El pago de la liquidación laboral debe realizarse al momento de
                 la terminación del contrato. Por ley, el empleador está obligado
                 a poner a disposición del trabajador el valor total de la
-                liquidación el último día de trabajo. No existe un "plazo
-                adicional" legalmente establecido para este pago.
+                liquidación el último día de trabajo. No existe un &quot;plazo
+                adicional&quot; legalmente establecido para este pago.
               </p>
               <p className="text-gray-700 mt-2">
                 El pago generalmente se realiza mediante:
@@ -476,7 +476,7 @@ function LiquidacionContent() {
                     Ingresa la fecha de terminación (puedes usar la fecha actual
                     si quieres proyectar tu liquidación).
                   </li>
-                  <li>Haz clic en "Calcular Liquidación".</li>
+                  <li>Haz clic en &quot;Calcular Liquidación&quot;.</li>
                 </ol>
               </div>
               <p className="text-gray-700 mt-3">
@@ -518,7 +518,7 @@ function LiquidacionContent() {
                 >
                   <path
                     fillRule="evenodd"
-                    d="M14.707 12.707a1 1 0 01-1.414 0L10 9.414l-3.293 3.293a1 1 0 01-1.414-1.414l4-4a1 1 0 011.414 0l4 4a 1 1 0 010 1.414z"
+                    d="M14.707 12.707a1 1 0 01-1.414 0L10 9.414l-3.293 3.293a1 1 0 01-1.414-1.414l4-4a 1 1 0 010 1.414z"
                     clipRule="evenodd"
                   />
                 </svg>
