@@ -13,7 +13,7 @@ const geist = Geist({
 export const metadata: Metadata = {
   title: "Calculadora de liquidacion y Prestaciones Laborales Colombia - Herramientas Gratuitas",
   description: "Calcula fácilmente liquidaciones, primas, cesantías y más. Herramientas gratuitas para trabajadores en Colombia. Cálculos actualizados 2025.",
-  keywords: "www.calculalaboral.com, calculadora de liquidación laboral gratis, calculadora de liquidación laboral gratis excel calculadora ministerio de trabajo,como se calcula la liquidación, cálculo liquidación laboral, calcular prima, calcular prima junio, prima de junio, calculadora laboral,calculo prima, calculo prima online, calculadora de liquidacion, calculadora de prima servicios, calculadora de cesantías, calculadora de vacaciones, calculadora de salario neto, calculadora de horas extras, calculadora de retención en la fuente, calculo de prestaciones sociales, calculadora de nómina, calculadora de recargos nocturnos, calculadora de dominicales y festivos, calculadora de deducciones salariales, calculadora de auxilio transporte, calculadora de sueldo",
+  keywords: "www.calculalaboral.com, calculadora de liquidación laboral gratis, calculadora de liquidación laboral gratis excel, calculadora ministerio de trabajo,como se calcula la liquidación, cálculo liquidación laboral, calcular prima, calcular prima junio, prima de junio, calculadora laboral,calculo prima, calculo prima online, calculadora de liquidacion, calculadora de prima servicios, calculadora de cesantías, calculadora de vacaciones, calculadora de salario neto, calculadora de horas extras, calculadora de retención en la fuente, calculo de prestaciones sociales, calculadora de nómina, calculadora de recargos nocturnos, calculadora de dominicales y festivos, calculadora de deducciones salariales, calculadora de auxilio transporte, calculadora de sueldo",
   openGraph: {
     title: "Calculadoras Laborales Colombia",
     description: "Herramientas gratuitas para calcular prestaciones laborales en Colombia",
@@ -65,6 +65,47 @@ export default function RootLayout({
         <footer className="bg-white border-t py-8">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="space-y-4">
+              <div className="flex flex-col sm:flex-row justify-center items-center text-xs text-gray-500 space-y-2 sm:space-y-0 sm:space-x-4">
+                <div>
+                  <a 
+                    target="_blank" 
+                    href="https://icons8.com/icon/N8GN5w7Vt8qp/colombia" 
+                    className="hover:text-blue-600"
+                    rel="noopener noreferrer"
+                  >
+                    Colombia-emoji
+                  </a>{' '}
+                  icono de{' '}
+                  <a 
+                    target="_blank" 
+                    href="https://icons8.com" 
+                    className="hover:text-blue-600"
+                    rel="noopener noreferrer"
+                  >
+                    Icons8
+                  </a>
+                </div>
+                <div className="hidden sm:block">|</div>
+                <div>
+                  <a 
+                    target="_blank" 
+                    href="https://icons8.com/icon/oTyxAxj0tuPz/calculator" 
+                    className="hover:text-blue-600"
+                    rel="noopener noreferrer"
+                  >
+                    Calculadora-de-manzana
+                  </a>{' '}
+                  icono de{' '}
+                  <a 
+                    target="_blank" 
+                    href="https://icons8.com" 
+                    className="hover:text-blue-600"
+                    rel="noopener noreferrer"
+                  >
+                    Icons8
+                  </a>
+                </div>
+              </div>
               <p className="text-center text-xs text-gray-500">
                 Nota: Los cálculos proporcionados son de carácter informativo y están sujetos a revisión. Se recomienda consultar con un profesional para validar los resultados.
               </p>

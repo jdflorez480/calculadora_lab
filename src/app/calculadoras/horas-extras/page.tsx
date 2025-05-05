@@ -4,6 +4,7 @@ import { useState, Suspense } from 'react';
 import { CurrencyDollarIcon, ClockIcon } from '@heroicons/react/24/outline';
 import ResultadoCalculo from '../../components/ResultadoCalculo';
 import { calcularHorasExtras } from '../../utils/calculosLaborales';
+import BotonVolver from '../../components/BotonVolver';
 
 interface ResultadoHorasExtras {
   resultados: Array<{
@@ -112,6 +113,9 @@ function HorasExtrasContent() {
   return (
     <div className="min-h-screen py-12 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-blue-50 via-white to-blue-50">
       <div className="max-w-4xl mx-auto">
+        <div className="mb-6">
+          <BotonVolver />
+        </div>
         <div className="text-center mb-8">
           <h1 className="text-4xl font-bold text-gray-900 tracking-tight">
             Calculadora de Horas Extras

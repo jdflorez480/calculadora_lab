@@ -6,7 +6,7 @@ export default function Navbar() {
     <nav className="bg-white shadow-lg">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16">
-          <div className="flex">
+          <div className="flex items-center">
             <Link href="/" className="group flex items-center" title="Ir al inicio">
               <div className="relative">
                 <Image
@@ -71,6 +71,15 @@ export default function Navbar() {
               >
                 FAQ
               </Link>
+              <div className="flex items-center ml-2">
+                <Image
+                  src="/images/bandera_colombia.png"
+                  alt="Bandera de Colombia"
+                  width={28}
+                  height={18}
+                  className="rounded shadow-sm"
+                />
+              </div>
             </div>
           </div>
         </div>
