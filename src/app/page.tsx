@@ -1,42 +1,55 @@
 import Link from 'next/link';
 import { BriefcaseIcon, CurrencyDollarIcon, ClockIcon, CalculatorIcon, GiftIcon, SunIcon, BuildingLibraryIcon } from '@heroicons/react/24/outline';
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Calculadoras Laborales Colombia | Herramientas Laborales 2025',
+  description: 'Calcula liquidación, nómina, horas extras, retención en la fuente y prestaciones sociales con nuestras calculadoras laborales colombianas actualizadas a 2025.',
+  keywords: 'calculadora laboral colombia, liquidación, nómina, horas extras, retención en la fuente, cesantías, prima, vacaciones, legislación laboral colombiana 2025',
+};
 
 const calculadoras = [
   {
     titulo: 'Liquidación Laboral',
     descripcion: 'Calcula tu liquidación final incluyendo todas tus prestaciones sociales',
     icono: BriefcaseIcon,
-    href: '/calculadoras/liquidacion'
+    href: '/calculadoras/liquidacion',
+    keywords: ['liquidación laboral', 'prestaciones sociales', 'indemnización', 'terminación contrato', 'finiquito']
   },
   {
     titulo: 'Calculadora de Nómina',
     descripcion: 'Calcula tu salario neto mensual incluyendo todas las deducciones',
     icono: CalculatorIcon,
-    href: '/calculadoras/nomina'
+    href: '/calculadoras/nomina',
+    keywords: ['nómina mensual', 'salario neto', 'deducciones', 'aportes seguridad social', 'parafiscales']
   },
   {
     titulo: 'Horas Extras',
     descripcion: 'Calcula el valor de tus horas extras, recargos nocturnos y dominicales',
     icono: ClockIcon,
-    href: '/calculadoras/horas-extras'
+    href: '/calculadoras/horas-extras',
+    keywords: ['horas extras', 'recargo nocturno', 'dominicales', 'festivos', 'jornada laboral']
   },
   {
     titulo: 'Retención en la Fuente',
     descripcion: 'Calcula el valor de tu retención en la fuente mensual',
     icono: CurrencyDollarIcon,
-    href: '/calculadoras/retencion'
+    href: '/calculadoras/retencion',
+    keywords: ['retención fuente', 'impuestos', 'declaración renta', 'deducciones fiscales', 'tributarios']
   },
   {
     titulo: 'Cesantías',
     descripcion: 'Calcula tus cesantías e intereses según la legislación colombiana',
     icono: BuildingLibraryIcon,
-    href: '/calculadoras/cesantias'
+    href: '/calculadoras/cesantias',
+    keywords: ['cesantías', 'intereses cesantías', 'fondo cesantías', 'liquidación anual', 'ahorro laboral']
   },
   {
     titulo: 'Vacaciones',
     descripcion: 'Calcula el valor de tus vacaciones y días acumulados',
     icono: SunIcon,
-    href: '/calculadoras/vacaciones'
+    href: '/calculadoras/vacaciones',
+    keywords: ['vacaciones', 'días acumulados', 'compensación', 'descanso remunerado', 'liquidación vacacional']
   }
 ];
 
@@ -46,10 +59,13 @@ export default function Home() {
       <div className="max-w-7xl mx-auto relative z-10">
         <div className="text-center">
           <h1 className="text-4xl font-bold tracking-tight text-blue-900 sm:text-5xl bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-blue-800">
-            Calculadoras Laborales Colombia
+            Calculadoras Laborales de Colombia
           </h1>
           <p className="mt-4 text-xl text-gray-700">
             Herramientas gratuitas para calcular tus prestaciones laborales
+          </p>
+          <p className="mt-2 text-sm text-gray-600">
+            Última actualización: 8 de mayo de 2025 | Conforme a la legislación laboral vigente
           </p>
         </div>
 
@@ -74,31 +90,52 @@ export default function Home() {
           </Link>
         </div>
 
-        <div className="mt-16 grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="mt-16 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
           {calculadoras.map((calc) => (
-            <Link
+            <article 
               key={calc.titulo}
-              href={calc.href}
-              className="relative group bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1"
+              itemScope 
+              itemType="https://schema.org/SoftwareApplication"
             >
-              <div>
-                <span className="rounded-lg inline-flex p-3 bg-blue-100 text-blue-700 ring-4 ring-blue-50 group-hover:bg-blue-600 group-hover:text-white transition-colors duration-300">
-                  <calc.icono className="h-6 w-6" aria-hidden="true" />
-                </span>
-              </div>
-              <div className="mt-8">
-                <h3 className="text-lg font-semibold text-gray-900 group-hover:text-blue-600 transition-colors duration-300">
-                  {calc.titulo}
-                </h3>
-                <p className="mt-2 text-base text-gray-600 group-hover:text-gray-700">
-                  {calc.descripcion}
-                </p>
-              </div>
-              <span
-                className="absolute inset-0 rounded-xl ring-1 ring-inset ring-gray-200 group-hover:ring-blue-200"
-                aria-hidden="true"
-              />
-            </Link>
+              <Link
+                href={calc.href}
+                className="relative group bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 block h-full"
+                title={`Acceder a ${calc.titulo}`}
+              >
+                <meta itemProp="applicationCategory" content="CalculadoraWeb" />
+                <meta itemProp="operatingSystem" content="Web" />
+                <div>
+                  <span className="rounded-lg inline-flex p-3 bg-blue-100 text-blue-700 ring-4 ring-blue-50 group-hover:bg-blue-600 group-hover:text-white transition-colors duration-300">
+                    <calc.icono className="h-6 w-6" aria-hidden="true" />
+                  </span>
+                </div>
+                <div className="mt-8">
+                  <h3 
+                    className="text-lg font-semibold text-gray-900 group-hover:text-blue-600 transition-colors duration-300"
+                    itemProp="name"
+                  >
+                    {calc.titulo}
+                  </h3>
+                  <p 
+                    className="mt-2 text-lg text-gray-700 group-hover:text-gray-800"
+                    itemProp="description"
+                  >
+                    {calc.descripcion}
+                  </p>
+                  <div className="mt-4 flex flex-wrap gap-2">
+                    {calc.keywords.map((keyword) => (
+                      <span key={keyword} className="inline-flex items-center px-2 py-0.5 rounded text-sm font-medium bg-blue-50 text-blue-700">
+                        {keyword}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+                <span
+                  className="absolute inset-0 rounded-xl ring-1 ring-inset ring-gray-200 group-hover:ring-blue-200"
+                  aria-hidden="true"
+                />
+              </Link>
+            </article>
           ))}
         </div>
 
