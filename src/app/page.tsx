@@ -81,6 +81,13 @@ export default function Home() {
                 <div className="text-left">
                   <h2 className="text-2xl font-bold text-blue-900">¡Calcula tu Prima de Junio 2025!</h2>
                   <p className="text-gray-600">Conoce cuánto recibirás de prima este semestre según la ley colombiana</p>
+                  <div className="mt-2 flex flex-wrap gap-2">
+                    {['prima de servicios', 'prima junio', 'cálculo prima', 'prestación social', 'beneficio laboral'].map((keyword) => (
+                      <span key={keyword} className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-blue-50 text-blue-700">
+                        {keyword}
+                      </span>
+                    ))}
+                  </div>
                 </div>
               </div>
               <button className="bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors duration-200 cursor-pointer">
