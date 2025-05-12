@@ -65,7 +65,7 @@ export default function Home() {
             Herramientas gratuitas para calcular tus prestaciones laborales
           </p>
           <p className="mt-2 text-sm text-gray-600">
-            Última actualización: 8 de mayo de 2025 | Conforme a la legislación laboral vigente
+            Última actualización: {new Date().toLocaleDateString('es-ES', {day: 'numeric', month: 'long', year: 'numeric'})} | Conforme a la legislación laboral vigente
           </p>
         </div>
 
