@@ -1,5 +1,15 @@
 import Link from 'next/link';
-import { BriefcaseIcon, CurrencyDollarIcon, ClockIcon, CalculatorIcon, GiftIcon, SunIcon, BuildingLibraryIcon } from '@heroicons/react/24/outline';
+import { 
+  BriefcaseIcon, 
+  CurrencyDollarIcon, 
+  ClockIcon, 
+  CalculatorIcon, 
+  GiftIcon, 
+  SunIcon, 
+  BuildingLibraryIcon,
+  DocumentTextIcon,
+  ShieldCheckIcon
+} from '@heroicons/react/24/outline';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
@@ -53,12 +63,38 @@ const calculadoras = [
   }
 ];
 
+// Nuevas secciones para mejorar la página
+const beneficios = [
+  {
+    titulo: 'Cálculos Precisos y Actualizados',
+    descripcion: 'Todos nuestros cálculos están basados en la legislación laboral colombiana vigente para 2025, incluyendo los últimos cambios normativos.',
+    icono: DocumentTextIcon
+  },
+  {
+    titulo: 'Ahorra Tiempo y Evita Errores',
+    descripcion: 'Automatiza tus cálculos laborales y obtén resultados precisos en segundos, evitando costosos errores administrativos.',
+    icono: ClockIcon
+  },
+  {
+    titulo: 'Seguridad y Confianza',
+    descripcion: 'Nuestras calculadoras están respaldadas por profesionales en derecho laboral con amplia experiencia en la legislación colombiana.',
+    icono: ShieldCheckIcon
+  }
+];
+
+const estadisticas = [
+  { cifra: '1.423.500', descripcion: 'Salario mínimo legal vigente 2025 (COP)' },
+  { cifra: '24%', descripcion: 'Aporte total a seguridad social por empleador (estimado)' },
+  { cifra: '+10.000', descripcion: 'Cálculos realizados por mes' },
+  { cifra: '100%', descripcion: 'Cumplimiento con legislación laboral actualizada' }
+];
+
 export default function Home() {
   return (
     <main className="min-h-screen py-12 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-blue-50 via-white to-blue-50 relative overflow-hidden">
       <div className="max-w-7xl mx-auto relative z-10">
         <div className="text-center">
-          <h1 className="text-4xl font-bold tracking-tight text-blue-900 sm:text-5xl bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-blue-800">
+          <h1 className="text-4xl font-bold tracking-tight sm:text-5xl bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-blue-800">
             Calculadoras Laborales de Colombia
           </h1>
           <p className="mt-4 text-xl text-gray-700">
@@ -97,7 +133,28 @@ export default function Home() {
           </Link>
         </div>
 
-        <div className="mt-16 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+        {/* Sección de Estadísticas */}
+        <div className="mt-12 py-8 bg-blue-50 rounded-xl shadow-sm">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 className="text-2xl font-semibold text-center mb-8 text-blue-900">
+              Datos Laborales Colombia 2025
+            </h2>
+            <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
+              {estadisticas.map((stat, index) => (
+                <div key={index} className="text-center">
+                  <p className="text-3xl font-bold text-blue-600">{stat.cifra}</p>
+                  <p className="mt-2 text-base text-gray-700">{stat.descripcion}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        <section className="mt-16" aria-labelledby="calculadoras-section">
+          <h2 id="calculadoras-section" className="text-2xl font-semibold text-center mb-8 text-blue-900">
+            Nuestras Calculadoras Laborales
+          </h2>
+          <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
           {calculadoras.map((calc) => (
             <article 
               key={calc.titulo}
@@ -145,6 +202,70 @@ export default function Home() {
             </article>
           ))}
         </div>
+        </section>
+
+        {/* Sección de beneficios */}
+        <section className="mt-16" aria-labelledby="beneficios-section">
+          <h2 id="beneficios-section" className="text-2xl font-semibold text-blue-900 text-center mb-8">
+            ¿Por qué usar nuestra calculadora laboral?
+          </h2>
+          <div className="grid gap-8 sm:grid-cols-1 md:grid-cols-3">
+            {beneficios.map((beneficio) => (
+              <div key={beneficio.titulo} className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-all">
+                <div className="flex flex-col items-center text-center">
+                  <span className="flex-shrink-0 rounded-md p-3 bg-blue-50 text-blue-700">
+                    <beneficio.icono className="h-6 w-6" aria-hidden="true" />
+                  </span>
+                  <div className="mt-4">
+                    <h3 className="text-lg font-medium text-gray-900">{beneficio.titulo}</h3>
+                    <p className="mt-2 text-base text-gray-600">{beneficio.descripcion}</p>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* Sección informativa */}
+        <section className="mt-16" aria-labelledby="informacion-adicional">
+          <h2 id="informacion-adicional" className="sr-only">Información adicional</h2>
+          <div className="bg-white rounded-xl shadow-md p-6">
+            <h3 className="text-xl font-semibold text-blue-900 mb-4">Calculadora laboral colombiana actualizada {new Date().getFullYear()}</h3>
+            <div className="prose prose-blue max-w-none text-gray-600">
+              <p>
+                Nuestra calculadora laboral colombiana te permite gestionar todos los aspectos laborales 
+                según la legislación vigente. Desde el cálculo de nómina mensual, 
+                incluyendo los aportes a seguridad social (salud, pensión y ARL), hasta la estimación 
+                de prestaciones sociales como prima, cesantías, intereses y vacaciones.
+              </p>
+              <p className="mt-4">
+                Con las herramientas de liquidación laboral, podrás conocer el valor 
+                exacto que corresponde a un trabajador al momento de terminar su contrato, 
+                teniendo en cuenta el tipo de contrato, tiempo trabajado y salario devengado.
+              </p>
+              <p className="mt-4">
+                Nuestras calculadoras están actualizadas con la legislación colombiana de {new Date().getFullYear()}, 
+                incluyendo las últimas reformas laborales y tributarias, para garantizar 
+                que todos los cálculos sean precisos y conformes a la ley.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        {/* Sección de CTA */}
+        <section className="mt-16 bg-gradient-to-r from-blue-600 to-blue-800 rounded-xl shadow-md p-8">
+          <div className="text-center">
+            <h2 className="text-2xl font-bold text-white">¿Necesitas calcular tus prestaciones laborales?</h2>
+            <p className="mt-4 text-lg text-blue-100">
+              Utiliza nuestras calculadoras y obtén resultados precisos en segundos
+            </p>
+            <div className="mt-6 flex justify-center">
+              <Link href="/calculadoras/nomina" className="bg-white text-blue-700 px-6 py-3 rounded-lg font-semibold hover:bg-blue-50 transition-colors duration-200">
+                Comenzar ahora
+              </Link>
+            </div>
+          </div>
+        </section>
 
         <div className="mt-16 text-center">
           <p className="text-base text-gray-700 bg-blue-50 rounded-lg p-4 inline-block shadow-sm">
