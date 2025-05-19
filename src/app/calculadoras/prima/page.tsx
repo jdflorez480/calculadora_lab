@@ -118,7 +118,7 @@ function PrimaContent() {
         </div>
         <div className="text-center mb-8">
           <h1 className="text-4xl font-bold text-gray-900 tracking-tight">
-            Calculadora Prima de Servicios Junio 2025
+            Calcular Prima de Junio
           </h1>
           <p className="mt-4 text-xl text-gray-600">
             Calcula el valor de tu prima de servicios del primer semestre de 2025

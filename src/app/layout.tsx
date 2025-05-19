@@ -59,7 +59,7 @@ export default function RootLayout({
       <body className={`${geist.className} antialiased bg-gray-50`}>
         <GoogleAnalytics />
         <Navbar />
-        <main className="min-h-screen">
+        <main className="min-h-screen pt-16">
           {children}
         </main>
         <footer className="bg-white border-t py-8">
