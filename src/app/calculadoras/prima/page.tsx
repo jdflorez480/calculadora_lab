@@ -149,7 +149,7 @@ function PrimaContent() {
                   type="text"
                   name="salarioBase"
                   className="block w-full pl-8 pr-12 py-2.5 text-gray-900 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 sm:text-sm input-currency shadow-sm"
-                  placeholder="1.423.500"
+                  placeholder="ejm: 1.423.500"
                   value={formData.salarioBase}
                   onChange={handleSalarioChange}
                   required
@@ -215,7 +215,7 @@ function PrimaContent() {
               <div className="flex items-center h-8 mb-2">
                 <CalendarIcon className="h-5 w-5 text-blue-500 shrink-0" />
                 <label className="ml-2 block text-sm font-medium text-gray-900">
-                  Período de Cálculo
+                 Seleccione el  Período de Cálculo
                 </label>
               </div>
               <div className="grid grid-cols-2 gap-4 pl-7">
