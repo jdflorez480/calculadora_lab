@@ -114,6 +114,23 @@ export default function Home() {
           </p>
         </div>
 
+
+        {/* Sección de Estadísticas */}
+        <div className="mt-12 py-8 bg-blue-50 rounded-xl shadow-sm">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 className="text-2xl font-semibold text-center mb-8 text-blue-900">
+              Datos Laborales Colombia 2025
+            </h2>
+            <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
+              {estadisticas.map((stat, index) => (
+                <div key={index} className="text-center">
+                  <p className="text-3xl font-bold text-blue-600">{stat.cifra}</p>
+                  <p className="mt-2 text-base text-gray-700">{stat.descripcion}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
         {/* Banner Prima Junio 2025 */}
         <div className="mt-8 mb-8">
           <Link href="/calculadoras/prima" 
@@ -142,21 +159,58 @@ export default function Home() {
           </Link>
         </div>
 
-        {/* Sección de Estadísticas */}
-        <div className="mt-12 py-8 bg-blue-50 rounded-xl shadow-sm">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 className="text-2xl font-semibold text-center mb-8 text-blue-900">
-              Datos Laborales Colombia 2025
-            </h2>
-            <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
-              {estadisticas.map((stat, index) => (
-                <div key={index} className="text-center">
-                  <p className="text-3xl font-bold text-blue-600">{stat.cifra}</p>
-                  <p className="mt-2 text-base text-gray-700">{stat.descripcion}</p>
-                </div>
-              ))}
-            </div>
+       
+
+
+         {/* Banner Calculadora Empresarial */}
+        <div className="mt-8 mb-12 relative">
+          <div className="absolute -top-3 -right-3 bg-yellow-500 text-white text-sm font-bold py-1 px-3 rounded-full animate-pulse shadow-md z-10">
+            ¡Para empresas!
           </div>
+          <a href="https://www.calculadoraempresarial.com" 
+             target="_blank" 
+             rel="noopener noreferrer" 
+             className="block bg-gradient-to-r from-green-600 to-green-800 rounded-xl p-1 shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1">
+            <div className="bg-white p-6 rounded-lg flex flex-col sm:flex-row items-center justify-between space-y-4 sm:space-y-0 border-dashed border-2 border-green-200">
+              <div className="flex items-center space-x-4">
+                <span className="bg-green-100 p-4 rounded-full shadow-inner">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-10 w-10 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                  </svg>
+                </span>
+                <div className="text-left">
+                  <div className="flex items-center">
+                    <h2 className="text-2xl font-bold text-green-900">¿Eres empresario o administras personal?</h2>
+                    <span className="ml-2 bg-green-100 text-green-800 text-xs font-semibold px-2 py-1 rounded-full">Nuevo</span>
+                  </div>
+                  <p className="text-gray-600 mt-1">Optimiza tu gestión de recursos humanos con nuestra plataforma especializada para empresas</p>
+                  <ul className="mt-2 space-y-1">
+                    <li className="flex items-center space-x-2 text-sm text-gray-700">
+                      <svg className="h-4 w-4 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                      </svg>
+                      <span>Cálculo automático de nómina para múltiples empleados</span>
+                    </li>
+                    <li className="flex items-center space-x-2 text-sm text-gray-700">
+                      <svg className="h-4 w-4 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                      </svg>
+                      <span>Gestión de liquidaciones, vacaciones y prestaciones</span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              <div className="flex flex-col items-center">
+                <span className="text-green-700 font-semibold text-sm mb-2">Soluciones empresariales</span>
+                <button className="bg-green-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-green-700 transition-colors duration-200 cursor-pointer shadow-md hover:shadow-lg flex items-center">
+                  <span>Visitar Calculadora Empresarial</span>
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                  </svg>
+                </button>
+              </div>
+            </div>
+          </a>
         </div>
 
         <section className="mt-16" aria-labelledby="calculadoras-section">
