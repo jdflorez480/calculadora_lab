@@ -25,6 +25,7 @@ import InfoSection from "./components/InfoSection";
 import CTASection from "./components/CTASection";
 import ContactSection from "./components/ContactSection";
 import WaveDivider from "./components/WaveDivider";
+import NewsletterForm from "./components/NewsletterForm";
 
 export const metadata: Metadata = {
   title: "Calculadoras Laborales Colombia | Herramientas Laborales 2025",
@@ -190,24 +191,25 @@ export default function Home() {
 
         {/* Sección Beneficios */}
         <BenefitsSection beneficios={beneficios} />
+           {/* Sección Informativa */}
+        <InfoSection />
         
         {/* Banner Calculadora Empresarial */}
         <BusinessBanner />
 
-        {/* Sección Informativa */}
-        <InfoSection />
+     
 
         {/* Sección CTA 
         <CTASection />*/}
 
+      
+
         {/* Sección Contacto */}
         <ContactSection />
 
-        {/* La sección de Calculadoras ahora se maneja desde el componente CalculatorsSection */}
 
-        {/* La sección de Beneficios ahora se maneja desde el componente BenefitsSection */}
-
-       
+         {/* Sección Newsletter */}
+        <NewsletterForm />
      
 
     
