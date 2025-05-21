@@ -12,7 +12,7 @@ interface WindowWithUmami extends Window {
 }
 
 // Función global para seguimiento de eventos
-export const trackImamiEvent = (eventName: string, properties?: Record<string, unknown>) => {
+export const trackUmamiEvent = (eventName: string, properties?: Record<string, unknown>) => {
   // Asegurarse de que umami existe
   if (typeof window !== 'undefined') {
     const windowWithUmami = window as WindowWithUmami;
@@ -25,9 +25,10 @@ export const trackImamiEvent = (eventName: string, properties?: Record<string, u
   }
 };
 
-export default function ImamiAnalytics() {
+export default function UmamiAnalytics() {
+  // Usa los datos oficiales de tu instancia de Umami desplegada en Vercel
   const UMAMI_WEBSITE_ID = '8e785457-af04-4fe8-9bc8-878b05e404b3';
-  const UMAMI_SCRIPT_URL = 'https://analytics.eu.umami.is/script.js';
+  const UMAMI_SCRIPT_URL = 'https://umami-alpha-ten.vercel.app/script.js'; // URL actualizada de tu despliegue en Vercel
 
   useEffect(() => {
     // Si umami ya está cargado, no hacemos nada
