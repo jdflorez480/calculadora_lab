@@ -1,4 +1,6 @@
 import React from 'react';
+import Link from 'next/link';
+import { ArrowRightIcon, GiftIcon } from '@heroicons/react/24/outline';
 
 const HeroSection = () => {
   return (
@@ -19,6 +21,18 @@ const HeroSection = () => {
         })}{" "}
         | Conforme a la legislación laboral vigente
       </p>
+      
+      {/* Botón destacado para la calculadora de prima */}
+      <div className="mt-8">
+        <Link 
+          href="/calculadoras/prima"
+          className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+        >
+          <GiftIcon className="mr-2 h-5 w-5" />
+          Calcular Prima de Junio 2025
+          <ArrowRightIcon className="ml-2 h-5 w-5" />
+        </Link>
+      </div>
     </div>
   );
 };

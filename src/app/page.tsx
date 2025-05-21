@@ -26,6 +26,7 @@ import CTASection from "./components/CTASection";
 import ContactSection from "./components/ContactSection";
 import WaveDivider from "./components/WaveDivider";
 import NewsletterForm from "./components/NewsletterForm";
+import FloatingPrimaButton from "./components/FloatingPrimaButton";
 
 export const metadata: Metadata = {
   title: "Calculadoras Laborales Colombia | Herramientas Laborales 2025",
@@ -182,7 +183,7 @@ export default function Home() {
       {/* Datos Estadísticos con diseño mejorado */}
       <div className="max-w-7xl mx-auto relative z-10">
         <StatisticsSection estadisticas={estadisticas} />
-        
+
         {/* Banner Prima Junio 2025 */}
         <PrimaBanner />
 
@@ -191,32 +192,27 @@ export default function Home() {
 
         {/* Sección Beneficios */}
         <BenefitsSection beneficios={beneficios} />
-           {/* Sección Informativa */}
+        {/* Sección Informativa */}
         <InfoSection />
-        
+
         {/* Banner Calculadora Empresarial */}
         <BusinessBanner />
-
-     
 
         {/* Sección CTA 
         <CTASection />*/}
 
-      
-
         {/* Sección Contacto */}
         <ContactSection />
 
-
-         {/* Sección Newsletter */}
+        {/* Sección Newsletter */}
         <NewsletterForm />
-     
-
-    
       </div>
 
       {/* Subtle Wave Divider */}
       <WaveDivider />
+
+      {/* Botón flotante para la calculadora de prima */}
+      <FloatingPrimaButton />
     </main>
   );
 }
