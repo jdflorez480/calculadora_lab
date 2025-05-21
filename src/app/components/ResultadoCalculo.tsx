@@ -10,6 +10,7 @@ import {
   FacebookIcon,
 } from 'react-share';
 import { EmailShareButton, EmailIcon } from 'react-share';
+import { trackUmamiEvent } from './UmamiAnalytics';
 
 interface Resultado {
   concepto: string;
@@ -44,8 +45,14 @@ const ResultadoCalculo = ({ resultados, total, titulo, subtitulo }: ResultadoCal
   const getValueClass = (valor: number) => {
     return valor < 0 ? 'text-red-600' : 'text-gray-900';
   };
-
   const generarPDF = () => {
+    // Registrar evento en Umami cuando se descarga el PDF
+    trackUmamiEvent('download_pdf', {
+      action: 'download_pdf',
+      content_type: titulo.toLowerCase().replace(/ /g, '_'),
+      total_amount: total
+    });
+    
     const doc = new jsPDF();
     
     // Configuración inicial del documento
@@ -55,7 +62,6 @@ const ResultadoCalculo = ({ resultados, total, titulo, subtitulo }: ResultadoCal
     // Encabezado
     doc.setTextColor(0, 47, 167); // Azul corporativo
     doc.text("Liquidación Laboral", doc.internal.pageSize.width/2, 20, { align: "center" });
-    
     // Información del documento
     doc.setFont("helvetica", "normal");
     doc.setFontSize(12);
@@ -155,37 +161,91 @@ const ResultadoCalculo = ({ resultados, total, titulo, subtitulo }: ResultadoCal
             >
               <ArrowDownTrayIcon className="h-4 w-4 mr-2" />
               <span className="font-medium">Descargar PDF</span>
-            </button>
-            <div className="relative flex-1 sm:flex-none">
+            </button>            <div className="relative flex-1 sm:flex-none">
               <button
-                onClick={() => setShowShare(!showShare)}
+                onClick={() => {
+                  setShowShare(!showShare);
+                  // Solo registramos el evento cuando se abre el menú de compartir
+                  if (!showShare) {
+                    trackUmamiEvent('share_menu_open', {
+                      action: 'open_share_menu',
+                      content_type: titulo.toLowerCase().replace(/ /g, '_'),
+                      total_amount: total
+                    });
+                  }
+                }}
                 className="w-full cursor-pointer flex items-center justify-center px-4 py-2 bg-white/10 text-white rounded-lg hover:bg-white/20 transition-colors duration-200 text-sm"
               >
                 <ShareIcon className="h-4 w-4 mr-2" />
                 <span className="font-medium">Compartir</span>
               </button>
-              {showShare && (
-                <div className="absolute right-0 mt-2 p-3 bg-white rounded-lg shadow-xl z-10">
+              {showShare && (                <div className="absolute right-0 mt-2 p-3 bg-white rounded-lg shadow-xl z-10">
                   <div className="flex flex-col gap-3">
-                    <WhatsappShareButton url={shareUrl} title={shareMessage}>
+                    <WhatsappShareButton 
+                      url={shareUrl} 
+                      title={shareMessage}
+                      onClick={() => {
+                        trackUmamiEvent('share_content', {
+                          action: 'share',
+                          platform: 'whatsapp',
+                          content_type: titulo.toLowerCase().replace(/ /g, '_'),
+                          total_amount: total
+                        });
+                      }}
+                    >
                       <div className="flex items-center gap-3 hover:bg-gray-50 p-2 rounded-lg transition-colors">
                         <WhatsappIcon size={32} round />
                         <span className="text-sm text-gray-700">WhatsApp</span>
                       </div>
                     </WhatsappShareButton>
-                    <EmailShareButton url={shareUrl} subject={shareTitle} body={shareMessage}>
+                    <EmailShareButton 
+                      url={shareUrl} 
+                      subject={shareTitle} 
+                      body={shareMessage}
+                      onClick={() => {
+                        trackUmamiEvent('share_content', {
+                          action: 'share',
+                          platform: 'email',
+                          content_type: titulo.toLowerCase().replace(/ /g, '_'),
+                          total_amount: total
+                        });
+                      }}
+                    >
                       <div className="flex items-center gap-3 hover:bg-gray-50 p-2 rounded-lg transition-colors">
                         <EmailIcon size={32} round />
                         <span className="text-sm text-gray-700">Gmail</span>
                       </div>
                     </EmailShareButton>
-                    <LinkedinShareButton url={shareUrl} title={shareTitle} summary={shareMessage}>
+                    <LinkedinShareButton 
+                      url={shareUrl} 
+                      title={shareTitle} 
+                      summary={shareMessage}
+                      onClick={() => {
+                        trackUmamiEvent('share_content', {
+                          action: 'share',
+                          platform: 'linkedin',
+                          content_type: titulo.toLowerCase().replace(/ /g, '_'),
+                          total_amount: total
+                        });
+                      }}
+                    >
                       <div className="flex items-center gap-3 hover:bg-gray-50 p-2 rounded-lg transition-colors">
                         <LinkedinIcon size={32} round />
                         <span className="text-sm text-gray-700">LinkedIn</span>
                       </div>
                     </LinkedinShareButton>
-                    <FacebookShareButton url={shareUrl} hashtag="#CalculadoraLaboral">
+                    <FacebookShareButton 
+                      url={shareUrl} 
+                      hashtag="#CalculadoraLaboral"
+                      onClick={() => {
+                        trackUmamiEvent('share_content', {
+                          action: 'share',
+                          platform: 'facebook',
+                          content_type: titulo.toLowerCase().replace(/ /g, '_'),
+                          total_amount: total
+                        });
+                      }}
+                    >
                       <div className="flex items-center gap-3 hover:bg-gray-50 p-2 rounded-lg transition-colors">
                         <FacebookIcon size={32} round />
                         <span className="text-sm text-gray-700">Facebook</span>
