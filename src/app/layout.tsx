@@ -6,6 +6,7 @@ import { Analytics } from '@vercel/analytics/react';
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import GoogleAnalytics from './components/GoogleAnalytics';
 import UmamiAnalytics from './components/UmamiAnalytics';
+import FooterShareButton from './components/FooterShareButton';
 
 const geist = Geist({
   subsets: ["latin"],
@@ -111,15 +112,20 @@ export default function RootLayout({
               <p className="text-center text-xs text-gray-500">
                 Nota: Los cálculos proporcionados son de carácter informativo y están sujetos a revisión. Se recomienda consultar con un profesional para validar los resultados.
               </p>
-              <p className="text-center text-sm text-gray-500">
+              <p className="text-center text-sm text-gray-500 mb-4">
                 <a className="p-1" href="https://www.calculalaboral.com/"> www.calculalaboral.com</a>
                 © {new Date().getFullYear()} Calculadora Laboral Colombia. Todos los derechos reservados.
               </p>
+              <div className="flex justify-center gap-4">
+                <span className="text-sm text-gray-500">¿Te ha resultado útil? Compártelo:</span>
+                <div id="footer-share-button" className="inline-block"></div>
+              </div>
             </div>
           </div>
         </footer>
         <Analytics />
         <SpeedInsights />
+        <FooterShareButton />
       </body>
     </html>
   );

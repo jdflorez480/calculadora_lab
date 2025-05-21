@@ -27,6 +27,7 @@ import ContactSection from "./components/ContactSection";
 import WaveDivider from "./components/WaveDivider";
 import NewsletterForm from "./components/NewsletterForm";
 import FloatingPrimaButton from "./components/FloatingPrimaButton";
+import ShareButton from "./components/ShareButton";
 
 export const metadata: Metadata = {
   title: "Calculadoras Laborales Colombia | Herramientas Laborales 2025",
@@ -213,6 +214,9 @@ export default function Home() {
 
       {/* Botón flotante para la calculadora de prima */}
       <FloatingPrimaButton />
+      
+      {/* Botón flotante para compartir la página */}
+      <ShareButton variant="floating" />
     </main>
   );
 }

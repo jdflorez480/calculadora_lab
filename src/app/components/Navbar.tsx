@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { useState, useEffect } from 'react';
+import ShareButton from './ShareButton';
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
@@ -107,8 +108,10 @@ export default function Navbar() {
                   {item.name}
                   <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-600 group-hover:w-full transition-all duration-300 ease-in-out"></span>
                 </Link>
-              ))}
-              <div className="flex items-center ml-4 bg-blue-50 px-3 rounded-full shadow-sm">
+              ))}              <div className="flex items-center ml-3">
+                <ShareButton variant="icon" />
+              </div>
+              <div className="flex items-center ml-2 bg-blue-50 px-3 rounded-full shadow-sm">
                 <Image
                   src="/images/bandera_colombia.png"
                   alt="Bandera de Colombia"
@@ -134,16 +137,30 @@ export default function Navbar() {
             >
               {item.name}
             </Link>
-          ))}
-          <div className="flex items-center justify-center py-2 border-t border-gray-200 mt-2">
-            <Image
-              src="/images/bandera_colombia.png"
-              alt="Bandera de Colombia"
-              width={28}
-              height={18}
-              className="rounded shadow-sm"
-            />
-            <span className="ml-2 text-sm text-gray-500">Colombia</span>
+          ))}          <div className="flex items-center justify-center py-2 border-t border-gray-200 mt-2">
+            <button 
+              className="flex items-center mx-2 px-4 py-2 text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50"
+              onClick={() => {
+                setMobileMenuOpen(false);
+                // Esperamos a que se cierre el menú antes de mostrar el diálogo de compartir
+                setTimeout(() => {
+                  const shareButton = document.querySelector('[aria-label="Compartir esta página"]') as HTMLButtonElement;
+                  shareButton?.click();
+                }, 100);
+              }}
+            >
+              Compartir página
+            </button>
+            <div className="flex items-center mx-2">
+              <Image
+                src="/images/bandera_colombia.png"
+                alt="Bandera de Colombia"
+                width={28}
+                height={18}
+                className="rounded shadow-sm"
+              />
+              <span className="ml-2 text-sm text-gray-500">Colombia</span>
+            </div>
           </div>
         </div>
       </div>
