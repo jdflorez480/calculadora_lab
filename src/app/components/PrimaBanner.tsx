@@ -24,7 +24,7 @@ const PrimaBanner = () => {
 
   const handleButtonClick = () => {
     // Registrar evento en Umami cuando se hace clic en el botón del banner
-    trackUmamiEvent('button_click', {
+    trackUmamiEvent('button_click_banner', {
       element: 'prima_banner_button',
       location: 'home_page',
       action: 'navigate_to_prima_calculator'
