@@ -1,7 +1,12 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    domains: ['www.calculalaboral.com'],
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'www.calculalaboral.com',
+      },
+    ],
   },
   async redirects() {
     return [
