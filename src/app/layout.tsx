@@ -5,7 +5,7 @@ import Navbar from "./components/Navbar";
 import { Analytics } from '@vercel/analytics/react';
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import GoogleAnalytics from './components/GoogleAnalytics';
-import ImamiAnalytics from './components/ImamiAnalytics';
+import UmamiAnalytics from './components/UmamiAnalytics';
 
 const geist = Geist({
   subsets: ["latin"],
@@ -59,7 +59,7 @@ export default function RootLayout({
       </head>
       <body className={`${geist.className} antialiased bg-gray-50`}>
         <GoogleAnalytics />
-        <ImamiAnalytics />
+        <UmamiAnalytics />
         <Navbar />
         <main className="min-h-screen pt-16">
           {children}

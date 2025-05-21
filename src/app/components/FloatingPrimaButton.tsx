@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { GiftIcon, XMarkIcon } from '@heroicons/react/24/outline';
-import { trackImamiEvent } from './ImamiAnalytics';
+import { trackUmamiEvent } from './UmamiAnalytics';
 
 const FloatingPrimaButton = () => {  const [isVisible, setIsVisible] = useState(true);
   const [isAnimating, setIsAnimating] = useState(true);
@@ -33,10 +33,9 @@ const FloatingPrimaButton = () => {  const [isVisible, setIsVisible] = useState(
     // Guardar preferencia del usuario
     localStorage.setItem('primaButtonClosed', 'true');
   };
-
   const handleButtonClick = () => {
-    // Registrar evento en Imami cuando se hace clic en el botón flotante
-    trackImamiEvent('button_click', { 
+    // Registrar evento en Umami cuando se hace clic en el botón flotante
+    trackUmamiEvent('button_click', { 
       element: 'floating_prima_button',
       location: 'floating',
       action: 'navigate_to_prima_calculator'

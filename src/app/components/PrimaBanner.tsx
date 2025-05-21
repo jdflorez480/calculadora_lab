@@ -3,7 +3,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { GiftIcon, ArrowRightIcon } from '@heroicons/react/24/outline';
-import { trackImamiEvent } from './ImamiAnalytics';
+import { trackUmamiEvent } from './UmamiAnalytics';
 
 const PrimaBanner = () => {
   const keywords = [
@@ -13,10 +13,9 @@ const PrimaBanner = () => {
     "prestación social",
     "beneficio laboral",
   ];
-
   const handleBannerClick = () => {
-    // Registrar evento en Imami cuando se hace clic en el banner de prima
-    trackImamiEvent('banner_click', {
+    // Registrar evento en Umami cuando se hace clic en el banner de prima
+    trackUmamiEvent('banner_click', {
       element: 'prima_banner',
       location: 'home_page',
       action: 'navigate_to_prima_calculator'
@@ -24,8 +23,8 @@ const PrimaBanner = () => {
   };
 
   const handleButtonClick = () => {
-    // Registrar evento en Imami cuando se hace clic en el botón del banner
-    trackImamiEvent('button_click', {
+    // Registrar evento en Umami cuando se hace clic en el botón del banner
+    trackUmamiEvent('button_click', {
       element: 'prima_banner_button',
       location: 'home_page',
       action: 'navigate_to_prima_calculator'
