@@ -1,6 +1,9 @@
+'use client';
+
 import React from 'react';
 import Link from 'next/link';
 import { GiftIcon, ArrowRightIcon } from '@heroicons/react/24/outline';
+import { trackImamiEvent } from './ImamiAnalytics';
 
 const PrimaBanner = () => {
   const keywords = [
@@ -11,8 +14,26 @@ const PrimaBanner = () => {
     "beneficio laboral",
   ];
 
+  const handleBannerClick = () => {
+    // Registrar evento en Imami cuando se hace clic en el banner de prima
+    trackImamiEvent('banner_click', {
+      element: 'prima_banner',
+      location: 'home_page',
+      action: 'navigate_to_prima_calculator'
+    });
+  };
+
+  const handleButtonClick = () => {
+    // Registrar evento en Imami cuando se hace clic en el botón del banner
+    trackImamiEvent('button_click', {
+      element: 'prima_banner_button',
+      location: 'home_page',
+      action: 'navigate_to_prima_calculator'
+    });
+  };
+
   return (
-    <div className="my-16">
+    <div className="my-16" onClick={handleBannerClick}>
       <div className="bg-gradient-to-r from-blue-500 to-blue-700 rounded-2xl shadow-lg overflow-hidden group hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
         <div className="relative">
           <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-blue-400 to-transparent opacity-20"></div>
@@ -48,6 +69,10 @@ const PrimaBanner = () => {
             <Link
               href="/calculadoras/prima"
               className="bg-white text-blue-700 px-6 py-4 rounded-xl font-bold hover:bg-blue-50 transition-colors duration-300 flex items-center space-x-2 shadow-md"
+              onClick={(e) => {
+                e.stopPropagation(); // Evitar que se registre también el clic en el banner
+                handleButtonClick();
+              }}
             >
               <span>Calcular Prima</span>
               <ArrowRightIcon className="h-5 w-5 transition-transform group-hover:translate-x-1" />
@@ -62,3 +87,5 @@ const PrimaBanner = () => {
 };
 
 export default PrimaBanner;
+
+
