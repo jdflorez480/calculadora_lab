@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { jsPDF } from 'jspdf';
-import { ArrowDownTrayIcon, ShareIcon } from '@heroicons/react/24/outline';
+import { ArrowDownTrayIcon, ShareIcon, XMarkIcon } from '@heroicons/react/24/outline';
 import {
   WhatsappShareButton,
   LinkedinShareButton,
@@ -11,6 +11,7 @@ import {
 } from 'react-share';
 import { EmailShareButton, EmailIcon } from 'react-share';
 import { trackUmamiEvent } from './UmamiAnalytics';
+import ShareButton from './ShareButton';
 
 interface Resultado {
   concepto: string;
@@ -27,6 +28,7 @@ interface ResultadoCalculoProps {
 
 const ResultadoCalculo = ({ resultados, total, titulo, subtitulo }: ResultadoCalculoProps) => {
   const [showShare, setShowShare] = useState(false);
+  const [showShareModal, setShowShareModal] = useState(false);
 
   const formatCurrency = (value: number) => {
     const absValue = Math.abs(value);
@@ -142,6 +144,9 @@ const ResultadoCalculo = ({ resultados, total, titulo, subtitulo }: ResultadoCal
 
     // Guardar PDF
     doc.save('liquidacion-laboral.pdf');
+    
+    // Mostrar el modal de compartir después de generar el PDF
+    setShowShareModal(true);
   };
 
   return (
@@ -294,8 +299,156 @@ const ResultadoCalculo = ({ resultados, total, titulo, subtitulo }: ResultadoCal
             <span className="text-base font-semibold text-gray-900">Total a Recibir</span>
             <span className="text-lg font-bold text-blue-600">{formatCurrency(total)}</span>
           </div>
+        </div>    </div>      {/* Modal de compartir que aparece después de generar el PDF */}
+      {showShareModal && (
+        <div 
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50"
+          onClick={(e) => {
+            // Solo cerrar si se hizo clic en el fondo (no en el contenido del modal)
+            if (e.target === e.currentTarget) {
+              trackUmamiEvent('share_modal_close', {
+                action: 'close_share_modal',
+                method: 'outside_click',
+                content_type: titulo.toLowerCase().replace(/ /g, '_'),
+                total_amount: total
+              });
+              setShowShareModal(false);
+            }
+          }}
+        >
+          <div className="bg-white rounded-xl shadow-2xl max-w-md w-full p-6 animate-fade-in-up">            <div className="flex justify-between items-start mb-4">
+              <h3 className="text-lg font-bold text-gray-900">¡Tu PDF está listo!</h3>
+              <button 
+                onClick={() => {
+                  // Registrar evento cuando el usuario cierra el modal con la X
+                  trackUmamiEvent('share_modal_close', {
+                    action: 'close_share_modal',
+                    method: 'x_button',
+                    content_type: titulo.toLowerCase().replace(/ /g, '_'),
+                    total_amount: total
+                  });
+                  setShowShareModal(false);
+                }}
+                className="text-gray-400 hover:text-gray-500 transition-colors"
+              >
+                <XMarkIcon className="h-5 w-5" />
+              </button>
+            </div>
+            
+            <div className="mb-6">
+              <div className="p-4 bg-blue-50 rounded-lg mb-4">
+                <p className="text-blue-700 text-sm">
+                  ¿Te ha sido útil esta calculadora? ¡Compártela con tus colegas y amigos que podrían necesitarla!
+                </p>
+              </div>
+              
+              <div className="grid grid-cols-2 gap-3 mb-4">
+                <WhatsappShareButton 
+                  url={shareUrl} 
+                  title={shareMessage}
+                  onClick={() => {
+                    trackUmamiEvent('share_content', {
+                      action: 'share',
+                      platform: 'whatsapp',
+                      content_type: titulo.toLowerCase().replace(/ /g, '_'),
+                      source: 'pdf_modal',
+                      total_amount: total
+                    });
+                  }}
+                  className="w-full"
+                >
+                  <div className="flex items-center justify-center gap-2 p-2 rounded-lg border border-gray-200 hover:bg-green-50 transition-colors">
+                    <WhatsappIcon size={24} round />
+                    <span className="text-sm font-medium text-gray-950">WhatsApp</span>
+                  </div>
+                </WhatsappShareButton>
+                
+                <EmailShareButton 
+                  url={shareUrl} 
+                  subject={shareTitle} 
+                  body={shareMessage}
+                  onClick={() => {
+                    trackUmamiEvent('share_content', {
+                      action: 'share',
+                      platform: 'email',
+                      content_type: titulo.toLowerCase().replace(/ /g, '_'),
+                      source: 'pdf_modal',
+                      total_amount: total
+                    });
+                  }}
+                  className="w-full"
+                >
+                  <div className="flex items-center justify-center gap-2 p-2 rounded-lg border border-gray-200 hover:bg-blue-50 transition-colors">
+                    <EmailIcon size={24} round />
+                    <span className="text-sm font-medium text-gray-950">Email</span>
+                  </div>
+                </EmailShareButton>
+                
+                <LinkedinShareButton 
+                  url={shareUrl} 
+                  title={shareTitle} 
+                  summary={shareMessage}
+                  onClick={() => {
+                    trackUmamiEvent('share_content', {
+                      action: 'share',
+                      platform: 'linkedin',
+                      content_type: titulo.toLowerCase().replace(/ /g, '_'),
+                      source: 'pdf_modal',
+                      total_amount: total
+                    });
+                  }}
+                  className="w-full"
+                >
+                  <div className="flex items-center justify-center gap-2 p-2 rounded-lg border border-gray-200 hover:bg-blue-100 transition-colors">
+                    <LinkedinIcon size={24} round />
+                    <span className="text-sm font-medium text-gray-950">LinkedIn</span>
+                  </div>
+                </LinkedinShareButton>
+                
+                <FacebookShareButton 
+                  url={shareUrl} 
+                  hashtag="#CalculadoraLaboral"
+                  onClick={() => {
+                    trackUmamiEvent('share_content', {
+                      action: 'share',
+                      platform: 'facebook',
+                      content_type: titulo.toLowerCase().replace(/ /g, '_'),
+                      source: 'pdf_modal',
+                      total_amount: total
+                    });
+                  }}
+                  className="w-full"
+                >
+                  <div className="flex items-center justify-center gap-2 p-2 rounded-lg border border-gray-200 hover:bg-blue-50 transition-colors">
+                    <FacebookIcon size={24} round />
+                    <span className="text-sm font-medium text-gray-950">Facebook</span>
+                  </div>
+                </FacebookShareButton>
+              </div>
+              
+              <p className="text-sm text-gray-500 text-center mb-4">
+                Ayuda a otros profesionales y trabajadores de Colombia a calcular sus derechos laborales
+              </p>
+                <div className="flex justify-center">
+                <button
+                  onClick={() => {
+                    // Registrar evento cuando el usuario cierra el modal
+                    trackUmamiEvent('share_modal_close', {
+                      action: 'close_share_modal',
+                      content_type: titulo.toLowerCase().replace(/ /g, '_'),
+                      total_amount: total
+                    });
+                    setShowShareModal(false);
+                  }}
+                  className="px-4 py-2 text-sm font-medium cursor-pointer text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
+                >
+                  Cerrar
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 };
