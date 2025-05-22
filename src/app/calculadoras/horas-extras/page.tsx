@@ -280,6 +280,91 @@ function HorasExtrasContent() {
             />
           </div>
         )}
+
+        {/* Texto explicativo sobre las horas extras */}
+        <div className="mt-16 bg-gray-50 p-8 rounded-lg shadow-md">
+          <h2 className="text-2xl font-bold text-gray-900 mb-4">¿Qué son las Horas Extras en Colombia?</h2>
+          <p className="text-gray-700 leading-relaxed mb-4">
+            Las horas extras son aquellas horas de trabajo que se realizan fuera de la jornada laboral ordinaria establecida por la ley o el contrato. En Colombia, el pago de horas extras es un derecho de los trabajadores y está regulado por el Código Sustantivo del Trabajo. El empleador debe reconocer un recargo adicional sobre el valor de la hora ordinaria, dependiendo del tipo de hora extra realizada.
+          </p>
+          <h3 className="text-xl font-semibold text-gray-900 mb-2">¿Cómo se calculan las horas extras?</h3>
+          <p className="text-gray-700 leading-relaxed mb-4">
+            El cálculo de las horas extras depende del tipo de recargo:
+          </p>
+          <ul className="list-disc pl-5 mb-4 text-gray-700">
+            <li><b>Horas extras diurnas:</b> Recargo del 25% sobre la hora ordinaria.</li>
+            <li><b>Horas extras nocturnas:</b> Recargo del 75% sobre la hora ordinaria.</li>
+            <li><b>Recargo nocturno:</b> 35% adicional por laborar entre las 9:00 p.m. y las 6:00 a.m.</li>
+            <li><b>Horas dominicales y festivas:</b> Recargo del 75%.</li>
+            <li><b>Horas extras dominicales/festivas:</b> Recargo del 100%.</li>
+          </ul>
+          <p className="text-gray-700 font-mono bg-gray-100 p-4 rounded-lg mb-4">
+            Valor hora ordinaria = Salario mensual ÷ 240<br/>
+            Valor hora extra diurna = Valor hora ordinaria × 1,25<br/>
+            Valor hora extra nocturna = Valor hora ordinaria × 1,75<br/>
+            Valor recargo nocturno = Valor hora ordinaria × 0,35<br/>
+            Valor hora dominical/festiva = Valor hora ordinaria × 1,75<br/>
+            Valor hora extra dominical/festiva = Valor hora ordinaria × 2
+          </p>
+          <h3 className="text-xl font-semibold text-gray-900 mb-2">Preguntas frecuentes sobre horas extras</h3>
+          <div className="space-y-6">
+            <div className="bg-white p-4 rounded-lg shadow-sm">
+              <h4 className="text-lg font-semibold text-blue-700">¿Cuántas horas extras se pueden trabajar legalmente?</h4>
+              <p className="text-gray-700 mt-2">
+                La ley colombiana establece un máximo de 2 horas extras diarias y 12 horas semanales. Superar este límite requiere autorización especial del Ministerio de Trabajo.
+              </p>
+            </div>
+            <div className="bg-white p-4 rounded-lg shadow-sm">
+              <h4 className="text-lg font-semibold text-blue-700">¿Cómo se pagan las horas extras nocturnas?</h4>
+              <p className="text-gray-700 mt-2">
+                Las horas extras nocturnas tienen un recargo del 75% sobre la hora ordinaria. Si además se laboran en domingo o festivo, el recargo puede llegar al 100%.
+              </p>
+            </div>
+            <div className="bg-white p-4 rounded-lg shadow-sm">
+              <h4 className="text-lg font-semibold text-blue-700">¿Qué sucede si no me pagan las horas extras?</h4>
+              <p className="text-gray-700 mt-2">
+                El no pago de horas extras puede ser denunciado ante el Ministerio de Trabajo. El empleador puede ser sancionado y está obligado a pagar los valores adeudados con los recargos correspondientes.
+              </p>
+            </div>
+            <div className="bg-white p-4 rounded-lg shadow-sm">
+              <h4 className="text-lg font-semibold text-blue-700">Ejemplo práctico de cálculo</h4>
+              <p className="text-gray-700 mt-2">
+                Si tu salario mensual es de $2.000.000 y trabajaste 5 horas extras diurnas y 2 nocturnas en el mes:
+              </p>
+              <p className="text-gray-700 font-mono bg-gray-100 p-4 rounded-lg my-2">
+                Valor hora ordinaria = $2.000.000 ÷ 240 = $8.333<br/>
+                Valor hora extra diurna = $8.333 × 1,25 = $10.416<br/>
+                Valor hora extra nocturna = $8.333 × 1,75 = $14.583<br/>
+                Total horas extras diurnas = 5 × $10.416 = $52.080<br/>
+                Total horas extras nocturnas = 2 × $14.583 = $29.166<br/>
+                <b>Total a pagar por horas extras = $81.246</b>
+              </p>
+              <p className="text-gray-700 mt-2">
+                <span className="font-medium text-blue-600">¡Utiliza nuestra calculadora para obtener el valor exacto de tus horas extras según tu salario y las horas laboradas!</span>
+              </p>
+            </div>
+          </div>
+          {/* Banner para destacar la calculadora */}
+          <div className="mt-8 bg-blue-100 p-6 rounded-xl shadow-sm">
+            <div className="flex flex-col md:flex-row items-center justify-between">
+              <div className="mb-4 md:mb-0 md:mr-6">
+                <h3 className="text-lg font-bold text-blue-800">Calcula tus horas extras fácilmente</h3>
+                <p className="text-blue-700 mt-2">
+                  Nuestra calculadora es gratuita, precisa y fácil de usar. Obtén el valor exacto de tus horas extras y recargos en segundos.
+                </p>
+              </div>
+              <button 
+                onClick={() => window.scrollTo({top: 0, behavior: 'smooth'})}
+                className="px-6 py-3 cursor-pointer bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition-colors shadow-md flex items-center"
+              >
+                Usar la calculadora
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 ml-2" viewBox="0 0 20 20" fill="currentColor">
+                  <path fillRule="evenodd" d="M14.707 12.707a1 1 0 01-1.414 0L10 9.414l-3.293 3.293a1 1 0 01-1.414-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 010 1.414z" clipRule="evenodd" />
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );

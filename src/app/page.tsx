@@ -205,8 +205,8 @@ export default function Home() {
         {/* Sección Contacto */}
         <ContactSection />
 
-        {/* Sección Newsletter */}
-        <NewsletterForm />
+        {/* Sección Newsletter 
+        <NewsletterForm />*/}
       </div>
 
       {/* Subtle Wave Divider */}
