@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Geist } from "next/font/google";
+import Link from "next/link";
 import "./globals.css";
 import Navbar from "./components/Navbar";
 import { Analytics } from '@vercel/analytics/react';
@@ -112,6 +113,15 @@ export default function RootLayout({
               <p className="text-center text-xs text-gray-500">
                 Nota: Los cálculos proporcionados son de carácter informativo y están sujetos a revisión. Se recomienda consultar con un profesional para validar los resultados.
               </p>
+              <div className="flex flex-col sm:flex-row justify-center items-center text-sm text-gray-500 space-y-2 sm:space-y-0 mb-2">
+                <Link href="/politica-privacidad" className="hover:text-blue-600 mx-2">
+                  Política de Privacidad
+                </Link>
+                <div className="hidden sm:block">|</div>
+                <Link href="/faq" className="hover:text-blue-600 mx-2">
+                  Preguntas Frecuentes
+                </Link>
+              </div>
               <p className="text-center text-sm text-gray-500 mb-4">
                 <a className="p-1" href="https://www.calculalaboral.com/"> www.calculalaboral.com</a>
                 © {new Date().getFullYear()} Calculadora Laboral Colombia. Todos los derechos reservados.
