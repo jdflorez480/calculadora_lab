@@ -11,7 +11,6 @@ import {
 } from 'react-share';
 import { EmailShareButton, EmailIcon } from 'react-share';
 import { trackUmamiEvent } from './UmamiAnalytics';
-import ShareButton from './ShareButton';
 
 interface Resultado {
   concepto: string;

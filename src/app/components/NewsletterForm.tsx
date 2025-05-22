@@ -38,8 +38,7 @@ const NewsletterForm = () => {
         setIsChecked(false);
       } else {
         setFormStatus('error');
-      }
-    } catch (error) {
+      }    } catch (_) {
       setFormStatus('error');
     }
   };

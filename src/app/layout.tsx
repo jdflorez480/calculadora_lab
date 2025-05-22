@@ -58,6 +58,11 @@ export default function RootLayout({
           title="Blog Laboral Colombia RSS Feed" 
           href="/feed.xml"
         />
+        <script 
+          async 
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7334386825129170"
+          crossOrigin="anonymous"
+        ></script>
       </head>
       <body className={`${geist.className} antialiased bg-gray-50`}>
         <GoogleAnalytics />

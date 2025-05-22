@@ -1,5 +1,4 @@
 import React from 'react';
-import { DocumentTextIcon, ClockIcon, ShieldCheckIcon } from '@heroicons/react/24/outline';
 
 type Beneficio = {
   titulo: string;

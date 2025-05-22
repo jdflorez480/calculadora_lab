@@ -1,15 +1,12 @@
-import Link from "next/link";
 import {
   BriefcaseIcon,
   CurrencyDollarIcon,
   ClockIcon,
   CalculatorIcon,
-  GiftIcon,
   SunIcon,
   BuildingLibraryIcon,
   DocumentTextIcon,
   ShieldCheckIcon,
-  ArrowRightIcon,
 } from "@heroicons/react/24/outline";
 import type { Metadata } from "next";
 
@@ -22,12 +19,11 @@ import BusinessBanner from "./components/BusinessBanner";
 import CalculatorsSection from "./components/CalculatorsSection";
 import BenefitsSection from "./components/BenefitsSection";
 import InfoSection from "./components/InfoSection";
-import CTASection from "./components/CTASection";
 import ContactSection from "./components/ContactSection";
 import WaveDivider from "./components/WaveDivider";
-import NewsletterForm from "./components/NewsletterForm";
 import FloatingPrimaButton from "./components/FloatingPrimaButton";
 import ShareButton from "./components/ShareButton";
+import AdBanner from "./components/AdBanner";
 
 export const metadata: Metadata = {
   title: "Calculadoras Laborales Colombia | Herramientas Laborales 2025",
@@ -190,6 +186,9 @@ export default function Home() {
 
         {/* Sección Calculadoras */}
         <CalculatorsSection calculadoras={calculadoras} />
+        
+        {/* Banner de anuncios */}
+        <AdBanner adSlot="1234567890" />
 
         {/* Sección Beneficios */}
         <BenefitsSection beneficios={beneficios} />
