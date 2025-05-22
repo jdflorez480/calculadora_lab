@@ -58,6 +58,10 @@ export default function RootLayout({
           title="Blog Laboral Colombia RSS Feed" 
           href="/feed.xml"
         />
+        <meta 
+          name="google-adsense-account" 
+          content="ca-pub-7334386825129170"
+        />
         <script 
           async 
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7334386825129170"
