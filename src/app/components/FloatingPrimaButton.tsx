@@ -35,11 +35,11 @@ const FloatingPrimaButton = () => {  const [isVisible, setIsVisible] = useState(
   };
   const handleButtonClick = () => {
     // Registrar evento en Umami cuando se hace clic en el botón flotante
-    trackUmamiEvent('button_click_float', { 
+   /*  trackUmamiEvent('button_click_float', { 
       element: 'floating_prima_button',
       location: 'floating',
       action: 'navigate_to_prima_calculator'
-    });
+    }); */
   };
   
   if (!isVisible) return null;

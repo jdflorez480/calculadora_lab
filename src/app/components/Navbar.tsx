@@ -60,7 +60,7 @@ export default function Navbar() {
                   Calculadora Laboral
                 </span>
                 <span className="text-xs text-gray-500 -mt-1 hidden md:block">
-                  Tu asistente legal en Colombia
+                  Tu asistente laboral en Colombia
                 </span>
               </div>
             </Link>

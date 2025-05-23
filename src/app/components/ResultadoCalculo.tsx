@@ -48,11 +48,11 @@ const ResultadoCalculo = ({ resultados, total, titulo, subtitulo }: ResultadoCal
   };
   const generarPDF = () => {
     // Registrar evento en Umami cuando se descarga el PDF
-    trackUmamiEvent('download_pdf', {
+   /*  trackUmamiEvent('download_pdf', {
       action: 'download_pdf',
       content_type: titulo.toLowerCase().replace(/ /g, '_'),
       total_amount: total
-    });
+    }); */
     
     const doc = new jsPDF();
     

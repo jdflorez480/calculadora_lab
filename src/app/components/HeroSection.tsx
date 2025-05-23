@@ -5,14 +5,14 @@ import Link from 'next/link';
 import { ArrowRightIcon, GiftIcon } from '@heroicons/react/24/outline';
 import { trackUmamiEvent } from './UmamiAnalytics';
 
-const HeroSection = () => {
-  // Función para registrar el clic en el botón de prima del hero section
+const HeroSection = () => {  // Función para registrar el clic en el botón de prima del hero section
   const handlePrimaButtonClick = () => {
-    trackUmamiEvent('button_click_hero', {
+    // Comentado temporalmente para reducir la carga en la base de datos
+  /*   trackUmamiEvent('button_click_hero', {
       element: 'hero_prima_button',
       location: 'hero_section',
       action: 'navigate_to_prima_calculator'
-    });
+    }); */
   };
 
   return (

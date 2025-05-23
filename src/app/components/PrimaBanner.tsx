@@ -15,20 +15,20 @@ const PrimaBanner = () => {
   ];
   const handleBannerClick = () => {
     // Registrar evento en Umami cuando se hace clic en el banner de prima
-    trackUmamiEvent('banner_click', {
+   /*  trackUmamiEvent('banner_click', {
       element: 'prima_banner',
       location: 'home_page',
       action: 'navigate_to_prima_calculator'
-    });
+    }); */
   };
 
   const handleButtonClick = () => {
     // Registrar evento en Umami cuando se hace clic en el botón del banner
-    trackUmamiEvent('button_click_banner', {
+    /* trackUmamiEvent('button_click_banner', {
       element: 'prima_banner_button',
       location: 'home_page',
       action: 'navigate_to_prima_calculator'
-    });
+    }); */
   };
 
   return (
