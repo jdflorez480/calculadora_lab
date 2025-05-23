@@ -2,7 +2,6 @@ import { MetadataRoute } from 'next';
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = 'https://www.calculalaboral.com';
-
   // URLs principales
   const mainRoutes = [
     {
@@ -22,6 +21,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       lastModified: new Date(),
       changeFrequency: 'monthly' as const,
       priority: 0.8,
+    },
+    {
+      url: `${baseUrl}/politica-privacidad`,
+      lastModified: new Date('2025-05-22'),
+      changeFrequency: 'yearly' as const,
+      priority: 0.7,
     },
   ];
 
