@@ -1,16 +1,20 @@
-import { useState } from 'react';
-import { jsPDF } from 'jspdf';
-import { ArrowDownTrayIcon, ShareIcon, XMarkIcon } from '@heroicons/react/24/outline';
+import { useState, useEffect } from "react";
+import { jsPDF } from "jspdf";
+import {
+  ArrowDownTrayIcon,
+  ShareIcon,
+  XMarkIcon,
+} from "@heroicons/react/24/outline";
 import {
   WhatsappShareButton,
-  LinkedinShareButton,
+  TwitterShareButton,
   FacebookShareButton,
   WhatsappIcon,
-  LinkedinIcon,
+  TwitterIcon,
   FacebookIcon,
-} from 'react-share';
-import { EmailShareButton, EmailIcon } from 'react-share';
-import { trackUmamiEvent } from './UmamiAnalytics';
+} from "react-share";
+import { EmailShareButton, EmailIcon } from "react-share";
+import { trackUmamiEvent } from "./UmamiAnalytics";
 
 interface Resultado {
   concepto: string;
@@ -25,55 +29,86 @@ interface ResultadoCalculoProps {
   subtitulo?: string;
 }
 
-const ResultadoCalculo = ({ resultados, total, titulo, subtitulo }: ResultadoCalculoProps) => {
+const ResultadoCalculo = ({
+  resultados,
+  total,
+  titulo,
+  subtitulo,
+}: ResultadoCalculoProps) => {
   const [showShare, setShowShare] = useState(false);
   const [showShareModal, setShowShareModal] = useState(false);
+  const [hasShownAutoModal, setHasShownAutoModal] = useState(false);
+
+  // Mostrar el modal automáticamente cuando se montan los resultados
+  useEffect(() => {
+    if (resultados.length > 0 && !hasShownAutoModal) {
+      // Esperar 2 segundos para que el usuario vea los resultados primero
+      const timer = setTimeout(() => {
+        setShowShareModal(true);
+        setHasShownAutoModal(true);
+
+        // Registrar evento de modal automático
+        trackUmamiEvent("auto_share_modal_shown", {
+          action: "auto_show_share_modal",
+          content_type: titulo.toLowerCase().replace(/ /g, "_"),
+          total_amount: total,
+          trigger: "calculation_complete",
+        });
+      }, 5000);
+
+      return () => clearTimeout(timer);
+    }
+  }, [resultados, total, titulo, hasShownAutoModal]);
 
   const formatCurrency = (value: number) => {
     const absValue = Math.abs(value);
-    return new Intl.NumberFormat('es-CO', {
-      style: 'currency',
-      currency: 'COP',
+    return new Intl.NumberFormat("es-CO", {
+      style: "currency",
+      currency: "COP",
       minimumFractionDigits: 0,
       maximumFractionDigits: 0,
     }).format(absValue);
   };
 
-  const shareUrl = typeof window !== 'undefined' ? window.location.href : '';
+  const shareUrl = typeof window !== "undefined" ? window.location.href : "";
   const shareTitle = `${titulo} - Total: ${formatCurrency(total)}`;
-  const shareMessage = `He calculado mi ${titulo.toLowerCase()} usando la Calculadora Laboral Colombia. Resultado: ${formatCurrency(total)}`;
+  const shareMessage = `He calculado mi ${titulo.toLowerCase()} usando la Calculadora Laboral Colombia. Resultado: ${formatCurrency(
+    total
+  )}`;
 
   const getValueClass = (valor: number) => {
-    return valor < 0 ? 'text-red-600' : 'text-gray-900';
+    return valor < 0 ? "text-red-600" : "text-gray-900";
   };
   const generarPDF = () => {
     // Registrar evento en Umami cuando se descarga el PDF
-   /*  trackUmamiEvent('download_pdf', {
-      action: 'download_pdf',
-      content_type: titulo.toLowerCase().replace(/ /g, '_'),
-      total_amount: total
-    }); */
-    
+    trackUmamiEvent("download_pdf", {
+      action: "download_pdf",
+      content_type: titulo.toLowerCase().replace(/ /g, "_"),
+      total_amount: total,
+    });
+
     const doc = new jsPDF();
-    
+
     // Configuración inicial del documento
     doc.setFont("helvetica", "bold");
     doc.setFontSize(20);
-    
+
     // Encabezado
     doc.setTextColor(0, 47, 167); // Azul corporativo
-    doc.text("Liquidación Laboral", doc.internal.pageSize.width/2, 20, { align: "center" });
+    doc.text("Liquidación Laboral", doc.internal.pageSize.width / 2, 20, {
+      align: "center",
+    });
     // Información del documento
     doc.setFont("helvetica", "normal");
     doc.setFontSize(12);
     doc.setTextColor(0, 0, 0);
-    
-    const fecha = new Date().toLocaleDateString('es-CO', {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric'
+
+    const fecha = new Date().toLocaleDateString("es-CO", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
     });
-    
+
     // Añadir información del documento
     doc.text(`Fecha de generación: ${fecha}`, 20, 40);
     if (subtitulo) {
@@ -88,28 +123,31 @@ const ResultadoCalculo = ({ resultados, total, titulo, subtitulo }: ResultadoCal
     // Tabla de resultados
     let y = 70;
     doc.setFontSize(11);
-    
+
     // Cabecera de la tabla
     doc.setFont("helvetica", "bold");
     doc.setFillColor(240, 240, 240);
-    doc.rect(20, y - 10, 170, 10, 'F');
+    doc.rect(20, y - 10, 170, 10, "F");
     doc.text("Concepto", 25, y - 2);
     doc.text("Valor", 150, y - 2);
-    
+
     // Contenido de la tabla
     doc.setFont("helvetica", "normal");
     resultados.forEach((resultado, index) => {
       // Alternar colores de fondo para mejor legibilidad
       if (index % 2 === 0) {
         doc.setFillColor(250, 250, 250);
-        doc.rect(20, y, 170, 20, 'F');
+        doc.rect(20, y, 170, 20, "F");
       }
 
       // Concepto y valor
       doc.text(resultado.concepto, 25, y + 5);
-      const valorTexto = resultado.valor < 0 ? `- ${formatCurrency(resultado.valor)}` : formatCurrency(resultado.valor);
-      doc.text(valorTexto, 170, y + 5, { align: 'right' });
-      
+      const valorTexto =
+        resultado.valor < 0
+          ? `- ${formatCurrency(resultado.valor)}`
+          : formatCurrency(resultado.valor);
+      doc.text(valorTexto, 170, y + 5, { align: "right" });
+
       // Descripción en texto más pequeño y gris
       if (resultado.descripcion) {
         doc.setFontSize(8);
@@ -118,7 +156,7 @@ const ResultadoCalculo = ({ resultados, total, titulo, subtitulo }: ResultadoCal
         doc.setTextColor(0, 0, 0);
         doc.setFontSize(11);
       }
-      
+
       y += 20;
     });
 
@@ -130,7 +168,7 @@ const ResultadoCalculo = ({ resultados, total, titulo, subtitulo }: ResultadoCal
     doc.setFontSize(12);
     doc.setTextColor(0, 47, 167);
     doc.text("Total a Recibir:", 25, y);
-    doc.text(formatCurrency(total), 170, y, { align: 'right' });
+    doc.text(formatCurrency(total), 170, y, { align: "right" });
 
     // Pie de página
     const yFooter = doc.internal.pageSize.height - 20;
@@ -138,14 +176,19 @@ const ResultadoCalculo = ({ resultados, total, titulo, subtitulo }: ResultadoCal
     doc.setFontSize(8);
     doc.setTextColor(100, 100, 100);
     doc.line(20, yFooter - 10, 190, yFooter - 10);
-    doc.text("Este documento es informativo y los valores pueden estar sujetos a verificación.", 20, yFooter);
-    doc.text("Calculadora de Liquidación Laboral -www.calculalaboral.com/", 20, yFooter + 5);
+    doc.text(
+      "Este documento es informativo y los valores pueden estar sujetos a verificación.",
+      20,
+      yFooter
+    );
+    doc.text(
+      "Calculadora de Liquidación Laboral -www.calculalaboral.com/",
+      20,
+      yFooter + 5
+    ); // Guardar PDF
+    doc.save("liquidacion-laboral.pdf");
 
-    // Guardar PDF
-    doc.save('liquidacion-laboral.pdf');
-    
-    // Mostrar el modal de compartir después de generar el PDF
-    setShowShareModal(true);
+    // No mostrar modal de compartir aquí, ya que se muestra automáticamente
   };
 
   return (
@@ -165,16 +208,17 @@ const ResultadoCalculo = ({ resultados, total, titulo, subtitulo }: ResultadoCal
             >
               <ArrowDownTrayIcon className="h-4 w-4 mr-2" />
               <span className="font-medium">Descargar PDF</span>
-            </button>            <div className="relative flex-1 sm:flex-none">
+            </button>{" "}
+            <div className="relative flex-1 sm:flex-none">
               <button
                 onClick={() => {
                   setShowShare(!showShare);
                   // Solo registramos el evento cuando se abre el menú de compartir
                   if (!showShare) {
-                    trackUmamiEvent('share_menu_open', {
-                      action: 'open_share_menu',
-                      content_type: titulo.toLowerCase().replace(/ /g, '_'),
-                      total_amount: total
+                    trackUmamiEvent("share_menu_open", {
+                      action: "open_share_menu",
+                      content_type: titulo.toLowerCase().replace(/ /g, "_"),
+                      total_amount: total,
                     });
                   }
                 }}
@@ -183,17 +227,18 @@ const ResultadoCalculo = ({ resultados, total, titulo, subtitulo }: ResultadoCal
                 <ShareIcon className="h-4 w-4 mr-2" />
                 <span className="font-medium">Compartir</span>
               </button>
-              {showShare && (                <div className="absolute right-0 mt-2 p-3 bg-white rounded-lg shadow-xl z-10">
+              {showShare && (
+                <div className="absolute right-0 mt-2 p-3 bg-white rounded-lg shadow-xl z-10">
                   <div className="flex flex-col gap-3">
-                    <WhatsappShareButton 
-                      url={shareUrl} 
+                    <WhatsappShareButton
+                      url={shareUrl}
                       title={shareMessage}
                       onClick={() => {
-                        trackUmamiEvent('share_content', {
-                          action: 'share',
-                          platform: 'whatsapp',
-                          content_type: titulo.toLowerCase().replace(/ /g, '_'),
-                          total_amount: total
+                        trackUmamiEvent("share_content", {
+                          action: "share",
+                          platform: "whatsapp",
+                          content_type: titulo.toLowerCase().replace(/ /g, "_"),
+                          total_amount: total,
                         });
                       }}
                     >
@@ -202,16 +247,16 @@ const ResultadoCalculo = ({ resultados, total, titulo, subtitulo }: ResultadoCal
                         <span className="text-sm text-gray-700">WhatsApp</span>
                       </div>
                     </WhatsappShareButton>
-                    <EmailShareButton 
-                      url={shareUrl} 
-                      subject={shareTitle} 
+                    <EmailShareButton
+                      url={shareUrl}
+                      subject={shareTitle}
                       body={shareMessage}
                       onClick={() => {
-                        trackUmamiEvent('share_content', {
-                          action: 'share',
-                          platform: 'email',
-                          content_type: titulo.toLowerCase().replace(/ /g, '_'),
-                          total_amount: total
+                        trackUmamiEvent("share_content", {
+                          action: "share",
+                          platform: "email",
+                          content_type: titulo.toLowerCase().replace(/ /g, "_"),
+                          total_amount: total,
                         });
                       }}
                     >
@@ -219,34 +264,32 @@ const ResultadoCalculo = ({ resultados, total, titulo, subtitulo }: ResultadoCal
                         <EmailIcon size={32} round />
                         <span className="text-sm text-gray-700">Gmail</span>
                       </div>
-                    </EmailShareButton>
-                    <LinkedinShareButton 
-                      url={shareUrl} 
-                      title={shareTitle} 
-                      summary={shareMessage}
+                    </EmailShareButton>                    <TwitterShareButton
+                      url={shareUrl}
+                      title={shareMessage}
                       onClick={() => {
-                        trackUmamiEvent('share_content', {
-                          action: 'share',
-                          platform: 'linkedin',
-                          content_type: titulo.toLowerCase().replace(/ /g, '_'),
-                          total_amount: total
+                        trackUmamiEvent("share_content", {
+                          action: "share",
+                          platform: "twitter",
+                          content_type: titulo.toLowerCase().replace(/ /g, "_"),
+                          total_amount: total,
                         });
                       }}
                     >
                       <div className="flex items-center gap-3 hover:bg-gray-50 p-2 rounded-lg transition-colors">
-                        <LinkedinIcon size={32} round />
-                        <span className="text-sm text-gray-700">LinkedIn</span>
+                        <TwitterIcon size={32} round />
+                        <span className="text-sm text-gray-700">X</span>
                       </div>
-                    </LinkedinShareButton>
-                    <FacebookShareButton 
-                      url={shareUrl} 
+                    </TwitterShareButton>
+                    <FacebookShareButton
+                      url={shareUrl}
                       hashtag="#CalculadoraLaboral"
                       onClick={() => {
-                        trackUmamiEvent('share_content', {
-                          action: 'share',
-                          platform: 'facebook',
-                          content_type: titulo.toLowerCase().replace(/ /g, '_'),
-                          total_amount: total
+                        trackUmamiEvent("share_content", {
+                          action: "share",
+                          platform: "facebook",
+                          content_type: titulo.toLowerCase().replace(/ /g, "_"),
+                          total_amount: total,
                         });
                       }}
                     >
@@ -262,69 +305,89 @@ const ResultadoCalculo = ({ resultados, total, titulo, subtitulo }: ResultadoCal
           </div>
         </div>
       </div>
-
       <div className="px-6 py-4">
         <div className="mb-4 p-3 bg-blue-50 border border-blue-100 rounded-lg">
           <p className="text-sm text-blue-700 flex items-center">
             <ArrowDownTrayIcon className="h-5 w-5 mr-2" />
-            <span>¡Puedes descargar tu liquidación en PDF para guardarla o compartirla!</span>
+            <span>
+              ¡Puedes descargar tu liquidación en PDF para guardarla o
+              compartirla!
+            </span>
           </p>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
           {resultados.map((resultado, index) => (
-            <div 
+            <div
               key={index}
               className="p-3 rounded-lg bg-gray-50 hover:bg-blue-50/50 transition-colors duration-200"
             >
               <div className="flex justify-between items-start gap-4">
                 <div className="min-w-0">
-                  <h3 className="text-sm font-medium text-gray-900 truncate">{resultado.concepto}</h3>
+                  <h3 className="text-sm font-medium text-gray-900 truncate">
+                    {resultado.concepto}
+                  </h3>
                   {resultado.descripcion && (
-                    <p className="mt-0.5 text-xs text-gray-500 line-clamp-2">{resultado.descripcion}</p>
+                    <p className="mt-0.5 text-xs text-gray-500 line-clamp-2">
+                      {resultado.descripcion}
+                    </p>
                   )}
                 </div>
                 <div className="flex-shrink-0">
-                  <span className={`text-sm font-semibold whitespace-nowrap ${getValueClass(resultado.valor)}`}>
-                    {resultado.valor < 0 ? '- ' : ''}{formatCurrency(resultado.valor)}
+                  <span
+                    className={`text-sm font-semibold whitespace-nowrap ${getValueClass(
+                      resultado.valor
+                    )}`}
+                  >
+                    {resultado.valor < 0 ? "- " : ""}
+                    {formatCurrency(resultado.valor)}
                   </span>
                 </div>
               </div>
             </div>
           ))}
         </div>
-
         <div className="mt-4 pt-3 border-t border-gray-200">
           <div className="flex justify-between items-center px-3 py-2 bg-blue-50 rounded-lg">
-            <span className="text-base font-semibold text-gray-900">Total a Recibir</span>
-            <span className="text-lg font-bold text-blue-600">{formatCurrency(total)}</span>
+            <span className="text-base font-semibold text-gray-900">
+              Total a Recibir
+            </span>
+            <span className="text-lg font-bold text-blue-600">
+              {formatCurrency(total)}
+            </span>
           </div>
-        </div>    </div>      {/* Modal de compartir que aparece después de generar el PDF */}
+        </div>{" "}
+      </div>{" "}
+      {/* Modal de compartir que aparece automáticamente después de mostrar los resultados */}
       {showShareModal && (
-        <div 
+        <div
           className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50"
           onClick={(e) => {
             // Solo cerrar si se hizo clic en el fondo (no en el contenido del modal)
             if (e.target === e.currentTarget) {
-              trackUmamiEvent('share_modal_close', {
-                action: 'close_share_modal',
-                method: 'outside_click',
-                content_type: titulo.toLowerCase().replace(/ /g, '_'),
-                total_amount: total
+              trackUmamiEvent("share_modal_close", {
+                action: "close_share_modal",
+                method: "outside_click",
+                content_type: titulo.toLowerCase().replace(/ /g, "_"),
+                total_amount: total,
               });
               setShowShareModal(false);
             }
           }}
         >
-          <div className="bg-white rounded-xl shadow-2xl max-w-md w-full p-6 animate-fade-in-up">            <div className="flex justify-between items-start mb-4">
-              <h3 className="text-lg font-bold text-gray-900">¡Tu PDF está listo!</h3>
-              <button 
+          <div className="bg-white rounded-xl shadow-2xl max-w-md w-full p-6 animate-fade-in-up">
+            {" "}
+            <div className="flex justify-between items-start mb-4">
+              <h3 className="text-lg font-bold text-gray-900">
+                ¡Tu cálculo está listo!
+              </h3>
+              <button
                 onClick={() => {
                   // Registrar evento cuando el usuario cierra el modal con la X
-                  trackUmamiEvent('share_modal_close', {
-                    action: 'close_share_modal',
-                    method: 'x_button',
-                    content_type: titulo.toLowerCase().replace(/ /g, '_'),
-                    total_amount: total
+                  trackUmamiEvent("share_modal_close", {
+                    action: "close_share_modal",
+                    method: "x_button",
+                    content_type: titulo.toLowerCase().replace(/ /g, "_"),
+                    total_amount: total,
                   });
                   setShowShareModal(false);
                 }}
@@ -332,110 +395,118 @@ const ResultadoCalculo = ({ resultados, total, titulo, subtitulo }: ResultadoCal
               >
                 <XMarkIcon className="h-5 w-5" />
               </button>
-            </div>
-            
+            </div>{" "}
             <div className="mb-6">
+              {" "}
               <div className="p-4 bg-blue-50 rounded-lg mb-4">
                 <p className="text-blue-700 text-sm">
-                  ¿Te ha sido útil esta calculadora? ¡Compártela con tus colegas y amigos que podrían necesitarla!
+                  ¡No dejes que te estafen con tus derechos laborales! 💪
+                  Comparte esta calculadora con tus amigos y familiares para que
+                  también conozcan lo que les corresponde.
                 </p>
               </div>
-              
               <div className="grid grid-cols-2 gap-3 mb-4">
-                <WhatsappShareButton 
-                  url={shareUrl} 
+                <WhatsappShareButton
+                  url={shareUrl}
                   title={shareMessage}
                   onClick={() => {
-                    trackUmamiEvent('share_content', {
-                      action: 'share',
-                      platform: 'whatsapp',
-                      content_type: titulo.toLowerCase().replace(/ /g, '_'),
-                      source: 'pdf_modal',
-                      total_amount: total
+                    trackUmamiEvent("share_content", {
+                      action: "share",
+                      platform: "whatsapp",
+                      content_type: titulo.toLowerCase().replace(/ /g, "_"),
+                      source: "pdf_modal",
+                      total_amount: total,
                     });
                   }}
                   className="w-full"
                 >
                   <div className="flex items-center justify-center gap-2 p-2 rounded-lg border border-gray-200 hover:bg-green-50 transition-colors">
                     <WhatsappIcon size={24} round />
-                    <span className="text-sm font-medium text-gray-950">WhatsApp</span>
+                    <span className="text-sm font-medium text-gray-950">
+                      WhatsApp
+                    </span>
                   </div>
                 </WhatsappShareButton>
-                
-                <EmailShareButton 
-                  url={shareUrl} 
-                  subject={shareTitle} 
+
+                <EmailShareButton
+                  url={shareUrl}
+                  subject={shareTitle}
                   body={shareMessage}
                   onClick={() => {
-                    trackUmamiEvent('share_content', {
-                      action: 'share',
-                      platform: 'email',
-                      content_type: titulo.toLowerCase().replace(/ /g, '_'),
-                      source: 'pdf_modal',
-                      total_amount: total
+                    trackUmamiEvent("share_content", {
+                      action: "share",
+                      platform: "email",
+                      content_type: titulo.toLowerCase().replace(/ /g, "_"),
+                      source: "pdf_modal",
+                      total_amount: total,
                     });
                   }}
                   className="w-full"
                 >
                   <div className="flex items-center justify-center gap-2 p-2 rounded-lg border border-gray-200 hover:bg-blue-50 transition-colors">
                     <EmailIcon size={24} round />
-                    <span className="text-sm font-medium text-gray-950">Email</span>
+                    <span className="text-sm font-medium text-gray-950">
+                      Email
+                    </span>
                   </div>
-                </EmailShareButton>
-                
-                <LinkedinShareButton 
-                  url={shareUrl} 
-                  title={shareTitle} 
-                  summary={shareMessage}
+                </EmailShareButton>                <TwitterShareButton
+                  url={shareUrl}
+                  title={shareMessage}
                   onClick={() => {
-                    trackUmamiEvent('share_content', {
-                      action: 'share',
-                      platform: 'linkedin',
-                      content_type: titulo.toLowerCase().replace(/ /g, '_'),
-                      source: 'pdf_modal',
-                      total_amount: total
+                    trackUmamiEvent("share_content", {
+                      action: "share",
+                      platform: "twitter",
+                      content_type: titulo.toLowerCase().replace(/ /g, "_"),
+                      source: "pdf_modal",
+                      total_amount: total,
                     });
                   }}
                   className="w-full"
                 >
                   <div className="flex items-center justify-center gap-2 p-2 rounded-lg border border-gray-200 hover:bg-blue-100 transition-colors">
-                    <LinkedinIcon size={24} round />
-                    <span className="text-sm font-medium text-gray-950">LinkedIn</span>
+                    <TwitterIcon size={24} round />
+                    <span className="text-sm font-medium text-gray-950">
+                      X
+                    </span>
                   </div>
-                </LinkedinShareButton>
-                
-                <FacebookShareButton 
-                  url={shareUrl} 
+                </TwitterShareButton>
+
+                <FacebookShareButton
+                  url={shareUrl}
                   hashtag="#CalculadoraLaboral"
                   onClick={() => {
-                    trackUmamiEvent('share_content', {
-                      action: 'share',
-                      platform: 'facebook',
-                      content_type: titulo.toLowerCase().replace(/ /g, '_'),
-                      source: 'pdf_modal',
-                      total_amount: total
+                    trackUmamiEvent("share_content", {
+                      action: "share",
+                      platform: "facebook",
+                      content_type: titulo.toLowerCase().replace(/ /g, "_"),
+                      source: "pdf_modal",
+                      total_amount: total,
                     });
                   }}
                   className="w-full"
                 >
                   <div className="flex items-center justify-center gap-2 p-2 rounded-lg border border-gray-200 hover:bg-blue-50 transition-colors">
                     <FacebookIcon size={24} round />
-                    <span className="text-sm font-medium text-gray-950">Facebook</span>
+                    <span className="text-sm font-medium text-gray-950">
+                      Facebook
+                    </span>
                   </div>
                 </FacebookShareButton>
               </div>
-              
               <p className="text-sm text-gray-500 text-center mb-4">
-                Ayuda a otros profesionales y trabajadores de Colombia a calcular sus derechos laborales
+                Ayuda a otros profesionales y trabajadores de Colombia a
+                calcular sus derechos laborales
               </p>
-                <div className="flex justify-center">
+              <div className="flex justify-center">
+                {" "}
                 <button
                   onClick={() => {
                     // Registrar evento cuando el usuario cierra el modal
-                    trackUmamiEvent('share_modal_close', {
-                      action: 'close_share_modal',
-                      content_type: titulo.toLowerCase().replace(/ /g, '_'),
-                      total_amount: total
+                    trackUmamiEvent("share_modal_close", {
+                      action: "close_share_modal",
+                      method: "close_button",
+                      content_type: titulo.toLowerCase().replace(/ /g, "_"),
+                      total_amount: total,
                     });
                     setShowShareModal(false);
                   }}
