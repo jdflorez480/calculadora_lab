@@ -45,13 +45,10 @@ const ResultadoCalculo = ({
       // Esperar 2 segundos para que el usuario vea los resultados primero
       const timer = setTimeout(() => {
         setShowShareModal(true);
-        setHasShownAutoModal(true);
-
-        // Registrar evento de modal automático
+        setHasShownAutoModal(true);        // Registrar evento de modal automático
         trackUmamiEvent("auto_share_modal_shown", {
           action: "auto_show_share_modal",
           content_type: titulo.toLowerCase().replace(/ /g, "_"),
-          total_amount: total,
           trigger: "calculation_complete",
         });
       }, 5000);
@@ -69,22 +66,17 @@ const ResultadoCalculo = ({
       maximumFractionDigits: 0,
     }).format(absValue);
   };
-
   const shareUrl = typeof window !== "undefined" ? window.location.href : "";
-  const shareTitle = `${titulo} - Total: ${formatCurrency(total)}`;
-  const shareMessage = `He calculado mi ${titulo.toLowerCase()} usando la Calculadora Laboral Colombia. Resultado: ${formatCurrency(
-    total
-  )}`;
+  const shareTitle = `Calculadora Laboral Colombia - ${titulo}`;
+  const shareMessage = `Te recomiendo esta herramienta gratuita para calcular tus derechos laborales. ¡Muy útil para conocer lo que te corresponde según la ley colombiana! 💼`;
 
   const getValueClass = (valor: number) => {
     return valor < 0 ? "text-red-600" : "text-gray-900";
   };
-  const generarPDF = () => {
-    // Registrar evento en Umami cuando se descarga el PDF
+  const generarPDF = () => {    // Registrar evento en Umami cuando se descarga el PDF
     trackUmamiEvent("download_pdf", {
       action: "download_pdf",
       content_type: titulo.toLowerCase().replace(/ /g, "_"),
-      total_amount: total,
     });
 
     const doc = new jsPDF();
@@ -214,11 +206,9 @@ const ResultadoCalculo = ({
                 onClick={() => {
                   setShowShare(!showShare);
                   // Solo registramos el evento cuando se abre el menú de compartir
-                  if (!showShare) {
-                    trackUmamiEvent("share_menu_open", {
+                  if (!showShare) {                    trackUmamiEvent("share_menu_open", {
                       action: "open_share_menu",
                       content_type: titulo.toLowerCase().replace(/ /g, "_"),
-                      total_amount: total,
                     });
                   }
                 }}
@@ -233,12 +223,10 @@ const ResultadoCalculo = ({
                     <WhatsappShareButton
                       url={shareUrl}
                       title={shareMessage}
-                      onClick={() => {
-                        trackUmamiEvent("share_content", {
+                      onClick={() => {                        trackUmamiEvent("share_content", {
                           action: "share",
                           platform: "whatsapp",
                           content_type: titulo.toLowerCase().replace(/ /g, "_"),
-                          total_amount: total,
                         });
                       }}
                     >
@@ -251,12 +239,10 @@ const ResultadoCalculo = ({
                       url={shareUrl}
                       subject={shareTitle}
                       body={shareMessage}
-                      onClick={() => {
-                        trackUmamiEvent("share_content", {
+                      onClick={() => {                        trackUmamiEvent("share_content", {
                           action: "share",
                           platform: "email",
                           content_type: titulo.toLowerCase().replace(/ /g, "_"),
-                          total_amount: total,
                         });
                       }}
                     >
@@ -267,12 +253,10 @@ const ResultadoCalculo = ({
                     </EmailShareButton>                    <TwitterShareButton
                       url={shareUrl}
                       title={shareMessage}
-                      onClick={() => {
-                        trackUmamiEvent("share_content", {
+                      onClick={() => {                        trackUmamiEvent("share_content", {
                           action: "share",
                           platform: "twitter",
                           content_type: titulo.toLowerCase().replace(/ /g, "_"),
-                          total_amount: total,
                         });
                       }}
                     >
@@ -284,12 +268,10 @@ const ResultadoCalculo = ({
                     <FacebookShareButton
                       url={shareUrl}
                       hashtag="#CalculadoraLaboral"
-                      onClick={() => {
-                        trackUmamiEvent("share_content", {
+                      onClick={() => {                        trackUmamiEvent("share_content", {
                           action: "share",
                           platform: "facebook",
                           content_type: titulo.toLowerCase().replace(/ /g, "_"),
-                          total_amount: total,
                         });
                       }}
                     >
@@ -363,12 +345,10 @@ const ResultadoCalculo = ({
           className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50"
           onClick={(e) => {
             // Solo cerrar si se hizo clic en el fondo (no en el contenido del modal)
-            if (e.target === e.currentTarget) {
-              trackUmamiEvent("share_modal_close", {
+            if (e.target === e.currentTarget) {              trackUmamiEvent("share_modal_close", {
                 action: "close_share_modal",
                 method: "outside_click",
                 content_type: titulo.toLowerCase().replace(/ /g, "_"),
-                total_amount: total,
               });
               setShowShareModal(false);
             }
@@ -381,13 +361,11 @@ const ResultadoCalculo = ({
                 ¡Tu cálculo está listo!
               </h3>
               <button
-                onClick={() => {
-                  // Registrar evento cuando el usuario cierra el modal con la X
+                onClick={() => {                  // Registrar evento cuando el usuario cierra el modal con la X
                   trackUmamiEvent("share_modal_close", {
                     action: "close_share_modal",
                     method: "x_button",
                     content_type: titulo.toLowerCase().replace(/ /g, "_"),
-                    total_amount: total,
                   });
                   setShowShareModal(false);
                 }}
@@ -409,13 +387,11 @@ const ResultadoCalculo = ({
                 <WhatsappShareButton
                   url={shareUrl}
                   title={shareMessage}
-                  onClick={() => {
-                    trackUmamiEvent("share_content", {
+                  onClick={() => {                    trackUmamiEvent("share_content", {
                       action: "share",
                       platform: "whatsapp",
                       content_type: titulo.toLowerCase().replace(/ /g, "_"),
-                      source: "pdf_modal",
-                      total_amount: total,
+                      source: "auto_modal",
                     });
                   }}
                   className="w-full"
@@ -432,13 +408,11 @@ const ResultadoCalculo = ({
                   url={shareUrl}
                   subject={shareTitle}
                   body={shareMessage}
-                  onClick={() => {
-                    trackUmamiEvent("share_content", {
+                  onClick={() => {                    trackUmamiEvent("share_content", {
                       action: "share",
                       platform: "email",
                       content_type: titulo.toLowerCase().replace(/ /g, "_"),
-                      source: "pdf_modal",
-                      total_amount: total,
+                      source: "auto_modal",
                     });
                   }}
                   className="w-full"
@@ -452,13 +426,11 @@ const ResultadoCalculo = ({
                 </EmailShareButton>                <TwitterShareButton
                   url={shareUrl}
                   title={shareMessage}
-                  onClick={() => {
-                    trackUmamiEvent("share_content", {
+                  onClick={() => {                    trackUmamiEvent("share_content", {
                       action: "share",
                       platform: "twitter",
                       content_type: titulo.toLowerCase().replace(/ /g, "_"),
-                      source: "pdf_modal",
-                      total_amount: total,
+                      source: "auto_modal",
                     });
                   }}
                   className="w-full"
@@ -474,13 +446,11 @@ const ResultadoCalculo = ({
                 <FacebookShareButton
                   url={shareUrl}
                   hashtag="#CalculadoraLaboral"
-                  onClick={() => {
-                    trackUmamiEvent("share_content", {
+                  onClick={() => {                    trackUmamiEvent("share_content", {
                       action: "share",
                       platform: "facebook",
                       content_type: titulo.toLowerCase().replace(/ /g, "_"),
-                      source: "pdf_modal",
-                      total_amount: total,
+                      source: "auto_modal",
                     });
                   }}
                   className="w-full"
@@ -500,13 +470,11 @@ const ResultadoCalculo = ({
               <div className="flex justify-center">
                 {" "}
                 <button
-                  onClick={() => {
-                    // Registrar evento cuando el usuario cierra el modal
+                  onClick={() => {                    // Registrar evento cuando el usuario cierra el modal
                     trackUmamiEvent("share_modal_close", {
                       action: "close_share_modal",
                       method: "close_button",
                       content_type: titulo.toLowerCase().replace(/ /g, "_"),
-                      total_amount: total,
                     });
                     setShowShareModal(false);
                   }}
