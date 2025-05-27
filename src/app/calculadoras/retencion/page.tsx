@@ -6,19 +6,14 @@ import {
   UserIcon,
   HomeIcon,
   HeartIcon,
+  BriefcaseIcon,
 } from "@heroicons/react/24/outline";
 import ResultadoCalculo from "../../components/ResultadoCalculo";
 import {
   calcularRetencionFuente,
   UVT_2025,
 } from "../../utils/calculosLaborales";
-import DatePicker, { registerLocale } from "react-datepicker";
-import { es } from "date-fns/locale";
-import "react-datepicker/dist/react-datepicker.css";
 import BotonVolver from "../../components/BotonVolver";
-
-// Registrar el idioma español para el DatePicker
-registerLocale("es", es);
 
 interface ResultadoRetencion {
   resultados: Array<{
@@ -32,6 +27,7 @@ interface ResultadoRetencion {
 }
 
 interface FormData {
+  tipoPersona: 'empleado' | 'independiente';
   salarioBase: string;
   bonificaciones: string;
   comisiones: string;
@@ -41,11 +37,14 @@ interface FormData {
   dependientes: boolean;
   interesesVivienda: string;
   medicinaPrepagada: string;
-  fechaCalculo: Date | null;
+  // Campos específicos para independientes
+  contrataEmpleados: boolean;
+  aplicaPresuncionCostos: boolean;
+  gastosReales: string;
 }
 
-function RetencionContent() {
-  const [formData, setFormData] = useState<FormData>({
+function RetencionContent() {  const [formData, setFormData] = useState<FormData>({
+    tipoPersona: 'empleado',
     salarioBase: "",
     bonificaciones: "",
     comisiones: "",
@@ -55,7 +54,9 @@ function RetencionContent() {
     dependientes: false,
     interesesVivienda: "",
     medicinaPrepagada: "",
-    fechaCalculo: null,
+    contrataEmpleados: false,
+    aplicaPresuncionCostos: true,
+    gastosReales: "",
   });
   const [resultado, setResultado] = useState<ResultadoRetencion | null>(null);
 
@@ -72,7 +73,6 @@ function RetencionContent() {
       [name]: formatNumber(rawValue),
     });
   };
-
   const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, checked } = e.target;
     setFormData({
@@ -81,10 +81,18 @@ function RetencionContent() {
     });
   };
 
+  const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+  };
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
     const datos = {
+      tipoPersona: formData.tipoPersona,
       salarioBase: parseFloat(formData.salarioBase.replace(/\./g, "")),
       bonificaciones:
         parseFloat(formData.bonificaciones.replace(/\./g, "")) || 0,
@@ -98,6 +106,10 @@ function RetencionContent() {
         parseFloat(formData.interesesVivienda.replace(/\./g, "")) || 0,
       medicinaPrepagada:
         parseFloat(formData.medicinaPrepagada.replace(/\./g, "")) || 0,
+      // Campos específicos para independientes
+      contrataEmpleados: formData.contrataEmpleados,
+      aplicaPresuncionCostos: formData.aplicaPresuncionCostos,
+      gastosReales: parseFloat(formData.gastosReales.replace(/\./g, "")) || 0,
     };
 
     const resultadoCalculo = calcularRetencionFuente(datos);
@@ -151,25 +163,140 @@ function RetencionContent() {
           <p className="mt-4 text-xl text-gray-600">
             Calcula tu retención en la fuente mensual según la normativa DIAN
           </p>
-        </div>
-
-        <form
+        </div>        <form
           onSubmit={handleSubmit}
           className="bg-white p-8 rounded-2xl shadow-xl"
         >
           <div className="grid grid-cols-1 gap-6">
+            {/* Tipo de Persona */}
+            <div className="space-y-6">
+              <h3 className="text-lg font-medium text-gray-900">
+                Tipo de Contribuyente
+              </h3>
+
+              <div className="form-group">
+                <div className="flex items-center mb-2">
+                  <BriefcaseIcon className="h-5 w-5 text-blue-500" />
+                  <label className="ml-2 block text-sm font-medium text-gray-900">
+                    ¿Eres empleado o trabajas de forma independiente?
+                  </label>
+                </div>
+                <select
+                  name="tipoPersona"
+                  value={formData.tipoPersona}
+                  onChange={handleSelectChange}
+                  className="block w-full py-2.5 pl-3 pr-10 text-gray-900 border border-gray-300 rounded-lg hover:border-gray-400 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-colors duration-200 ease-in-out sm:text-sm cursor-pointer bg-white shadow-sm"
+                  required
+                >
+                  <option value="empleado">Empleado (Trabajo en relación de dependencia)</option>
+                  <option value="independiente">Independiente (Prestación de servicios / Honorarios)</option>
+                </select>
+              </div>
+
+              {/* Campos específicos para independientes */}
+              {formData.tipoPersona === 'independiente' && (
+                <div className="space-y-4 p-4 bg-blue-50 rounded-lg">
+                  <h4 className="text-md font-medium text-blue-900">
+                    Configuración para Independientes
+                  </h4>
+                  
+                  {/* ¿Contrata empleados? */}
+                  <div className="form-group">
+                    <div className="flex items-center mb-2">
+                      <input
+                        type="checkbox"
+                        name="contrataEmpleados"
+                        checked={formData.contrataEmpleados}
+                        onChange={handleCheckboxChange}
+                        className="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500 cursor-pointer"
+                      />
+                      <label className="ml-2 block text-sm font-medium text-gray-900">
+                        ¿Contratas empleados?
+                      </label>
+                    </div>
+                  </div>
+
+                  {/* Tipo de costos */}
+                  <div className="form-group">
+                    <label className="block text-sm font-medium text-gray-900 mb-2">
+                      ¿Cómo deseas calcular los costos y gastos?
+                    </label>
+                    <div className="space-y-2">
+                      <div className="flex items-center">
+                        <input
+                          type="radio"
+                          name="aplicaPresuncionCostos"
+                          value="true"
+                          checked={formData.aplicaPresuncionCostos}
+                          onChange={(e) => setFormData({...formData, aplicaPresuncionCostos: e.target.value === 'true'})}
+                          className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 cursor-pointer"
+                        />
+                        <label className="ml-2 text-sm text-gray-700">
+                          Presunción de costos ({formData.contrataEmpleados ? '50%' : '75%'} de los ingresos)
+                        </label>
+                      </div>
+                      <div className="flex items-center">
+                        <input
+                          type="radio"
+                          name="aplicaPresuncionCostos"
+                          value="false"
+                          checked={!formData.aplicaPresuncionCostos}
+                          onChange={(e) => setFormData({...formData, aplicaPresuncionCostos: e.target.value === 'true'})}
+                          className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 cursor-pointer"
+                        />
+                        <label className="ml-2 text-sm text-gray-700">
+                          Costos y gastos reales (según facturas)
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Campo para gastos reales */}
+                  {!formData.aplicaPresuncionCostos && (
+                    <div className="form-group">
+                      <div className="flex items-center mb-2">
+                        <CurrencyDollarIcon className="h-5 w-5 text-blue-500" />
+                        <label className="ml-2 block text-sm font-medium text-gray-900">
+                          Costos y Gastos Reales
+                        </label>
+                      </div>
+                      <div className="relative rounded-lg">
+                        <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                          <span className="text-gray-900 sm:text-sm">$</span>
+                        </div>
+                        <input
+                          type="text"
+                          name="gastosReales"
+                          className="block w-full pl-8 pr-12 py-2.5 text-gray-900 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 sm:text-sm input-currency shadow-sm"
+                          placeholder="0"
+                          value={formData.gastosReales}
+                          onChange={handleMoneyInputChange}
+                        />
+                        <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                          <span className="text-gray-500 sm:text-sm">COP</span>
+                        </div>
+                      </div>
+                      <p className="text-xs text-gray-500 mt-1">
+                        Incluye todos los costos y gastos necesarios para generar tus ingresos
+                      </p>
+                    </div>
+                  )}
+                </div>
+              )}
+            </div>
+
             {/* Ingresos */}
             <div className="space-y-6">
               <h3 className="text-lg font-medium text-gray-900">
                 Ingresos Mensuales
               </h3>
 
-              {/* Salario Base */}
+              {/* Salario Base / Ingresos */}
               <div className="form-group">
                 <div className="flex items-center mb-2">
                   <CurrencyDollarIcon className="h-5 w-5 text-blue-500" />
                   <label className="ml-2 block text-sm font-medium text-gray-900">
-                    Salario Base Mensual
+                    {formData.tipoPersona === 'empleado' ? 'Salario Base Mensual' : 'Ingresos Mensuales por Servicios'}
                   </label>
                 </div>
                 <div className="relative rounded-lg">
@@ -250,21 +377,23 @@ function RetencionContent() {
                 Deducciones y Beneficios
               </h3>
 
-              {/* Auxilio de Transporte */}
-              <div className="form-group">
-                <div className="flex items-center mb-2">
-                  <input
-                    type="checkbox"
-                    name="auxilioTransporte"
-                    checked={formData.auxilioTransporte}
-                    onChange={handleCheckboxChange}
-                    className="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500 cursor-pointer"
-                  />
-                  <label className="ml-2 block text-sm font-medium text-gray-900">
-                    Recibe Auxilio de Transporte
-                  </label>
+              {/* Auxilio de Transporte - Solo para empleados */}
+              {formData.tipoPersona === 'empleado' && (
+                <div className="form-group">
+                  <div className="flex items-center mb-2">
+                    <input
+                      type="checkbox"
+                      name="auxilioTransporte"
+                      checked={formData.auxilioTransporte}
+                      onChange={handleCheckboxChange}
+                      className="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500 cursor-pointer"
+                    />
+                    <label className="ml-2 block text-sm font-medium text-gray-900">
+                      Recibe Auxilio de Transporte
+                    </label>
+                  </div>
                 </div>
-              </div>
+              )}
 
               {/* Fondo Voluntario de Pensiones */}
               <div className="form-group">
@@ -392,28 +521,9 @@ function RetencionContent() {
                     <span className="text-gray-500 sm:text-sm">COP</span>
                   </div>
                 </div>
-              </div>
-
-              {/* Fecha de Cálculo */}
-              <div className="form-group">
-                <div className="flex items-center mb-2">
-                  <label className="ml-2 block text-sm font-medium text-gray-900">
-                    Fecha de Cálculo
-                  </label>
-                </div>
-                <div className="relative rounded-lg">
-                  <DatePicker
-                    selected={formData.fechaCalculo}
-                    onChange={(date) =>
-                      setFormData({ ...formData, fechaCalculo: date })
-                    }
-                    dateFormat="dd/MM/yyyy"
-                    locale="es"
-                    placeholderText="Seleccionar fecha"
-                    className="block w-full py-2.5 pl-3 pr-10 text-gray-900 border border-gray-300 rounded-lg hover:border-gray-400 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-colors duration-200 ease-in-out sm:text-sm cursor-pointer bg-white shadow-sm"
-                    required
-                  />
-                </div>
+                <p className="text-xs text-gray-500 mt-1">
+                  Máximo deducible: 16 UVT mensuales (${new Intl.NumberFormat("es-CO").format(16 * 49799)})
+                </p>
               </div>
             </div>
           </div>
@@ -437,9 +547,7 @@ function RetencionContent() {
               subtitulo={resultado.subtitulo}
             />
           </div>
-        )}
-
-        {/* Texto explicativo sobre la retención en la fuente */}
+        )}        {/* Texto explicativo sobre la retención en la fuente */}
         <div className="mt-16 bg-gray-50 p-8 rounded-lg shadow-md">
           <h2 className="text-2xl font-bold text-gray-900 mb-4">
             ¿Qué es la Retención en la Fuente en Colombia?
@@ -453,6 +561,36 @@ function RetencionContent() {
           </p>
 
           <h3 className="text-xl font-semibold text-gray-900 mb-2">
+            ¿Cómo funciona para empleados vs independientes?
+          </h3>
+          <div className="grid md:grid-cols-2 gap-6 mb-6">
+            <div className="bg-white p-4 rounded-lg shadow-sm">
+              <h4 className="text-lg font-semibold text-blue-700 mb-2">
+                Para Empleados
+              </h4>
+              <ul className="text-gray-700 text-sm space-y-1">
+                <li>• Se calculan aportes obligatorios (salud, pensión, FSP)</li>
+                <li>• Se considera auxilio de transporte si aplica</li>
+                <li>• Deducciones por dependientes, AFC, vivienda</li>
+                <li>• Renta exenta del 25% (máx. 240 UVT)</li>
+                <li>• Aplica tabla de retención según base gravable</li>
+              </ul>
+            </div>
+            <div className="bg-white p-4 rounded-lg shadow-sm">
+              <h4 className="text-lg font-semibold text-blue-700 mb-2">
+                Para Independientes
+              </h4>
+              <ul className="text-gray-700 text-sm space-y-1">
+                <li>• Sin aportes obligatorios automáticos</li>
+                <li>• Presunción de costos: 75% (sin empleados) o 50% (con empleados)</li>
+                <li>• O costos reales según facturas</li>
+                <li>• Mismas deducciones adicionales que empleados</li>
+                <li>• Aplica la misma tabla 383 de retención</li>
+              </ul>
+            </div>
+          </div>
+
+          <h3 className="text-xl font-semibold text-gray-900 mb-2">
             ¿Cómo se calcula la retención en la fuente?
           </h3>
           <p className="text-gray-700 leading-relaxed mb-4">
@@ -464,11 +602,22 @@ function RetencionContent() {
             y sobre esa base se aplica la tabla de retención vigente para 2025.
           </p>
 
-          <p className="text-gray-700 font-mono bg-gray-100 p-4 rounded-lg mb-4">
-            Base gravable = Ingresos - Deducciones - Renta exenta
-            <br />
-            Retención = Según tabla DIAN (progresiva por rangos en UVT)
-          </p>
+          <div className="grid md:grid-cols-2 gap-4 mb-4">
+            <div className="text-gray-700 font-mono bg-gray-100 p-4 rounded-lg">
+              <strong>Empleados:</strong>
+              <br />
+              Base = Ingresos - Aportes - Deducciones - Renta exenta - Aux. transporte
+              <br />
+              Retención = Según tabla DIAN
+            </div>
+            <div className="text-gray-700 font-mono bg-gray-100 p-4 rounded-lg">
+              <strong>Independientes:</strong>
+              <br />
+              Base = Ingresos - Costos - Deducciones - Renta exenta
+              <br />
+              Retención = Según tabla DIAN
+            </div>
+          </div>
 
           <h3 className="text-xl font-semibold text-gray-900 mb-2">
             Preguntas frecuentes sobre retención en la fuente
@@ -479,10 +628,24 @@ function RetencionContent() {
                 ¿Quiénes están sujetos a retención en la fuente?
               </h4>
               <p className="text-gray-700 mt-2">
-                Todos los empleados y personas naturales que reciban pagos
-                laborales superiores a ciertos límites establecidos por la DIAN
-                pueden estar sujetos a retención en la fuente, dependiendo de su
-                nivel de ingresos y deducciones.
+                <strong>Empleados:</strong> Todos los empleados que reciban pagos
+                laborales superiores a ciertos límites establecidos por la DIAN.
+                <br />
+                <strong>Independientes:</strong> Profesionales y prestadores de servicios
+                que facturen a empresas, dependiendo de su nivel de ingresos.
+              </p>
+            </div>
+
+            <div className="bg-white p-4 rounded-lg shadow-sm">
+              <h4 className="text-lg font-semibold text-blue-700">
+                ¿Qué es la presunción de costos para independientes?
+              </h4>
+              <p className="text-gray-700 mt-2">
+                Es un beneficio que permite deducir automáticamente un porcentaje
+                de los ingresos como costos sin necesidad de tener facturas.
+                Es del <strong>75%</strong> si no contratas empleados, o del{" "}
+                <strong>50%</strong> si contratas empleados. El límite es{" "}
+                <strong>1000 UVT anuales = ${new Intl.NumberFormat("es-CO").format(1000 * 49799)}</strong>.
               </p>
             </div>
 
@@ -491,8 +654,8 @@ function RetencionContent() {
                 ¿Qué deducciones y beneficios puedo aplicar?
               </h4>
               <p className="text-gray-700 mt-2">
-                Puedes deducir aportes voluntarios a pensiones, cuentas AFC,
-                intereses de vivienda, medicina prepagada (hasta{" "}
+                Tanto empleados como independientes pueden deducir aportes voluntarios a pensiones, 
+                cuentas AFC, intereses de vivienda, medicina prepagada (hasta{" "}
                 <strong>16 UVT = $752.960</strong>), y deducción por
                 dependientes (hasta el 10% del ingreso). Además, la renta exenta
                 del 25% aplica sobre la base menos deducciones, hasta{" "}
@@ -506,8 +669,9 @@ function RetencionContent() {
               </h4>
               <p className="text-gray-700 mt-2">
                 Puedes usar nuestra calculadora para simular tu retención
-                mensual y comparar con el descuento que ves en tu nómina. Si hay
-                diferencias, consulta con tu área de nómina o un contador.
+                mensual y comparar con el descuento que ves en tu nómina o
+                facturas. Si hay diferencias, consulta con tu área de nómina,
+                contador o la empresa que te paga.
               </p>
             </div>
 
@@ -515,28 +679,46 @@ function RetencionContent() {
               <h4 className="text-lg font-semibold text-blue-700">
                 Ejemplo práctico de cálculo
               </h4>
-              <p className="text-gray-700 mt-2">
-                Si tu ingreso mensual es de $5.000.000, tienes $500.000 en
-                deducciones y $1.000.000 de renta exenta, la base gravable sería
-                $3.500.000. Sobre esa base, se consulta la tabla DIAN de 2025
-                para determinar el porcentaje de retención aplicable según los
-                rangos de UVT.
-              </p>
-              <p className="text-gray-700 font-mono bg-gray-100 p-4 rounded-lg my-2">
-                Ingreso: $5.000.000
-                <br />
-                Deducciones: $500.000
-                <br />
-                Renta exenta: $1.000.000
-                <br />
-                Base gravable: $3.500.000
-                <br />
-                Retención: Según tabla DIAN 2025
-              </p>
-              <p className="text-gray-700 mt-2">
+              <div className="grid md:grid-cols-2 gap-4 mt-2">
+                <div>
+                  <p className="text-gray-700 font-semibold">Empleado:</p>
+                  <p className="text-gray-700 font-mono bg-gray-100 p-3 rounded-lg text-xs">
+                    Salario: $5.000.000
+                    <br />
+                    Aportes: $400.000
+                    <br />
+                    Deducciones: $500.000
+                    <br />
+                    Renta exenta: $1.025.000
+                    <br />
+                    Aux. transporte: $200.000
+                    <br />
+                    Base gravable: $2.875.000
+                    <br />
+                    Retención: Según tabla DIAN
+                  </p>
+                </div>
+                <div>
+                  <p className="text-gray-700 font-semibold">Independiente:</p>
+                  <p className="text-gray-700 font-mono bg-gray-100 p-3 rounded-lg text-xs">
+                    Ingresos: $5.000.000
+                    <br />
+                    Presunción costos 75%: $3.750.000
+                    <br />
+                    Deducciones: $500.000
+                    <br />
+                    Renta exenta: $187.500
+                    <br />
+                    Base gravable: $562.500
+                    <br />
+                    Retención: Según tabla DIAN
+                  </p>
+                </div>
+              </div>
+              <p className="text-gray-700 mt-3">
                 <span className="font-medium text-blue-600">
                   ¡Utiliza nuestra calculadora para obtener el valor exacto de
-                  tu retención en la fuente según tu salario y beneficios!
+                  tu retención según tu situación específica!
                 </span>
               </p>
             </div>

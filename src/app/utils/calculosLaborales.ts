@@ -22,7 +22,7 @@ export const RECARGO_HORA_EXTRA_DOMINICAL_FESTIVO = 1.00; // 100% adicional
 export const RECARGO_NOCTURNO = 0.35; // 35% adicional
 
 // Constantes para retención en la fuente 2025
-export const UVT_2025 = 47065;
+export const UVT_2025 = 49799;
 export const RANGO_UVT = {
   RANGO1: 95,
   RANGO2: 150,
@@ -31,6 +31,11 @@ export const RANGO_UVT = {
   RANGO5: 945,
   RANGO6: 2300
 };
+
+// Constantes para independientes
+export const PORCENTAJE_PRESUNCION_COSTOS = 0.75; // 75% para independientes que no contratan empleados
+export const PORCENTAJE_PRESUNCION_COSTOS_CON_EMPLEADOS = 0.5; // 50% para independientes que contratan empleados
+export const LIMITE_PRESUNCION_COSTOS = 1000 * UVT_2025; // 1000 UVT
 
 export interface DatosLiquidacion {
   salarioBase: number;
@@ -77,6 +82,7 @@ interface ResultadoHorasExtras {
 }
 
 interface DatosRetencion {
+  tipoPersona: 'empleado' | 'independiente';
   salarioBase: number;
   bonificaciones?: number;
   comisiones?: number;
@@ -86,6 +92,10 @@ interface DatosRetencion {
   dependientes: boolean;
   interesesVivienda?: number;
   medicinaPrepagada?: number;
+  // Campos específicos para independientes
+  contrataEmpleados?: boolean;
+  aplicaPresuncionCostos?: boolean;
+  gastosReales?: number;
 }
 
 interface ResultadoRetencion {
@@ -353,6 +363,14 @@ export const calcularRetencionFuente = (datos: DatosRetencion): ResultadoRetenci
     (datos.bonificaciones || 0) + 
     (datos.comisiones || 0);
 
+  if (datos.tipoPersona === 'empleado') {
+    return calcularRetencionEmpleado(datos, ingresoTotal);
+  } else {
+    return calcularRetencionIndependiente(datos, ingresoTotal);
+  }
+};
+
+const calcularRetencionEmpleado = (datos: DatosRetencion, ingresoTotal: number): ResultadoRetencion => {
   // 2. Calcular deducciones obligatorias
   const aportesSalud = ingresoTotal * PORCENTAJE_SALUD;
   const aportesPension = ingresoTotal * PORCENTAJE_PENSION;
@@ -386,26 +404,8 @@ export const calcularRetencionFuente = (datos: DatosRetencion): ResultadoRetenci
   // 7. Calcular base gravable
   const baseGravable = ingresoTotal - totalDeducciones - rentaExenta - auxilioTransporte;
 
-  // 8. Convertir base gravable a UVT
-  const baseGravableUVT = baseGravable / UVT_2025;
-
-  // 9. Calcular retención según tabla
-  let retencion = 0;
-  if (baseGravableUVT <= RANGO_UVT.RANGO1) {
-    retencion = 0;
-  } else if (baseGravableUVT <= RANGO_UVT.RANGO2) {
-    retencion = ((baseGravableUVT - RANGO_UVT.RANGO1) * 0.19) * UVT_2025;
-  } else if (baseGravableUVT <= RANGO_UVT.RANGO3) {
-    retencion = ((baseGravableUVT - RANGO_UVT.RANGO2) * 0.28 + 10.45) * UVT_2025;
-  } else if (baseGravableUVT <= RANGO_UVT.RANGO4) {
-    retencion = ((baseGravableUVT - RANGO_UVT.RANGO3) * 0.33 + 69.05) * UVT_2025;
-  } else if (baseGravableUVT <= RANGO_UVT.RANGO5) {
-    retencion = ((baseGravableUVT - RANGO_UVT.RANGO4) * 0.35 + 162.65) * UVT_2025;
-  } else if (baseGravableUVT <= RANGO_UVT.RANGO6) {
-    retencion = ((baseGravableUVT - RANGO_UVT.RANGO5) * 0.37 + 269.40) * UVT_2025;
-  } else {
-    retencion = ((baseGravableUVT - RANGO_UVT.RANGO6) * 0.39 + 770.15) * UVT_2025;
-  }
+  // 8. Calcular retención
+  const retencion = calcularRetencionSegunTabla(baseGravable);
 
   return {
     baseGravable,
@@ -423,4 +423,94 @@ export const calcularRetencionFuente = (datos: DatosRetencion): ResultadoRetenci
       { concepto: 'Deducción por Dependientes', valor: deduccionDependientes }
     ]
   };
+};
+
+const calcularRetencionIndependiente = (datos: DatosRetencion, ingresoTotal: number): ResultadoRetencion => {
+  // 1. Calcular costos y gastos
+  let costos = 0;
+  let detalleCostos = '';
+
+  if (datos.aplicaPresuncionCostos) {
+    // Aplicar presunción de costos según si contrata empleados o no
+    const porcentajePresuncion = datos.contrataEmpleados 
+      ? PORCENTAJE_PRESUNCION_COSTOS_CON_EMPLEADOS 
+      : PORCENTAJE_PRESUNCION_COSTOS;
+    
+    costos = Math.min(ingresoTotal * porcentajePresuncion, LIMITE_PRESUNCION_COSTOS);
+    detalleCostos = `Presunción de costos ${datos.contrataEmpleados ? '50%' : '75%'} (máx. 1000 UVT)`;
+  } else {
+    costos = datos.gastosReales || 0;
+    detalleCostos = 'Costos y gastos reales';
+  }
+
+  // 2. Calcular renta líquida
+  const rentaLiquida = ingresoTotal - costos;
+
+  // 3. Calcular deducciones adicionales (no aplican aportes obligatorios para independientes)
+  const fondoVoluntarioPensiones = datos.fondoVoluntarioPensiones || 0;
+  const afc = datos.afc || 0;
+  const interesesVivienda = datos.interesesVivienda || 0;
+  const medicinaPrepagada = Math.min(datos.medicinaPrepagada || 0, 16 * UVT_2025);
+
+  // 4. Calcular deducción por dependientes (sobre renta líquida)
+  const deduccionDependientes = datos.dependientes ? (rentaLiquida * 0.10) : 0;
+
+  // 5. Calcular total deducciones
+  const totalDeducciones = 
+    costos +
+    fondoVoluntarioPensiones +
+    afc +
+    interesesVivienda +
+    medicinaPrepagada +
+    deduccionDependientes;
+
+  // 6. Calcular renta exenta (25% de la renta líquida menos deducciones adicionales)
+  const baseParaRentaExenta = rentaLiquida - (fondoVoluntarioPensiones + afc + interesesVivienda + medicinaPrepagada + deduccionDependientes);
+  const rentaExenta = Math.min(baseParaRentaExenta * 0.25, 240 * UVT_2025);
+
+  // 7. Calcular base gravable
+  const baseGravable = Math.max(0, ingresoTotal - totalDeducciones - rentaExenta);
+
+  // 8. Calcular retención según tabla 383 (misma tabla que empleados)
+  const retencion = calcularRetencionSegunTabla(baseGravable);
+
+  return {
+    baseGravable,
+    totalDeducciones,
+    rentaExenta,
+    totalRetencion: retencion,
+    detalleDeducciones: [
+      { concepto: detalleCostos, valor: costos },
+      { concepto: 'Fondo Voluntario de Pensiones', valor: fondoVoluntarioPensiones },
+      { concepto: 'Cuenta AFC', valor: afc },
+      { concepto: 'Intereses de Vivienda', valor: interesesVivienda },
+      { concepto: 'Medicina Prepagada', valor: medicinaPrepagada },
+      { concepto: 'Deducción por Dependientes', valor: deduccionDependientes }
+    ]
+  };
+};
+
+const calcularRetencionSegunTabla = (baseGravable: number): number => {
+  // Convertir base gravable a UVT
+  const baseGravableUVT = baseGravable / UVT_2025;
+
+  // Calcular retención según tabla 383 (vigente para 2025)
+  let retencion = 0;
+  if (baseGravableUVT <= RANGO_UVT.RANGO1) {
+    retencion = 0;
+  } else if (baseGravableUVT <= RANGO_UVT.RANGO2) {
+    retencion = ((baseGravableUVT - RANGO_UVT.RANGO1) * 0.19) * UVT_2025;
+  } else if (baseGravableUVT <= RANGO_UVT.RANGO3) {
+    retencion = ((baseGravableUVT - RANGO_UVT.RANGO2) * 0.28 + 10.45) * UVT_2025;
+  } else if (baseGravableUVT <= RANGO_UVT.RANGO4) {
+    retencion = ((baseGravableUVT - RANGO_UVT.RANGO3) * 0.33 + 69.05) * UVT_2025;
+  } else if (baseGravableUVT <= RANGO_UVT.RANGO5) {
+    retencion = ((baseGravableUVT - RANGO_UVT.RANGO4) * 0.35 + 162.65) * UVT_2025;
+  } else if (baseGravableUVT <= RANGO_UVT.RANGO6) {
+    retencion = ((baseGravableUVT - RANGO_UVT.RANGO5) * 0.37 + 269.40) * UVT_2025;
+  } else {
+    retencion = ((baseGravableUVT - RANGO_UVT.RANGO6) * 0.39 + 770.15) * UVT_2025;
+  }
+
+  return Math.max(0, retencion);
 };
