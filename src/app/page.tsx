@@ -202,8 +202,8 @@ export default function Home() {
         {/* Sección Calculadoras */}
         <CalculatorsSection calculadoras={calculadoras} />
         
-        {/* Banner de anuncios */}
-        <AdBanner adSlot="1234567890" />
+        {/* Banner de anuncios 
+        <AdBanner adSlot="1234567890" />*/}
 
         {/* Sección Beneficios */}
         <BenefitsSection beneficios={beneficios} />
