@@ -174,7 +174,7 @@ const DonationButton: React.FC<DonationButtonProps> = ({
                       onClick={handleCloseModal}
                       className="flex-1 bg-gray-100 text-gray-700 px-6 py-3 rounded-xl font-medium hover:bg-gray-200 transition-colors"
                     >
-                      Ahora no
+                      Ahora no  💔
                     </button>
                   </div>
                   
@@ -243,7 +243,7 @@ const DonationButton: React.FC<DonationButtonProps> = ({
                     onClick={handleCloseModal}
                     className="flex-1 bg-gray-100 text-gray-700 px-6 py-3 rounded-xl font-medium hover:bg-gray-200 transition-colors"
                   >
-                    Ahora no
+                    Ahora no  💔
                   </button>
                 </div>
                 

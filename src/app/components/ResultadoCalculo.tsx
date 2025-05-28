@@ -15,6 +15,7 @@ import {
 } from "react-share";
 import { EmailShareButton, EmailIcon } from "react-share";
 import { trackUmamiEvent } from "./UmamiAnalytics";
+import DonationButton from "./DonationButton";
 
 interface Resultado {
   concepto: string;
@@ -34,28 +35,46 @@ const ResultadoCalculo = ({
   total,
   titulo,
   subtitulo,
-}: ResultadoCalculoProps) => {
-  const [showShare, setShowShare] = useState(false);
+}: ResultadoCalculoProps) => {  const [showShare, setShowShare] = useState(false);
   const [showShareModal, setShowShareModal] = useState(false);
   const [hasShownAutoModal, setHasShownAutoModal] = useState(false);
-
-  // Mostrar el modal automáticamente cuando se montan los resultados
+  const [showDonationModal, setShowDonationModal] = useState(false);
+  // Mostrar el modal de donación automáticamente después de 10 segundos
   useEffect(() => {
-    if (resultados.length > 0 && !hasShownAutoModal) {
-      // Esperar 2 segundos para que el usuario vea los resultados primero
+    if (resultados.length > 0 && total !== 0 && !hasShownAutoModal) {
       const timer = setTimeout(() => {
-        setShowShareModal(true);
-        setHasShownAutoModal(true);        // Registrar evento de modal automático
-        trackUmamiEvent("auto_share_modal_shown", {
-          action: "auto_show_share_modal",
+        setShowDonationModal(true);
+        setHasShownAutoModal(true);
+        
+        // Registrar evento de modal automático de donación
+        trackUmamiEvent("auto_donation_modal_shown", {
+          action: "auto_show_donation_modal",
           content_type: titulo.toLowerCase().replace(/ /g, "_"),
           trigger: "calculation_complete",
         });
-      }, 5000);
+      }, 10000); // 10 segundos
 
       return () => clearTimeout(timer);
     }
   }, [resultados, total, titulo, hasShownAutoModal]);
+
+  // COMENTADO TEMPORALMENTE: Modal de compartir automático
+  // useEffect(() => {
+  //   if (resultados.length > 0 && !hasShownAutoModal) {
+  //     // Esperar 2 segundos para que el usuario vea los resultados primero
+  //     const timer = setTimeout(() => {
+  //       setShowShareModal(true);
+  //       setHasShownAutoModal(true);
+  //       // Registrar evento de modal automático
+  //       trackUmamiEvent("auto_share_modal_shown", {
+  //         action: "auto_show_share_modal",
+  //         content_type: titulo.toLowerCase().replace(/ /g, "_"),
+  //         trigger: "calculation_complete",
+  //       });
+  //     }, 5000);
+  //     return () => clearTimeout(timer);
+  //   }
+  // }, [resultados, total, titulo, hasShownAutoModal]);
 
   const formatCurrency = (value: number) => {
     const absValue = Math.abs(value);
@@ -337,10 +356,9 @@ const ResultadoCalculo = ({
               {formatCurrency(total)}
             </span>
           </div>
-        </div>{" "}
-      </div>{" "}
-      {/* Modal de compartir que aparece automáticamente después de mostrar los resultados */}
-      {showShareModal && (
+        </div>{" "}      </div>{" "}
+      {/* COMENTADO TEMPORALMENTE: Modal de compartir automático - ahora solo manual */}
+      {false && showShareModal && (
         <div
           className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50"
           onClick={(e) => {
@@ -482,6 +500,64 @@ const ResultadoCalculo = ({
                 >
                   Cerrar
                 </button>
+              </div>            </div>          </div>
+        </div>
+      )}      {/* Modal de donación que aparece automáticamente después de 10 segundos */}
+      {showDonationModal && (
+        <div className="fixed inset-0 bg-blue-50 bg-opacity-95 z-[100] flex items-center justify-center p-4">
+          <div className="bg-white rounded-2xl max-w-md w-full mx-4 shadow-xl border border-blue-100 transform transition-all">
+            <div className="relative p-6">
+              {/* Contenido del modal - SIN botón X para cerrar */}
+              <div className="text-center">
+                <div className="mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-gradient-to-r from-pink-100 to-red-100 mb-4">
+                  <span className="text-2xl">❤️</span>
+                </div>
+                
+                <h3 className="text-xl font-bold text-gray-900 mb-2">
+                  ¡Tu cálculo está listo!
+                </h3>
+                
+                <p className="text-gray-600 mb-4 leading-relaxed">
+                  Esta herramienta te ayudó a conocer tus derechos laborales. Si te resultó útil, 
+                  considera apoyarnos para mantener este servicio gratuito para todos los trabajadores colombianos.
+                </p>
+
+                <div className="flex flex-col gap-3">
+                  <button
+                    onClick={() => {
+                      trackUmamiEvent('auto_donation_confirm', { 
+                        action: 'donation_confirmed',
+                        method: 'auto_modal',
+                        content_type: titulo.toLowerCase().replace(/ /g, "_"),
+                        trigger: 'auto_modal'
+                      });
+                      
+                      setShowDonationModal(false);
+                      window.open('https://link.mercadopago.com.co/calculalaboral', '_blank', 'noopener,noreferrer');
+                    }}
+                    className="bg-gradient-to-r from-green-500 to-blue-500 text-white px-6 py-3 rounded-xl font-semibold hover:from-green-600 hover:to-blue-600 transition-all duration-300 transform hover:scale-105"
+                  >
+                    ¡Sí, quiero apoyar! 💚
+                  </button>
+                  <button
+                    onClick={() => {
+                      trackUmamiEvent('auto_donation_modal_close', { 
+                        action: 'donation_modal_closed',
+                        method: 'not_now_button',
+                        content_type: titulo.toLowerCase().replace(/ /g, "_"),
+                        trigger: 'auto_modal'
+                      });
+                      setShowDonationModal(false);
+                    }}
+                    className="bg-gray-100 text-gray-700 px-6 py-3 rounded-xl font-medium hover:bg-gray-200 transition-colors"
+                  >
+                    Ahora no, gracias  💔 
+                  </button>
+                </div>
+                
+                <p className="text-xs text-gray-500 mt-4">
+                  Cualquier monto es de gran ayuda ❤️
+                </p>
               </div>
             </div>
           </div>
