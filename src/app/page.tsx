@@ -229,8 +229,8 @@ export default function Home() {
       {/* Botón flotante para la calculadora de prima */}
       <FloatingPrimaButton />
       
-      {/* Botón flotante para compartir la página */}
-      <ShareButton variant="floating" />
+      {/* Botón flotante para compartir la página 
+      <ShareButton variant="floating" />*/}
     </main>
   );
 }

@@ -7,7 +7,8 @@ import { Analytics } from '@vercel/analytics/react';
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import GoogleAnalytics from './components/GoogleAnalytics';
 import UmamiAnalytics from './components/UmamiAnalytics';
-import FooterShareButton from './components/FooterShareButton';
+import FooterActions from './components/FooterActions';
+import DonationButton from './components/DonationButton';
 
 const geist = Geist({
   subsets: ["latin"],
@@ -136,16 +137,17 @@ export default function RootLayout({
                 <a className="p-1" href="https://www.calculalaboral.com/"> www.calculalaboral.com</a>
                 © {new Date().getFullYear()} Calculadora Laboral Colombia. Todos los derechos reservados.
               </p>
-              <div className="flex justify-center gap-4">
-                <span className="text-sm text-gray-500">¿Te ha resultado útil? Compártelo:</span>
+              <div className="flex flex-col sm:flex-row justify-center items-center gap-4">
+                <span className="text-sm text-gray-500">¿Te ha resultado útil?</span>
                 <div id="footer-share-button" className="inline-block"></div>
-              </div>
+              </div> 
             </div>
           </div>
         </footer>
         <Analytics />
         <SpeedInsights />
-        <FooterShareButton />
+        <FooterActions />
+        <DonationButton variant="floating" />
       </body>
     </html>
   );
