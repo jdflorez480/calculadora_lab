@@ -122,6 +122,21 @@ const calculadoras = [
     ],
     color: "bg-cyan-50 text-cyan-600 ring-cyan-100",
   },
+  {
+    titulo: "Aportes Independientes",
+    descripcion:
+      "Calcula tus aportes a pensión, salud y otros gastos como independiente",
+    icono: BriefcaseIcon,
+    href: "/calculadoras/aportes-independientes",
+    keywords: [
+      "aportes independientes",
+      "pensión",
+      "salud",
+      "impuestos",
+      "trabajadores independientes",
+    ],
+    color: "bg-teal-50 text-teal-600 ring-teal-100",
+  },
 ];
 
 // Nuevas secciones para mejorar la página
