@@ -512,14 +512,13 @@ const ResultadoCalculo = ({
                 <div className="mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-gradient-to-r from-pink-100 to-red-100 mb-4">
                   <span className="text-2xl">❤️</span>
                 </div>
-                
-                <h3 className="text-xl font-bold text-gray-900 mb-2">
+                  <h3 className="text-xl font-bold text-gray-900 mb-2">
                   ¡Tu cálculo está listo!
                 </h3>
                 
                 <p className="text-gray-600 mb-4 leading-relaxed">
-                  Esta herramienta te ayudó a conocer tus derechos laborales. Si te resultó útil, 
-                  considera apoyarnos para mantener este servicio gratuito para todos los trabajadores colombianos.
+                  Considera apoyarnos con una pequeña donación a través de MercadoPago Colombia 
+                  (canal 100% seguro) para mantener este servicio gratuito para todos los trabajadores colombianos.
                 </p>
 
                 <div className="flex flex-col gap-3">
