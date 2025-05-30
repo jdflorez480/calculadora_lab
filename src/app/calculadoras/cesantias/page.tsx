@@ -407,9 +407,8 @@ function CesantiasContent() {
                 </div>
               </li>
             </ul>
-          </div>
-          <p className="text-gray-700 leading-relaxed mb-4">
-            <strong>Importante:</strong> Por esta razón, en nuestra calculadora el "Total a Recibir" muestra únicamente el valor de las cesantías (lo que va al fondo), mientras que los intereses aparecen como un concepto separado que recibes directamente en tu cuenta.
+          </div>          <p className="text-gray-700 leading-relaxed mb-4">
+            <strong>Importante:</strong> Por esta razón, en nuestra calculadora el &quot;Total a Recibir&quot; muestra únicamente el valor de las cesantías (lo que va al fondo), mientras que los intereses aparecen como un concepto separado que recibes directamente en tu cuenta.
           </p>
           <h3 className="text-xl font-semibold text-gray-900 mb-2">
             ¿Cuándo se pueden retirar?
