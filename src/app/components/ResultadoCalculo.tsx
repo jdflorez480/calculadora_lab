@@ -52,7 +52,7 @@ const ResultadoCalculo = ({
           content_type: titulo.toLowerCase().replace(/ /g, "_"),
           trigger: "calculation_complete",
         });
-      }, 10000); // 10 segundos
+      }, 20000); // 20 segundos
 
       return () => clearTimeout(timer);
     }

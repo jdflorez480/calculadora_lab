@@ -309,9 +309,7 @@ function CesantiasContent() {
               Calcular Cesantías
             </button>
           </div>
-        </form>
-
-        {resultado && (
+        </form>        {resultado && (
           <div className="mt-8 animate-fade-in">
             <ResultadoCalculo
               resultados={resultado.resultados}
@@ -319,6 +317,33 @@ function CesantiasContent() {
               titulo={resultado.titulo}
               subtitulo={resultado.subtitulo}
             />
+            
+            {/* Aclaración importante sobre cesantías e intereses */}
+            <div className="mt-6 p-4 bg-amber-50 border border-amber-200 rounded-lg">
+              <div className="flex items-start">
+                <div className="flex-shrink-0">
+                  <svg className="h-5 w-5 text-amber-400 mt-0.5" viewBox="0 0 20 20" fill="currentColor">
+                    <path fillRule="evenodd" d="M8.485 2.495c.673-1.167 2.357-1.167 3.03 0l6.28 10.875c.673 1.167-.17 2.625-1.516 2.625H3.72c-1.347 0-2.189-1.458-1.515-2.625L8.485 2.495zM10 5a.75.75 0 01.75.75v3.5a.75.75 0 01-1.5 0v-3.5A.75.75 0 0110 5zm0 9a1 1 0 100-2 1 1 0 000 2z" clipRule="evenodd" />
+                  </svg>
+                </div>
+                <div className="ml-3">
+                  <h3 className="text-sm font-medium text-amber-800">
+                    ¿Por qué los intereses no se suman al total de cesantías?
+                  </h3>
+                  <p className="mt-1 text-sm text-amber-700">
+                    <strong>Es correcto que aparezcan separados.</strong> Según la ley colombiana, las cesantías y sus intereses se manejan de forma independiente:
+                  </p>
+                  <ul className="mt-2 text-sm text-amber-700 list-disc list-inside space-y-1">
+                    <li><strong>Cesantías:</strong> Se consignan al fondo antes del 14 de febrero</li>
+                    <li><strong>Intereses:</strong> Se pagan directamente al trabajador antes del 31 de enero</li>
+                    <li><strong>Propósito diferente:</strong> Las cesantías van al fondo para retiros específicos, los intereses se pagan en efectivo como rendimiento</li>
+                  </ul>
+                  <p className="mt-2 text-sm text-amber-700">
+                    El total mostrado corresponde únicamente al valor de las cesantías, que es lo que se consigna al fondo.
+                  </p>
+                </div>
+              </div>
+            </div>
           </div>
         )}
 
@@ -361,15 +386,30 @@ function CesantiasContent() {
           </p>
           <p className="text-gray-700 font-mono bg-gray-100 p-4 rounded-lg mb-4">
             Intereses = Cesantías × 12% × Días trabajados ÷ 360
-          </p>
-          <h3 className="text-xl font-semibold text-gray-900 mb-2">
+          </p>          <h3 className="text-xl font-semibold text-gray-900 mb-2">
             ¿Cuándo se pagan?
           </h3>
           <p className="text-gray-700 leading-relaxed mb-4">
-            Los empleadores deben consignar las cesantías a los fondos de
-            cesantías antes del 14 de febrero de cada año. Los intereses sobre
-            las cesantías deben ser pagados directamente al trabajador a más
-            tardar el 31 de enero.
+            <strong>Las cesantías e intereses se pagan por separado:</strong>
+          </p>
+          <div className="bg-blue-50 p-4 rounded-lg mb-4">
+            <ul className="space-y-2 text-gray-700">
+              <li className="flex items-start">
+                <span className="inline-block w-2 h-2 bg-blue-500 rounded-full mt-2 mr-3 flex-shrink-0"></span>
+                <div>
+                  <strong>Cesantías:</strong> Los empleadores deben consignarlas a los fondos de cesantías antes del <strong>14 de febrero</strong> de cada año.
+                </div>
+              </li>
+              <li className="flex items-start">
+                <span className="inline-block w-2 h-2 bg-green-500 rounded-full mt-2 mr-3 flex-shrink-0"></span>
+                <div>
+                  <strong>Intereses:</strong> Se pagan directamente al trabajador en efectivo antes del <strong>31 de enero</strong>.
+                </div>
+              </li>
+            </ul>
+          </div>
+          <p className="text-gray-700 leading-relaxed mb-4">
+            <strong>Importante:</strong> Por esta razón, en nuestra calculadora el "Total a Recibir" muestra únicamente el valor de las cesantías (lo que va al fondo), mientras que los intereses aparecen como un concepto separado que recibes directamente en tu cuenta.
           </p>
           <h3 className="text-xl font-semibold text-gray-900 mb-2">
             ¿Cuándo se pueden retirar?
