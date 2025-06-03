@@ -69,7 +69,7 @@ const ResultadoCalculo = ({
           content_type: titulo.toLowerCase().replace(/ /g, "_"),
           trigger: "calculation_complete",
         });
-      }, 5000);
+      }, 15000);
       return () => clearTimeout(timer);
     }
   }, [resultados, total, titulo, hasShownAutoModal]);
