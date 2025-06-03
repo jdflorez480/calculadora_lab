@@ -38,43 +38,41 @@ const ResultadoCalculo = ({
 }: ResultadoCalculoProps) => {  const [showShare, setShowShare] = useState(false);
   const [showShareModal, setShowShareModal] = useState(false);
   const [hasShownAutoModal, setHasShownAutoModal] = useState(false);
-  const [showDonationModal, setShowDonationModal] = useState(false);
-  // Mostrar el modal de donación automáticamente después de 10 segundos
-  useEffect(() => {
-    if (resultados.length > 0 && total !== 0 && !hasShownAutoModal) {
-      const timer = setTimeout(() => {
-        setShowDonationModal(true);
-        setHasShownAutoModal(true);
-        
-        // Registrar evento de modal automático de donación
-        trackUmamiEvent("auto_donation_modal_shown", {
-          action: "auto_show_donation_modal",
-          content_type: titulo.toLowerCase().replace(/ /g, "_"),
-          trigger: "calculation_complete",
-        });
-      }, 20000); // 20 segundos
-
-      return () => clearTimeout(timer);
-    }
-  }, [resultados, total, titulo, hasShownAutoModal]);
-
-  // COMENTADO TEMPORALMENTE: Modal de compartir automático
+  const [showDonationModal, setShowDonationModal] = useState(false);  // COMENTADO TEMPORALMENTE: Modal de donación automático
   // useEffect(() => {
-  //   if (resultados.length > 0 && !hasShownAutoModal) {
-  //     // Esperar 2 segundos para que el usuario vea los resultados primero
+  //   if (resultados.length > 0 && total !== 0 && !hasShownAutoModal) {
   //     const timer = setTimeout(() => {
-  //       setShowShareModal(true);
+  //       setShowDonationModal(true);
   //       setHasShownAutoModal(true);
-  //       // Registrar evento de modal automático
-  //       trackUmamiEvent("auto_share_modal_shown", {
-  //         action: "auto_show_share_modal",
+  //       
+  //       // Registrar evento de modal automático de donación
+  //       trackUmamiEvent("auto_donation_modal_shown", {
+  //         action: "auto_show_donation_modal",
   //         content_type: titulo.toLowerCase().replace(/ /g, "_"),
   //         trigger: "calculation_complete",
   //       });
-  //     }, 5000);
+  //     }, 20000); // 20 segundos
+  //
   //     return () => clearTimeout(timer);
   //   }
   // }, [resultados, total, titulo, hasShownAutoModal]);
+  // Mostrar el modal de compartir automáticamente
+  useEffect(() => {
+    if (resultados.length > 0 && !hasShownAutoModal) {
+      // Esperar 2 segundos para que el usuario vea los resultados primero
+      const timer = setTimeout(() => {
+        setShowShareModal(true);
+        setHasShownAutoModal(true);
+        // Registrar evento de modal automático
+        trackUmamiEvent("auto_share_modal_shown", {
+          action: "auto_show_share_modal",
+          content_type: titulo.toLowerCase().replace(/ /g, "_"),
+          trigger: "calculation_complete",
+        });
+      }, 5000);
+      return () => clearTimeout(timer);
+    }
+  }, [resultados, total, titulo, hasShownAutoModal]);
 
   const formatCurrency = (value: number) => {
     const absValue = Math.abs(value);
@@ -357,8 +355,8 @@ const ResultadoCalculo = ({
             </span>
           </div>
         </div>{" "}      </div>{" "}
-      {/* COMENTADO TEMPORALMENTE: Modal de compartir automático - ahora solo manual */}
-      {false && showShareModal && (
+      {/* Modal de compartir automático */}
+      {showShareModal && (
         <div
           className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50"
           onClick={(e) => {
@@ -502,8 +500,8 @@ const ResultadoCalculo = ({
                 </button>
               </div>            </div>          </div>
         </div>
-      )}      {/* Modal de donación que aparece automáticamente después de 10 segundos */}
-      {showDonationModal && (
+      )}      {/* Modal de donación - COMENTADO */}
+      {false && showDonationModal && (
         <div className="fixed inset-0 bg-blue-50 bg-opacity-95 z-[100] flex items-center justify-center p-4">
           <div className="bg-white rounded-2xl max-w-md w-full mx-4 shadow-xl border border-blue-100 transform transition-all">
             <div className="relative p-6">
