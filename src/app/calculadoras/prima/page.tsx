@@ -115,32 +115,49 @@ function PrimaContent() {
       <div className="max-w-4xl mx-auto">
         <div className="mb-6">
           <BotonVolver />
-        </div>
-        <div className="text-center mb-8">
+        </div>        <div className="text-center mb-8">
           <h1 className="text-4xl font-bold text-gray-900 tracking-tight">
-            Calcular Prima de Junio
+            Calcula Tu Prima de Junio 2025
           </h1>
           <p className="mt-4 text-xl text-gray-600">
-            Calcula el valor de tu prima de servicios del primer semestre de 2025
+            Conoce en <span className="font-semibold text-blue-600">menos de 30 segundos</span> exactamente cuánto dinero recibirás
           </p>
-          <div className="mt-4 p-4 bg-blue-50 rounded-lg inline-block">
-            <p className="text-sm text-blue-700">
-              ¡Prepárate para tu prima de junio! Conoce cuánto recibirás según la ley colombiana
+          <div className="mt-4 p-4 bg-blue-100 border border-blue-200 rounded-lg inline-block shadow-sm">
+            <p className="text-blue-800 font-medium">
+              <span className="text-blue-600 font-bold">¡Importante!</span> La prima de junio debe pagarse antes del 30 de junio
             </p>
           </div>
+          <div className="mt-4 flex justify-center items-center space-x-8 text-sm font-medium">
+            <div className="flex items-center">
+              <span className="bg-blue-600 text-white rounded-full w-6 h-6 flex items-center justify-center mr-2">1</span>
+              <span className='text-gray-900'>Ingresa tu salario</span>
+            </div>
+            <div className="flex items-center">
+              <span className="bg-blue-600 text-white rounded-full w-6 h-6 flex items-center justify-center mr-2">2</span>
+              <span className='text-gray-900'>Verifica el período</span>
+            </div>
+            <div className="flex items-center">
+              <span className="bg-blue-600 text-white rounded-full w-6 h-6 flex items-center justify-center mr-2">3</span>
+              <span className='text-gray-900'>Obtén tu resultado</span>
+            </div>
+          </div>
         </div>
-
         <form onSubmit={handleSubmit} className="bg-white p-8 rounded-2xl shadow-xl">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            {/* Salario Base */}
+          <div className="bg-blue-50 p-4 rounded-lg mb-6 border-l-4 border-blue-500">
+            <p className="text-blue-800 text-sm">
+              <span className="font-bold">Rápido y sencillo:</span> Completa solo los campos necesarios y haz clic en "Calcular mi prima" para obtener tu resultado personalizado.
+            </p>
+          </div>
+          
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">            {/* Salario Base */}
             <div className="form-group">
               <div className="flex items-center h-8">
                 <CurrencyDollarIcon className="h-5 w-5 text-blue-500 shrink-0" />
                 <label className="ml-2 block text-sm font-medium text-gray-900">
-                  Salario Base Mensual
+                  Salario Base Mensual <span className="text-red-500">*</span>
                 </label>
               </div>
-              <p className="text-sm text-gray-600 mb-2 pl-7">Ingrese su salario mensual actual</p>
+              <p className="text-sm text-gray-600 mb-2 pl-7">Ingresa el valor de tu salario mensual actual</p>
               <div className="relative rounded-lg">
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                   <span className="text-gray-900 sm:text-sm">$</span>
@@ -149,7 +166,7 @@ function PrimaContent() {
                   type="text"
                   name="salarioBase"
                   className="block w-full pl-8 pr-12 py-2.5 text-gray-900 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 sm:text-sm input-currency shadow-sm"
-                  placeholder="ejm: 1.423.500"
+                  placeholder="1.423.500"
                   value={formData.salarioBase}
                   onChange={handleSalarioChange}
                   required
@@ -158,17 +175,18 @@ function PrimaContent() {
                   <span className="text-gray-500 sm:text-sm">COP</span>
                 </div>
               </div>
-            </div>
-
-            {/* Otros Ingresos */}
+              <p className="text-xs text-blue-600 mt-1 pl-7">
+                <span className="font-semibold">Recomendación:</span> Para salario mínimo, ingresa {formatNumber(SALARIO_MINIMO_2025.toString())}
+              </p>
+            </div>            {/* Otros Ingresos */}
             <div className="form-group">
               <div className="flex items-center h-8">
                 <CurrencyDollarIcon className="h-5 w-5 text-blue-500 shrink-0" />
                 <label className="ml-2 block text-sm font-medium text-gray-900">
-                  Otros Ingresos
+                  Otros Ingresos <span className="text-xs text-gray-500">(opcional)</span>
                 </label>
               </div>
-              <p className="text-sm text-gray-600 mb-2 pl-7">Comisiones, horas extras, etc.</p>
+              <p className="text-sm text-gray-600 mb-2 pl-7">Comisiones, horas extras, bonificaciones habituales</p>
               <div className="relative rounded-lg">
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                   <span className="text-gray-900 sm:text-sm">$</span>
@@ -185,14 +203,15 @@ function PrimaContent() {
                   <span className="text-gray-500 sm:text-sm">COP</span>
                 </div>
               </div>
-            </div>
-
-            {/* Auxilio de Transporte */}
+              <p className="text-xs text-gray-600 mt-1 pl-7">
+                Deja en blanco si no recibes ingresos adicionales
+              </p>
+            </div>            {/* Auxilio de Transporte */}
             <div className="form-group lg:col-span-1">
               <div className="flex items-center h-8 mb-2">
                 <TruckIcon className="h-5 w-5 text-blue-500 shrink-0" />
                 <label className="ml-2 block text-sm font-medium text-gray-900">
-                  Auxilio de Transporte
+                  ¿Recibes Auxilio de Transporte?
                 </label>
               </div>
               <div className="flex items-start pl-7">
@@ -204,38 +223,49 @@ function PrimaContent() {
                     className="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500 cursor-pointer"
                   />
                 </div>
-                <span className="ml-3 text-sm text-gray-600">
-                  Se marca automáticamente si el salario es menor o igual a 2 SMMLV (${formatNumber(TOPE_AUXILIO_TRANSPORTE.toString())})
-                </span>
+                <div className="ml-3">
+                  <span className="text-sm text-gray-700 font-medium">
+                    Sí, incluir auxilio de transporte
+                  </span>
+                  <p className="text-xs text-gray-600 mt-1">
+                    Se marca automáticamente si el salario es menor a ${formatNumber(TOPE_AUXILIO_TRANSPORTE.toString())}
+                  </p>
+                </div>
               </div>
-            </div>
-
-            {/* Período de Cálculo */}
+            </div>            {/* Período de Cálculo */}
             <div className="form-group lg:col-span-1">
               <div className="flex items-center h-8 mb-2">
                 <CalendarIcon className="h-5 w-5 text-blue-500 shrink-0" />
                 <label className="ml-2 block text-sm font-medium text-gray-900">
-                 Seleccione el  Período de Cálculo
+                  Período de Cálculo
                 </label>
               </div>
-              <div className="grid grid-cols-2 gap-4 pl-7">
-                <div>
-                  <DatePicker
-                    selected={formData.fechaInicioPeriodo}
-                    onChange={(date) => setFormData({...formData, fechaInicioPeriodo: date})}
-                    dateFormat="dd/MM/yyyy"
-                    locale="es"
-                    className="block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                  />
-                </div>
-                <div>
-                  <DatePicker
-                    selected={formData.fechaFinPeriodo}
-                    onChange={(date) => setFormData({...formData, fechaFinPeriodo: date})}
-                    dateFormat="dd/MM/yyyy"
-                    locale="es"
-                    className="block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                  />
+              <div className="pl-7">
+                <p className="text-xs text-gray-700 mb-2 font-medium ">
+                  Selecciona las fechas en las que iniciaste tu periodo de trabajo o deja las que vienen configuradas
+                </p>
+               
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <p className="text-xs text-gray-600 mb-1">Fecha inicio:</p>
+                    <DatePicker
+                      selected={formData.fechaInicioPeriodo}
+                      onChange={(date) => setFormData({...formData, fechaInicioPeriodo: date})}
+                      dateFormat="dd/MM/yyyy"
+                      locale="es"
+                      className="block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                    />
+                  </div>
+                  <div>
+                    <p className="text-xs text-gray-600 mb-1">Fecha fin:</p>
+                    <DatePicker
+                      selected={formData.fechaFinPeriodo}
+                      onChange={(date) => setFormData({...formData, fechaFinPeriodo: date})}
+                      dateFormat="dd/MM/yyyy"
+                      locale="es"
+                      className="block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                    />
+                  </div>
                 </div>
               </div>
             </div>
