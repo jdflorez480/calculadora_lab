@@ -120,7 +120,7 @@ function PrimaContent() {
             Calcula Tu Prima de Junio 2025
           </h1>
           <p className="mt-4 text-xl text-gray-600">
-            Conoce en <span className="font-semibold text-blue-600">menos de 30 segundos</span> exactamente cuánto dinero recibirás
+            Conoce en <span className="font-semibold text-blue-600">menos de 30 segundos</span> exactamente cuánto dinero recibirás con nuestra calculadora de prima de servicios.
           </p>
           <div className="mt-4 p-4 bg-blue-100 border border-blue-200 rounded-lg inline-block shadow-sm">
             <p className="text-blue-800 font-medium">
