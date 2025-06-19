@@ -3,7 +3,6 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { GiftIcon, XMarkIcon } from '@heroicons/react/24/outline';
-import { trackUmamiEvent } from './UmamiAnalytics';
 
 const FloatingPrimaButton = () => {  const [isVisible, setIsVisible] = useState(true);
   const [isAnimating, setIsAnimating] = useState(true);

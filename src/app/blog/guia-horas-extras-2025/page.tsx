@@ -55,15 +55,21 @@ export default function BlogPostPage() {
                       <td className="px-4 py-2 border">Hora Extra Nocturna</td>
                       <td className="px-4 py-2 border">75%</td>
                       <td className="px-4 py-2 border">9:00 PM - 6:00 AM</td>
-                    </tr>
-                    <tr>
+                    </tr>                    <tr>
                       <td className="px-4 py-2 border">Recargo Nocturno</td>
                       <td className="px-4 py-2 border">35%</td>
-                      <td className="px-4 py-2 border">9:00 PM - 6:00 AM</td>
-                    </tr>
-                    <tr>
+                      <td className="px-4 py-2 border">
+                        <span className="line-through">9:00 PM - 6:00 AM</span>
+                        <span className="ml-2 text-blue-600 font-medium">7:00 PM - 6:00 AM</span>
+                        <span className="block text-xs text-blue-600">(Desde julio 2025)</span>
+                      </td>
+                    </tr>                    <tr>
                       <td className="px-4 py-2 border">Dominical/Festivo</td>
-                      <td className="px-4 py-2 border">75%</td>
+                      <td className="px-4 py-2 border">
+                        <span className="line-through">75%</span>
+                        <span className="ml-2 text-blue-600 font-medium">80%</span>
+                        <span className="block text-xs text-blue-600">(Desde julio 2025)</span>
+                      </td>
                       <td className="px-4 py-2 border">Todo el día</td>
                     </tr>
                     <tr>
@@ -73,6 +79,42 @@ export default function BlogPostPage() {
                     </tr>
                   </tbody>
                 </table>
+              </div>
+
+              <div className="bg-blue-50 border border-blue-200 rounded-lg p-6 my-8">
+                <div className="flex items-center gap-3 mb-4">
+                  <ClockIcon className="h-8 w-8 text-blue-600" />
+                  <h3 className="text-xl font-semibold text-blue-900 m-0">
+                    ¡Actualización importante!
+                  </h3>
+                </div>
+                <p className="text-blue-700 mb-4">
+                  <strong>Reforma Laboral 2025:</strong> A partir de julio de 2025, el horario de recargo nocturno cambia de 9:00 p.m. a <strong>7:00 p.m.</strong>, manteniendo el recargo del 35%. 
+                </p>
+                <Link 
+                  href="/blog/guia-horas-extras-2025/recargo-nocturno-colombia-2025"
+                  className="inline-block bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors duration-200"
+                >
+                  Ver detalles del cambio
+                </Link>
+              </div>
+
+              <div className="bg-blue-50 border border-blue-200 rounded-lg p-6 my-8">
+                <div className="flex items-center gap-3 mb-4">
+                  <ClockIcon className="h-8 w-8 text-blue-600" />
+                  <h3 className="text-xl font-semibold text-blue-900 m-0">
+                    ¡Actualización importante!
+                  </h3>
+                </div>
+                <p className="text-blue-700 mb-4">
+                  <strong>Reforma Laboral 2025:</strong> El recargo dominical y festivo aumentará progresivamente del 75% actual hasta el 100% en 2027 (80% en 2025, 90% en 2026).
+                </p>
+                <Link 
+                  href="/blog/guia-horas-extras-2025/recargo-dominical-festivo-2025"
+                  className="inline-block bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors duration-200"
+                >
+                  Ver detalles del cambio
+                </Link>
               </div>
 
               <h2>¿Cómo se Calculan las Horas Extras?</h2>

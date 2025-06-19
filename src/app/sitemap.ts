@@ -81,9 +81,26 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.8,
     },
   ];
-
   // Artículos del blog
   const blogArticles = [
+    {
+      url: `${baseUrl}/blog/reforma-laboral-2025/aprendices-sena-reforma-laboral`,
+      lastModified: new Date('2025-06-19'),
+      changeFrequency: 'monthly' as const,
+      priority: 0.9,
+    },
+    {
+      url: `${baseUrl}/blog/guia-horas-extras-2025/recargo-dominical-festivo-2025`,
+      lastModified: new Date('2025-06-19'),
+      changeFrequency: 'monthly' as const,
+      priority: 0.9,
+    },
+    {
+      url: `${baseUrl}/blog/guia-horas-extras-2025/recargo-nocturno-colombia-2025`,
+      lastModified: new Date('2025-06-19'),
+      changeFrequency: 'monthly' as const,
+      priority: 0.9,
+    },
     {
       url: `${baseUrl}/blog/salario-minimo-2025`,
       lastModified: new Date('2025-04-22'),
@@ -143,6 +160,24 @@ export default function sitemap(): MetadataRoute.Sitemap {
       lastModified: new Date('2025-03-28'),
       changeFrequency: 'monthly' as const,
       priority: 0.8,
+    },
+    {
+      url: `${baseUrl}/blog/reforma-laboral-2025/aprendices-sena-reforma-laboral`,
+      lastModified: new Date('2025-06-19'),
+      changeFrequency: 'monthly' as const,
+      priority: 0.9,
+    },
+    {
+      url: `${baseUrl}/blog/guia-horas-extras-2025/recargo-dominical-festivo-2025`,
+      lastModified: new Date('2025-06-19'),
+      changeFrequency: 'monthly' as const,
+      priority: 0.9,
+    },
+    {
+      url: `${baseUrl}/blog/guia-horas-extras-2025/recargo-nocturno-colombia-2025`,
+      lastModified: new Date('2025-06-19'),
+      changeFrequency: 'monthly' as const,
+      priority: 0.9,
     },
   ];
 

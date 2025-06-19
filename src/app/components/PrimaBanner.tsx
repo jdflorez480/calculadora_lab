@@ -3,7 +3,6 @@
 import React from 'react';
 import Link from 'next/link';
 import { GiftIcon, ArrowRightIcon } from '@heroicons/react/24/outline';
-import { trackUmamiEvent } from './UmamiAnalytics';
 
 const PrimaBanner = () => {
   const keywords = [

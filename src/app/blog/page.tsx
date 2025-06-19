@@ -14,6 +14,30 @@ interface BlogPost {
 
 const blogPosts: BlogPost[] = [
   {
+    id: '13',
+    title: 'Aprendices del SENA: ¿Cuánto ganan y qué cambia con la reforma laboral 2025?',
+    excerpt: 'Descubre las novedades para aprendices SENA con la reforma laboral: contrato laboral formal, salario entre 75-100% del mínimo y todas las prestaciones sociales.',
+    date: '2025-06-19',
+    category: 'Reforma Laboral',
+    slug: 'reforma-laboral-2025/aprendices-sena-reforma-laboral'
+  },
+  {
+    id: '12',
+    title: '¿Cuánto es el recargo dominical y festivo en Colombia según la reforma laboral?',
+    excerpt: 'Descubre cómo cambia el recargo dominical con la reforma laboral: del 75% actual aumentará hasta el 100% en 2027. Incluye ejemplos de cálculo y tablas con los valores por año.',
+    date: '2025-06-19',
+    category: 'Reforma Laboral',
+    slug: 'guia-horas-extras-2025/recargo-dominical-festivo-2025'
+  },
+  {
+    id: '11',
+    title: '¿A qué hora inicia el recargo nocturno en Colombia desde 2025?',
+    excerpt: 'Todo sobre el cambio en el horario de recargo nocturno con la Reforma Laboral 2025: ahora inicia a las 7:00 p.m. en lugar de las 9:00 p.m. Aprende cómo calcularlo correctamente.',
+    date: '2025-06-19',
+    category: 'Reforma Laboral',
+    slug: 'guia-horas-extras-2025/recargo-nocturno-colombia-2025'
+  },
+  {
     id: '1',
     title: 'Cambios en el Salario Mínimo y Subsidio de Transporte 2025',
     excerpt: 'Análisis detallado del nuevo salario mínimo de $1.423.500 y subsidio de transporte de $200.000. Impacto en prestaciones sociales y recomendaciones para empleadores y trabajadores.',

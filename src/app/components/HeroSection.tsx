@@ -3,7 +3,6 @@
 import React from 'react';
 import Link from 'next/link';
 import { ArrowRightIcon, GiftIcon } from '@heroicons/react/24/outline';
-import { trackUmamiEvent } from './UmamiAnalytics';
 
 const HeroSection = () => {  // Función para registrar el clic en el botón de prima del hero section
   const handlePrimaButtonClick = () => {

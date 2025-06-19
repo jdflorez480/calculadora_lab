@@ -145,7 +145,7 @@ function PrimaContent() {
         <form onSubmit={handleSubmit} className="bg-white p-8 rounded-2xl shadow-xl">
           <div className="bg-blue-50 p-4 rounded-lg mb-6 border-l-4 border-blue-500">
             <p className="text-blue-800 text-sm">
-              <span className="font-bold">Rápido y sencillo:</span> Completa solo los campos necesarios y haz clic en "Calcular mi prima" para obtener tu resultado personalizado.
+              <span className="font-bold">Rápido y sencillo:</span> Completa solo los campos necesarios y haz clic en &ldquo;Calcular mi prima&rdquo; para obtener tu resultado personalizado.
             </p>
           </div>
           

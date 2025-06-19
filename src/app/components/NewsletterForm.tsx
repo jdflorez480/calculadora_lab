@@ -38,7 +38,8 @@ const NewsletterForm = () => {
         setIsChecked(false);
       } else {
         setFormStatus('error');
-      }    } catch (_) {
+      }    } catch (error) {
+      console.error('Newsletter subscription error:', error);
       setFormStatus('error');
     }
   };

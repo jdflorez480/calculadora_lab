@@ -22,8 +22,6 @@ import InfoSection from "./components/InfoSection";
 import ContactSection from "./components/ContactSection";
 import WaveDivider from "./components/WaveDivider";
 import FloatingPrimaButton from "./components/FloatingPrimaButton";
-import ShareButton from "./components/ShareButton";
-import AdBanner from "./components/AdBanner";
 
 export const metadata: Metadata = {
   title: "Calculadoras Laborales Colombia | Herramientas Laborales 2025",
