@@ -17,20 +17,20 @@ const HeroSection = () => {  // Función para registrar el clic en el botón de 
   return (
     <div className="text-center mb-10">
       <h1 className="text-4xl font-bold tracking-tight sm:text-5xl bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-blue-800 pb-1">
-        Calculadoras Laborales de Colombia
+        Calculadora Laboral Colombia 2025
       </h1>
       <div className="w-24 h-1 bg-gradient-to-r from-blue-500 to-blue-700 mx-auto rounded-full my-3"></div>
       <p className="mt-4 text-xl text-gray-700">
-        Herramientas gratuitas para calcular tus prestaciones laborales
+        Calculadora de liquidación laboral gratis, prima de servicios y nómina salarial
       </p>
       <p className="mt-2 text-sm text-gray-600">
-        Última actualización:{" "}
+        Calculadora laboral actualizada:{" "}
         {new Date().toLocaleDateString("es-ES", {
           day: "numeric",
           month: "long",
           year: "numeric",
         })}{" "}
-        | Conforme a la legislación laboral vigente
+        | Calcular prima, liquidación y prestaciones según la ley colombiana
       </p>
       
       {/* Botón destacado para la calculadora de prima */}
@@ -41,7 +41,7 @@ const HeroSection = () => {  // Función para registrar el clic en el botón de 
           onClick={handlePrimaButtonClick}
         >
           <GiftIcon className="mr-2 h-5 w-5" />
-          Calcular Prima de Junio 2025
+          Calculadora de Prima Junio 2025
           <ArrowRightIcon className="ml-2 h-5 w-5" />
         </Link>
       </div>

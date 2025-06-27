@@ -24,116 +24,131 @@ import WaveDivider from "./components/WaveDivider";
 import FloatingPrimaButton from "./components/FloatingPrimaButton";
 
 export const metadata: Metadata = {
-  title: "Calculadoras Laborales Colombia | Herramientas Laborales 2025",
+  title: "Calculadora Laboral Colombia 2025 | Calcular Prima, Liquidación y Nómina",
   description:
-    "Calcula liquidación, nómina, horas extras, retención en la fuente y prestaciones sociales con nuestras calculadoras laborales colombianas actualizadas a 2025.",
+    "Calculadora laboral colombiana gratis. Calcula prima de servicios, liquidación laboral, nómina, horas extras y retención en la fuente. Herramientas actualizadas 2025.",
   keywords:
-    "calculadora laboral colombia, liquidación, nómina, horas extras, retención en la fuente, cesantías, prima, vacaciones, legislación laboral colombiana 2025",
+    "calculadora laboral, calculadora de liquidación, calculadora de prima, calcular prima, calculadora liquidación laboral, calculadora prima servicios, calculadora laboral colombia, liquidación laboral gratis, calculadora de liquidación laboral gratis, mi calculadora laboral, calculadora salarial, calculadora prima, calcular liquidación laboral, calculadora de liquidación colombia 2025",
 };
 
 const calculadoras = [
   {
-    titulo: "Liquidación Laboral",
+    titulo: "Calculadora de Liquidación Laboral",
     descripcion:
-      "Calcula tu liquidación final incluyendo todas tus prestaciones sociales",
+      "Calculadora de liquidación laboral gratis - Calcula tu liquidación final incluyendo todas las prestaciones sociales según la ley colombiana",
     icono: BriefcaseIcon,
     href: "/calculadoras/liquidacion",
     keywords: [
-      "liquidación laboral",
-      "prestaciones sociales",
-      "indemnización",
-      "terminación contrato",
-      "finiquito",
+      "calculadora de liquidación",
+      "calculadora liquidación laboral",
+      "liquidación laboral gratis",
+      "calculadora de liquidación laboral gratis",
+      "calcular liquidación laboral",
     ],
     color: "bg-blue-50 text-blue-600 ring-blue-100",
   },
   {
-    titulo: "Calculadora de Nómina",
+    titulo: "Calculadora de Nómina Salarial",
     descripcion:
-      "Calcula tu salario neto mensual incluyendo todas las deducciones",
+      "Calculadora salarial Colombia - Calcula tu nómina mensual, salario neto y todas las deducciones laborales actualizadas 2025",
     icono: CalculatorIcon,
     href: "/calculadoras/nomina",
     keywords: [
-      "nómina mensual",
+      "calculadora salarial",
+      "calculadora de nómina",
+      "calculadora laboral",
       "salario neto",
-      "deducciones",
-      "aportes seguridad social",
-      "parafiscales",
+      "nómina mensual colombia",
     ],
     color: "bg-green-50 text-green-600 ring-green-100",
   },
   {
-    titulo: "Horas Extras",
+    titulo: "Calculadora de Horas Extras",
     descripcion:
-      "Calcula el valor de tus horas extras, recargos nocturnos y dominicales",
+      "Calculadora laboral para horas extras - Calcula recargos nocturnos, dominicales y festivos según legislación colombiana 2025",
     icono: ClockIcon,
     href: "/calculadoras/horas-extras",
     keywords: [
-      "horas extras",
-      "recargo nocturno",
-      "dominicales",
-      "festivos",
-      "jornada laboral",
+      "calculadora horas extras",
+      "calculadora laboral",
+      "recargo nocturno colombia",
+      "recargo dominical festivo",
+      "horas extras colombia",
     ],
     color: "bg-purple-50 text-purple-600 ring-purple-100",
   },
   {
-    titulo: "Retención en la Fuente",
-    descripcion: "Calcula el valor de tu retención en la fuente mensual",
+    titulo: "Calculadora Retención en la Fuente",
+    descripcion: "Calculadora laboral retención - Calcula tu retención en la fuente mensual según la DIAN y legislación tributaria vigente",
     icono: CurrencyDollarIcon,
     href: "/calculadoras/retencion",
     keywords: [
-      "retención fuente",
-      "impuestos",
-      "declaración renta",
-      "deducciones fiscales",
-      "tributarios",
+      "calculadora retención fuente",
+      "calculadora laboral",
+      "retención en la fuente",
+      "impuestos colombia",
+      "calculadora tributaria",
     ],
     color: "bg-amber-50 text-amber-600 ring-amber-100",
   },
   {
-    titulo: "Cesantías",
+    titulo: "Calculadora de Cesantías",
     descripcion:
-      "Calcula tus cesantías e intereses según la legislación colombiana",
+      "Calculadora laboral cesantías - Calcula cesantías e intereses según el fondo de cesantías y legislación laboral colombiana",
     icono: BuildingLibraryIcon,
     href: "/calculadoras/cesantias",
     keywords: [
-      "cesantías",
+      "calculadora cesantías",
+      "calculadora laboral",
       "intereses cesantías",
-      "fondo cesantías",
-      "liquidación anual",
-      "ahorro laboral",
+      "fondo cesantías colombia",
+      "cesantías colombia 2025",
     ],
     color: "bg-indigo-50 text-indigo-600 ring-indigo-100",
   },
   {
-    titulo: "Vacaciones",
-    descripcion: "Calcula el valor de tus vacaciones y días acumulados",
+    titulo: "Calculadora de Vacaciones",
+    descripcion: "Calculadora laboral vacaciones - Calcula compensación vacacional, días acumulados y liquidación de descanso remunerado",
     icono: SunIcon,
     href: "/calculadoras/vacaciones",
     keywords: [
-      "vacaciones",
-      "días acumulados",
-      "compensación",
-      "descanso remunerado",
-      "liquidación vacacional",
+      "calculadora vacaciones",
+      "calculadora laboral",
+      "compensación vacacional",
+      "días de vacaciones",
+      "liquidación vacaciones colombia",
     ],
     color: "bg-cyan-50 text-cyan-600 ring-cyan-100",
   },
   {
-    titulo: "Aportes Independientes",
+    titulo: "Calculadora Prima de Servicios",
     descripcion:
-      "Calcula tus aportes a pensión, salud y otros gastos como independiente",
+      "Calculadora de prima - Calcula prima de servicios, prima de junio y diciembre según la legislación laboral colombiana actualizada",
+    icono: BriefcaseIcon,
+    href: "/calculadoras/prima",
+    keywords: [
+      "calculadora de prima",
+      "calculadora prima servicios",
+      "calcular prima",
+      "prima de servicios colombia",
+      "calculadora prima junio",
+    ],
+    color: "bg-teal-50 text-teal-600 ring-teal-100",
+  },
+  {
+    titulo: "Calculadora Aportes Independientes",
+    descripcion:
+      "Calculadora laboral independientes - Calcula aportes a pensión, salud y otros gastos como trabajador independiente según legislación 2025",
     icono: BriefcaseIcon,
     href: "/calculadoras/aportes-independientes",
     keywords: [
-      "aportes independientes",
-      "pensión",
-      "salud",
-      "impuestos",
-      "trabajadores independientes",
+      "calculadora aportes independientes",
+      "calculadora laboral",
+      "aportes pensión independientes",
+      "aportes salud independientes",
+      "trabajadores independientes colombia",
     ],
-    color: "bg-teal-50 text-teal-600 ring-teal-100",
+    color: "bg-rose-50 text-rose-600 ring-rose-100",
   },
 ];
 
@@ -162,22 +177,22 @@ const beneficios = [
 const estadisticas = [
   {
     cifra: "1.423.500",
-    descripcion: "Salario mínimo legal vigente 2025 (COP)",
+    descripcion: "Salario mínimo legal vigente 2025 para calcular prima y liquidación",
     colorClase: "from-blue-500 to-blue-600",
   },
   {
     cifra: "24%",
-    descripcion: "Aporte total a seguridad social por empleador",
+    descripcion: "Aporte total seguridad social - Calculadora laboral precisa",
     colorClase: "from-green-500 to-green-600",
   },
   {
-    cifra: "+10.000",
-    descripcion: "Cálculos realizados por mes",
+    cifra: "+15.000",
+    descripcion: "Cálculos de liquidación laboral y prima realizados mensualmente",
     colorClase: "from-purple-500 to-purple-600",
   },
   {
     cifra: "100%",
-    descripcion: "Cumplimiento con legislación laboral actualizada",
+    descripcion: "Calculadora de liquidación laboral gratis actualizada 2025",
     colorClase: "from-yellow-500 to-yellow-600",
   },
 ];
@@ -210,6 +225,50 @@ export default function Home() {
 
         {/* Banner Calculadora Empresarial */}
         <BusinessBanner />
+
+        {/* Nueva sección de palabras clave específicas para SEO */}
+        <section className="mt-16 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-2xl p-8" aria-labelledby="calculadoras-especificas">
+          <div className="text-center mb-8">
+            <h2 id="calculadoras-especificas" className="text-2xl font-bold text-gray-900 mb-4">
+              Calculadoras Laborales Más Buscadas en Colombia
+            </h2>
+            <p className="text-gray-700">
+              Herramientas especializadas para todos tus cálculos laborales
+            </p>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="bg-white p-4 rounded-lg shadow-sm border">
+              <h3 className="font-semibold text-blue-800 mb-2">Mi Calculadora Laboral</h3>
+              <p className="text-sm text-gray-600">Calculadora laboral personalizada para trabajadores colombianos con todas las prestaciones actualizadas 2025.</p>
+            </div>
+            
+            <div className="bg-white p-4 rounded-lg shadow-sm border">
+              <h3 className="font-semibold text-blue-800 mb-2">Calculadora de Liquidación Laboral Gratis</h3>
+              <p className="text-sm text-gray-600">Calcula tu liquidación laboral sin costo, incluyendo cesantías, prima e indemnización según la ley.</p>
+            </div>
+            
+            <div className="bg-white p-4 rounded-lg shadow-sm border">
+              <h3 className="font-semibold text-blue-800 mb-2">Calculadora Prima Servicios 2025</h3>
+              <p className="text-sm text-gray-600">Calcula prima de servicios de junio y diciembre con la legislación laboral colombiana vigente.</p>
+            </div>
+            
+            <div className="bg-white p-4 rounded-lg shadow-sm border">
+              <h3 className="font-semibold text-blue-800 mb-2">Calcular Liquidación Laboral</h3>
+              <p className="text-sm text-gray-600">Herramienta precisa para calcular liquidación por terminación de contrato laboral en Colombia.</p>
+            </div>
+            
+            <div className="bg-white p-4 rounded-lg shadow-sm border">
+              <h3 className="font-semibold text-blue-800 mb-2">Calculadora Salarial Colombia</h3>
+              <p className="text-sm text-gray-600">Calcula salario neto, deducciones y aportes de seguridad social según la legislación 2025.</p>
+            </div>
+            
+            <div className="bg-white p-4 rounded-lg shadow-sm border">
+              <h3 className="font-semibold text-blue-800 mb-2">Recargo Nocturno Colombia 2025</h3>
+              <p className="text-sm text-gray-600">Calcula recargos nocturnos, dominicales y festivos según las tarifas laborales actualizadas.</p>
+            </div>
+          </div>
+        </section>
 
         {/* Sección CTA 
         <CTASection />*/}

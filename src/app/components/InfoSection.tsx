@@ -9,28 +9,27 @@ const InfoSection = () => {
       <div className="bg-white rounded-xl shadow-md p-6">
         <h3 className="text-xl font-semibold text-blue-900 mb-4">
           Calculadora laboral colombiana actualizada{" "}
-          {new Date().getFullYear()}
+          {new Date().getFullYear()} - Gratis y Precisa
         </h3>
         <div className="prose prose-blue max-w-none text-gray-600">
           <p>
-            Nuestra calculadora laboral colombiana te permite gestionar
-            todos los aspectos laborales según la legislación vigente. Desde
-            el cálculo de nómina mensual, incluyendo los aportes a seguridad
-            social (salud, pensión y ARL), hasta la estimación de
-            prestaciones sociales como prima, cesantías, intereses y
+            Nuestra <strong>calculadora laboral</strong> te permite gestionar
+            todos los aspectos laborales según la legislación vigente. Utiliza nuestra <strong>calculadora de liquidación laboral gratis</strong> para calcular nómina mensual, incluyendo los aportes a seguridad
+            social (salud, pensión y ARL), y la <strong>calculadora de prima</strong> para estimar
+            prestaciones sociales como prima de servicios, cesantías, intereses y
             vacaciones.
           </p>
           <p className="mt-4">
-            Con las herramientas de liquidación laboral, podrás conocer el
+            Con nuestra <strong>calculadora de liquidación</strong>, podrás conocer el
             valor exacto que corresponde a un trabajador al momento de
-            terminar su contrato, teniendo en cuenta el tipo de contrato,
-            tiempo trabajado y salario devengado.
+            terminar su contrato. Nuestra <strong>calculadora liquidación laboral</strong> tiene en cuenta el tipo de contrato,
+            tiempo trabajado y salario devengado para brindarte resultados precisos.
           </p>
           <p className="mt-4">
-            Nuestras calculadoras están actualizadas con la legislación
+            Todas nuestras calculadoras laborales están actualizadas con la legislación
             colombiana de {new Date().getFullYear()}, incluyendo las últimas
-            reformas laborales y tributarias, para garantizar que todos los
-            cálculos sean precisos y conformes a la ley.
+            reformas laborales y tributarias. Usa nuestra <strong>calculadora prima servicios</strong> y <strong>calculadora salarial</strong> para garantizar que todos los
+            cálculos sean precisos y conformes a la ley colombiana vigente.
           </p>
         </div>
       </div>
