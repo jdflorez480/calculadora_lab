@@ -25,7 +25,7 @@ export const trackUmamiEvent = (eventName: string, properties?: Record<string, u
   }
 };
 
-export default function UmamiAnalytics() {
+/* export default function UmamiAnalytics() {
   // Usa los datos oficiales de tu instancia de Umami desplegada en Vercel
   const UMAMI_WEBSITE_ID = '8e785457-af04-4fe8-9bc8-878b05e404b3';
   const UMAMI_SCRIPT_URL = 'https://umami-alpha-ten.vercel.app/script.js'; // URL actualizada de tu despliegue en Vercel
@@ -44,5 +44,10 @@ export default function UmamiAnalytics() {
         strategy="afterInteractive"
       />
     </>
-  );
+  ); */
+
+  export default function UmamiAnalytics() {
+  return null;
 }
+
+
