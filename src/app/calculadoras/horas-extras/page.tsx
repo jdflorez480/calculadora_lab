@@ -90,7 +90,7 @@ function HorasExtrasContent() {
       {
         concepto: 'Recargo Dominical/Festivo',
         valor: resultadoCalculo.totalHorasDominicalesFestivas,
-        descripcion: `${datos.horasDominicalesFestivas} horas con recargo del 75%`
+        descripcion: `${datos.horasDominicalesFestivas} horas con recargo del 80%`
       },
       {
         concepto: 'Horas Extras Dominicales/Festivas',
@@ -123,6 +123,27 @@ function HorasExtrasContent() {
           <p className="mt-4 text-xl text-gray-600">
             Calcula el valor de tus horas extras, recargos nocturnos y dominicales
           </p>
+        </div>
+
+        {/* Banner informativo sobre reforma laboral 2025 */}
+        <div className="bg-blue-50 border border-blue-200 rounded-lg p-6 mb-8">
+          <div className="flex items-center gap-3 mb-4">
+            <ClockIcon className="h-8 w-8 text-blue-600" />
+            <h3 className="text-xl font-semibold text-blue-900 m-0">
+              ¡Actualización Reforma Laboral 2025!
+            </h3>
+          </div>
+          <div className="text-blue-700 space-y-2">
+            <p>
+              <strong>✓ Recargo dominical/festivo:</strong> Aumentó del 75% al <strong>80%</strong> desde enero 2025
+            </p>
+            <p>
+              <strong>✓ Horario nocturno:</strong> Cambia de 9:00 PM a <strong>7:00 PM</strong> desde julio 2025
+            </p>
+            <p className="text-sm">
+              Esta calculadora ya incluye los nuevos porcentajes vigentes en 2025.
+            </p>
+          </div>
         </div>
 
         <form onSubmit={handleSubmit} className="bg-white p-8 rounded-2xl shadow-xl">
@@ -214,7 +235,7 @@ function HorasExtrasContent() {
                 min="0"
                 max="999"
               />
-              <p className="mt-1 text-sm text-gray-500">Recargo del 75%</p>
+              <p className="mt-1 text-sm text-gray-500">Recargo del 80% (Reforma 2025)</p>
             </div>
 
             {/* Horas Extras Dominicales/Festivas */}
@@ -256,7 +277,7 @@ function HorasExtrasContent() {
                 min="0"
                 max="999"
               />
-              <p className="mt-1 text-sm text-gray-500">Recargo del 35%</p>
+              <p className="mt-1 text-sm text-gray-500">Recargo del 35% (7:00 PM - 6:00 AM desde julio 2025)</p>
             </div>
           </div>
 
@@ -294,8 +315,8 @@ function HorasExtrasContent() {
           <ul className="list-disc pl-5 mb-4 text-gray-700">
             <li><b>Horas extras diurnas:</b> Recargo del 25% sobre la hora ordinaria.</li>
             <li><b>Horas extras nocturnas:</b> Recargo del 75% sobre la hora ordinaria.</li>
-            <li><b>Recargo nocturno:</b> 35% adicional por laborar entre las 9:00 p.m. y las 6:00 a.m.</li>
-            <li><b>Horas dominicales y festivas:</b> Recargo del 75%.</li>
+            <li><b>Recargo nocturno:</b> 35% adicional por laborar entre las 7:00 p.m. y las 6:00 a.m. (cambio desde julio 2025).</li>
+            <li><b>Horas dominicales y festivas:</b> Recargo del 80% (aumento desde 2025).</li>
             <li><b>Horas extras dominicales/festivas:</b> Recargo del 100%.</li>
           </ul>
           <p className="text-gray-700 font-mono bg-gray-100 p-4 rounded-lg mb-4">
@@ -303,7 +324,7 @@ function HorasExtrasContent() {
             Valor hora extra diurna = Valor hora ordinaria × 1,25<br/>
             Valor hora extra nocturna = Valor hora ordinaria × 1,75<br/>
             Valor recargo nocturno = Valor hora ordinaria × 0,35<br/>
-            Valor hora dominical/festiva = Valor hora ordinaria × 1,75<br/>
+            Valor hora dominical/festiva = Valor hora ordinaria × 1,80 (2025)<br/>
             Valor hora extra dominical/festiva = Valor hora ordinaria × 2
           </p>
           <h3 className="text-xl font-semibold text-gray-900 mb-2">Preguntas frecuentes sobre horas extras</h3>

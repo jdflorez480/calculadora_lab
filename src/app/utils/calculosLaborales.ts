@@ -14,12 +14,12 @@ export const PORCENTAJE_SALUD = 0.04; // 4% del salario base
 export const PORCENTAJE_PENSION = 0.04; // 4% del salario base
 export const AUXILIO_TRANSPORTE_2025 = 200000;
 
-// Constantes para horas extras
+// Constantes para horas extras (actualizadas según reforma laboral 2025)
 export const RECARGO_HORA_EXTRA_DIURNA = 0.25; // 25% adicional
 export const RECARGO_HORA_EXTRA_NOCTURNA = 0.75; // 75% adicional
-export const RECARGO_HORA_DOMINICAL_FESTIVO = 0.75; // 75% adicional
+export const RECARGO_HORA_DOMINICAL_FESTIVO = 0.80; // 80% adicional (cambio 2025)
 export const RECARGO_HORA_EXTRA_DOMINICAL_FESTIVO = 1.00; // 100% adicional
-export const RECARGO_NOCTURNO = 0.35; // 35% adicional
+export const RECARGO_NOCTURNO = 0.35; // 35% adicional (horario cambia a 7PM-6AM en julio 2025)
 
 // Constantes para retención en la fuente 2025
 export const UVT_2025 = 49799;

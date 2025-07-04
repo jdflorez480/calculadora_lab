@@ -15,6 +15,7 @@ import ContactBar from "./components/ContactBar";
 import HeroSection from "./components/HeroSection";
 import StatisticsSection from "./components/StatisticsSection";
 import PrimaBanner from "./components/PrimaBanner";
+import LiquidacionBanner from "./components/LiquidacionBanner";
 import BusinessBanner from "./components/BusinessBanner";
 import CalculatorsSection from "./components/CalculatorsSection";
 import BenefitsSection from "./components/BenefitsSection";
@@ -33,20 +34,35 @@ export const metadata: Metadata = {
 
 const calculadoras = [
   {
-    titulo: "Calculadora de Liquidación Laboral",
+    titulo: "Calculadora Prima de Servicios",
     descripcion:
-      "Calculadora de liquidación laboral gratis - Calcula tu liquidación final incluyendo todas las prestaciones sociales según la ley colombiana",
+      "Calculadora de prima - Calcula prima de servicios, prima de junio y diciembre según la legislación laboral colombiana actualizada",
     icono: BriefcaseIcon,
-    href: "/calculadoras/liquidacion",
+    href: "/calculadoras/prima",
     keywords: [
-      "calculadora de liquidación",
-      "calculadora liquidación laboral",
-      "liquidación laboral gratis",
-      "calculadora de liquidación laboral gratis",
-      "calcular liquidación laboral",
+      "calculadora de prima",
+      "calculadora prima servicios",
+      "calcular prima",
+      "prima de servicios colombia",
+      "calculadora prima junio",
     ],
-    color: "bg-blue-50 text-blue-600 ring-blue-100",
+    color: "bg-teal-50 text-teal-600 ring-teal-100",
   },
+  {
+    titulo: "Calculadora Retención en la Fuente",
+    descripcion: "Calculadora laboral retención - Calcula tu retención en la fuente mensual según la DIAN y legislación tributaria vigente",
+    icono: CurrencyDollarIcon,
+    href: "/calculadoras/retencion",
+    keywords: [
+      "calculadora retención fuente",
+      "calculadora laboral",
+      "retención en la fuente",
+      "impuestos colombia",
+      "calculadora tributaria",
+    ],
+    color: "bg-amber-50 text-amber-600 ring-amber-100",
+  },
+
   {
     titulo: "Calculadora de Nómina Salarial",
     descripcion:
@@ -83,19 +99,35 @@ const calculadoras = [
     ],
     color: "bg-purple-50 text-purple-600 ring-purple-100",
   },
-  {
-    titulo: "Calculadora Retención en la Fuente",
-    descripcion: "Calculadora laboral retención - Calcula tu retención en la fuente mensual según la DIAN y legislación tributaria vigente",
-    icono: CurrencyDollarIcon,
-    href: "/calculadoras/retencion",
+    {
+    titulo: "Calculadora de Liquidación Laboral",
+    descripcion:
+      "Calculadora de liquidación laboral gratis - Calcula tu liquidación final incluyendo todas las prestaciones sociales según la ley colombiana",
+    icono: BriefcaseIcon,
+    href: "/calculadoras/liquidacion",
     keywords: [
-      "calculadora retención fuente",
-      "calculadora laboral",
-      "retención en la fuente",
-      "impuestos colombia",
-      "calculadora tributaria",
+      "calculadora de liquidación",
+      "calculadora liquidación laboral",
+      "liquidación laboral gratis",
+      "calculadora de liquidación laboral gratis",
+      "calcular liquidación laboral",
     ],
-    color: "bg-amber-50 text-amber-600 ring-amber-100",
+    color: "bg-blue-50 text-blue-600 ring-blue-100",
+  },
+   {
+    titulo: "Calculadora Aportes Independientes",
+    descripcion:
+      "Calculadora laboral independientes - Calcula aportes a pensión, salud y otros gastos como trabajador independiente según legislación 2025",
+    icono: BriefcaseIcon,
+    href: "/calculadoras/aportes-independientes",
+    keywords: [
+      "calculadora aportes independientes",
+      "calculadora laboral",
+      "aportes pensión independientes",
+      "aportes salud independientes",
+      "trabajadores independientes colombia",
+    ],
+    color: "bg-rose-50 text-rose-600 ring-rose-100",
   },
   {
     titulo: "Calculadora de Cesantías",
@@ -126,36 +158,7 @@ const calculadoras = [
     ],
     color: "bg-cyan-50 text-cyan-600 ring-cyan-100",
   },
-  {
-    titulo: "Calculadora Prima de Servicios",
-    descripcion:
-      "Calculadora de prima - Calcula prima de servicios, prima de junio y diciembre según la legislación laboral colombiana actualizada",
-    icono: BriefcaseIcon,
-    href: "/calculadoras/prima",
-    keywords: [
-      "calculadora de prima",
-      "calculadora prima servicios",
-      "calcular prima",
-      "prima de servicios colombia",
-      "calculadora prima junio",
-    ],
-    color: "bg-teal-50 text-teal-600 ring-teal-100",
-  },
-  {
-    titulo: "Calculadora Aportes Independientes",
-    descripcion:
-      "Calculadora laboral independientes - Calcula aportes a pensión, salud y otros gastos como trabajador independiente según legislación 2025",
-    icono: BriefcaseIcon,
-    href: "/calculadoras/aportes-independientes",
-    keywords: [
-      "calculadora aportes independientes",
-      "calculadora laboral",
-      "aportes pensión independientes",
-      "aportes salud independientes",
-      "trabajadores independientes colombia",
-    ],
-    color: "bg-rose-50 text-rose-600 ring-rose-100",
-  },
+ 
 ];
 
 // Nuevas secciones para mejorar la página
@@ -215,8 +218,10 @@ export default function Home() {
       <div className="max-w-7xl mx-auto relative z-10">
         <StatisticsSection estadisticas={estadisticas} />
 
-        {/* Banner Prima Junio 2025 */}
-        <PrimaBanner />
+        {/* Banner Prima Junio 2025 - Comentado hasta diciembre  <PrimaBanner /> */}
+
+        {/* Banner Liquidación Laboral 2025 - Comentado temporalmente */}
+        <LiquidacionBanner />
 
         {/* Sección Calculadoras */}
         <CalculatorsSection calculadoras={calculadoras} />
@@ -289,8 +294,8 @@ export default function Home() {
       {/* Subtle Wave Divider */}
       <WaveDivider />
 
-      {/* Botón flotante para la calculadora de prima */}
-      <FloatingPrimaButton />
+      {/* Botón flotante para la calculadora de prima 
+      <FloatingPrimaButton />*/}
       
       {/* Botón flotante para compartir la página 
       <ShareButton variant="floating" />*/}
